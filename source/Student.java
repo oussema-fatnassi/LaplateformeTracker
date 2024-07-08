@@ -19,6 +19,34 @@ public class Student {
         this.subject = subject;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
     @Override
     public String toString() {
         return "Students: " + '\n' +

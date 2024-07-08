@@ -5,10 +5,13 @@ import java.util.List;
 
 public class StudentDAO {
 
+    Connection connection = null;
+
     public void addStudent(String firstName, String lastName, String email, int age, double grade, String subject) {
         String query = "INSERT INTO student (first_name, last_name, email, age, grade, subject) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try {
+            connection = DatabaseConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             preparedStatement.setString(3, email);
@@ -18,13 +21,16 @@ public class StudentDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DatabaseConnection.closeConnection(connection);
         }
     }
 
     public void updateStudent(int id, String firstName, String lastName, String email, int age, double grade, String subject) {
         String query = "UPDATE student SET first_name = ?, last_name = ?, email = ?, age = ?, grade = ?, subject = ? WHERE id = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try {
+            connection = DatabaseConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             preparedStatement.setString(3, email);
@@ -35,17 +41,22 @@ public class StudentDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DatabaseConnection.closeConnection(connection);
         }
     }
 
     public void deleteStudent(int id) {
         String query = "DELETE FROM student WHERE id = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try {
+            connection = DatabaseConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DatabaseConnection.closeConnection(connection);
         }
     }
 
@@ -53,9 +64,10 @@ public class StudentDAO {
         List<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM student";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try {
+            connection = DatabaseConnection.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -66,12 +78,13 @@ public class StudentDAO {
                 double grade = rs.getDouble("grade");
                 String subject = rs.getString("subject");
 
-
                 Student student = new Student(id, firstName, lastName, email, age, grade, subject);
                 students.add(student);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DatabaseConnection.closeConnection(connection);
         }
         return students;
     }
@@ -80,8 +93,9 @@ public class StudentDAO {
         Student student = null;
         String sql = "SELECT * FROM student WHERE id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+        try {
+            connection = DatabaseConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
@@ -97,15 +111,19 @@ public class StudentDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DatabaseConnection.closeConnection(connection);
         }
         return student;
     }
 
     public static void main(String[] args) {
-        Connection conn = DatabaseConnection.getConnection();
         StudentDAO studentDAO = new StudentDAO();
         studentDAO.addStudent("John", "Doe", "ciao", 25, 8.5, "Math");
-        studentDAO.updateStudent(1, "Jane", "Doe", "hello", 30, 9.5, "Science");
-        DatabaseConnection.closeConnection(conn);
+        studentDAO.addStudent("Jane", "Doe", "hello", 22, 9.0, "Science");
+        List<Student> students = studentDAO.getAllStudents();
+        for (Student student : students) {
+            System.out.println(student);
+        }
     }
 }

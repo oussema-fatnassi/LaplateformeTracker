@@ -17,7 +17,7 @@ public class Main {
                 menu.displayMenu();
                 choice = menu.getUserChoice(scanner);
                 menu.handleChoice(choice, scanner);
-            } while (choice != 6);
+            } while (choice != 10);
         }
     }
 }

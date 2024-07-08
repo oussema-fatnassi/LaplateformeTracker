@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 public class Menu {
 
     static final StudentDAO studentDAO = new StudentDAO();
+    static final Sort sort = new Sort();
 
     public void displayMenu() {
         System.out.println("********************************************");
@@ -17,7 +18,8 @@ public class Menu {
         System.out.println("3. Delete student");
         System.out.println("4. Search student by ID");
         System.out.println("5. Display all students");
-        System.out.println("6. Exit");
+        System.out.println("6. Sort students");
+        System.out.println("10. Exit");
         System.out.println("********************************************");
         System.out.print("Enter your choice: ");
     }
@@ -51,6 +53,9 @@ public class Menu {
                 displayAllStudents();
                 break;
             case 6:
+                sortStudents(scanner);
+                break;
+            case 10:
                 System.out.println("Exiting...");
                 break;
             default:
@@ -144,6 +149,51 @@ public class Menu {
             System.out.println(student);
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid integer for id.");
+            scanner.nextLine();
+        }
+    }
+
+    private void sortStudents(Scanner scanner) {
+        try {
+            System.out.println("********************************************");
+            System.out.println("*          Sorted Students Information     *");
+            System.out.println("********************************************");
+            System.out.println("1. Sort by first name");
+            System.out.println("2. Sort by last name");
+            System.out.println("3. Sort by email");
+            System.out.println("4. Sort by age");
+            System.out.println("5. Sort by grade");
+            System.out.println("6. Sort by subject");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            List<Student> students = studentDAO.getAllStudents();
+            switch (choice) {
+                case 1:
+                    sort.sortByFirstName(students);
+                    break;
+                case 2:
+                    sort.sortByLastName(students);
+                    break;
+                case 3:
+                    sort.sortByEmail(students);
+                    break;
+                case 4:
+                    sort.sortByAge(students);
+                    break;
+                case 5:
+                    sort.sortByGrade(students);
+                    break;
+                case 6:
+                    sort.sortBySubject(students);
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    return;
+            }
+            students.forEach(System.out::println);
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid integer choice.");
             scanner.nextLine();
         }
     }

@@ -116,14 +116,4 @@ public class StudentDAO {
         }
         return student;
     }
-
-    public static void main(String[] args) {
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.addStudent("John", "Doe", "ciao", 25, 8.5, "Math");
-        studentDAO.addStudent("Jane", "Doe", "hello", 22, 9.0, "Science");
-        List<Student> students = studentDAO.getAllStudents();
-        for (Student student : students) {
-            System.out.println(student);
-        }
-    }
 }

@@ -5,8 +5,6 @@ import java.util.InputMismatchException;
 
 public class Main {
 
-    static final StudentDAO studentDAO = new StudentDAO();
-
     public static void main(String[] args) {
         Menu menu = new Menu();
 

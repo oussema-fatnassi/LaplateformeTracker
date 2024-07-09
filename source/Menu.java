@@ -20,6 +20,7 @@ public class Menu {
         System.out.println("6. Sort students");
         System.out.println("7. Advanced Search");
         System.out.println("8. Display statistics");
+        System.out.println("9. Export data (CSV, XML, JSON)");
         System.out.println("10. Exit");
         System.out.println("********************************************");
         System.out.print("Enter your choice: ");
@@ -61,6 +62,9 @@ public class Menu {
                 break;
             case 8:
                 Statistics.statisticsMenu(scanner);
+                break;
+            case 9:
+                exportData(scanner);
                 break;
             case 10:
                 System.out.println("Exiting...");
@@ -158,5 +162,10 @@ public class Menu {
             System.out.println("Invalid input. Please enter a valid integer for id.");
             scanner.nextLine();
         }
+    }
+
+    private void exportData(Scanner scanner) {
+        List<Student> students = studentDAO.getAllStudents();
+        ExportData.exportDataMenu(students, scanner);
     }
 }

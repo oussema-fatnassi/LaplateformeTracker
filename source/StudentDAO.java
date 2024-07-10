@@ -1,4 +1,5 @@
 package source;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class StudentDAO {
             preparedStatement.setString(6, subject);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error adding student: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -40,7 +41,7 @@ public class StudentDAO {
             preparedStatement.setInt(7, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error updating student: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -54,7 +55,7 @@ public class StudentDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error deleting student: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -66,8 +67,8 @@ public class StudentDAO {
 
         try {
             connection = DatabaseConnection.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -82,7 +83,7 @@ public class StudentDAO {
                 students.add(student);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error retrieving students: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
@@ -110,7 +111,7 @@ public class StudentDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error retrieving student: " + e.getMessage());
         } finally {
             DatabaseConnection.closeConnection(connection);
         }

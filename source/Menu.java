@@ -3,6 +3,7 @@ package source;
 import java.util.Scanner;
 import java.util.List;
 import java.util.InputMismatchException;
+import java.util.regex.Pattern;
 
 public class Menu {
 
@@ -32,7 +33,7 @@ public class Menu {
             choice = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid integer choice.");
-            scanner.nextLine();
+            scanner.nextLine(); // clear the invalid input
         }
         return choice;
     }
@@ -70,74 +71,123 @@ public class Menu {
                 System.out.println("Exiting...");
                 break;
             default:
-                System.out.println("Invalid choice");
+                System.out.println("Invalid choice. Please enter a number between 1 and 10.");
         }
     }
 
     private void addStudent(Scanner scanner) {
-        try {
-            System.out.println("\n********************************************");
-            System.out.println("*             Add New Student               *");
-            System.out.println("********************************************");
-            System.out.print("Enter first name: ");
-            String firstName = scanner.next();
-            System.out.print("Enter last name: ");
-            String lastName = scanner.next();
-            System.out.print("Enter email: ");
-            String email = scanner.next();
-            System.out.print("Enter age: ");
-            int age = scanner.nextInt();
-            System.out.print("Enter grade: ");
-            double grade = scanner.nextDouble();
-            System.out.print("Enter subject: ");
-            String subject = scanner.next();
-            studentDAO.addStudent(firstName, lastName, email, age, grade, subject);
-            System.out.println("Student added successfully");
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter a valid integer for age and a valid decimal for grade.");
-            scanner.nextLine();
+        String firstName, lastName, email, subject;
+        int age = 0;
+        double grade = 0.0;
+
+        System.out.println("\n********************************************");
+        System.out.println("*             Add New Student               *");
+        System.out.println("********************************************");
+
+        firstName = getValidatedInput(scanner, "^[a-zA-Z]+$", "Invalid input. First name should contain only letters.", "Enter first name: ");
+        lastName = getValidatedInput(scanner, "^[a-zA-Z]+$", "Invalid input. Last name should contain only letters.", "Enter last name: ");
+        email = getValidatedInput(scanner, "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", "Invalid input. Please enter a valid email address.", "Enter email: ");
+
+        while (true) {
+            try {
+                System.out.print("Enter age: ");
+                age = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer for age.");
+                scanner.nextLine(); // clear the invalid input
+            }
         }
+
+        while (true) {
+            try {
+                System.out.print("Enter grade: ");
+                grade = scanner.nextDouble();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid decimal for grade.");
+                scanner.nextLine(); // clear the invalid input
+            }
+        }
+
+        System.out.print("Enter subject: ");
+        subject = scanner.next();
+
+        studentDAO.addStudent(firstName, lastName, email, age, grade, subject);
+        System.out.println("Student added successfully.");
     }
 
     private void updateStudent(Scanner scanner) {
-        try {
-            System.out.println("\n********************************************");
-            System.out.println("*           Update Student Details          *");
-            System.out.println("********************************************");
-            System.out.print("Enter student id: ");
-            int id = scanner.nextInt();
-            System.out.print("Enter first name: ");
-            String firstName = scanner.next();
-            System.out.print("Enter last name: ");
-            String lastName = scanner.next();
-            System.out.print("Enter email: ");
-            String email = scanner.next();
-            System.out.print("Enter age: ");
-            int age = scanner.nextInt();
-            System.out.print("Enter grade: ");
-            double grade = scanner.nextDouble();
-            System.out.print("Enter subject: ");
-            String subject = scanner.next();
-            studentDAO.updateStudent(id, firstName, lastName, email, age, grade, subject);
-            System.out.println("Student updated successfully");
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter a valid integer for id, age, and a valid decimal for grade.");
-            scanner.nextLine();
+        int id = 0, age = 0;
+        double grade = 0.0;
+        String firstName, lastName, email, subject;
+
+        System.out.println("\n********************************************");
+        System.out.println("*           Update Student Details          *");
+        System.out.println("********************************************");
+
+        while (true) {
+            try {
+                System.out.print("Enter student id: ");
+                id = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer for id.");
+                scanner.nextLine(); // clear the invalid input
+            }
         }
+
+        firstName = getValidatedInput(scanner, "^[a-zA-Z]+$", "Invalid input. First name should contain only letters.", "Enter first name: ");
+        lastName = getValidatedInput(scanner, "^[a-zA-Z]+$", "Invalid input. Last name should contain only letters.", "Enter last name: ");
+        email = getValidatedInput(scanner, "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", "Invalid input. Please enter a valid email address.", "Enter email: ");
+
+        while (true) {
+            try {
+                System.out.print("Enter age: ");
+                age = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer for age.");
+                scanner.nextLine(); // clear the invalid input
+            }
+        }
+
+        while (true) {
+            try {
+                System.out.print("Enter grade: ");
+                grade = scanner.nextDouble();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid decimal for grade.");
+                scanner.nextLine(); // clear the invalid input
+            }
+        }
+
+        System.out.print("Enter subject: ");
+        subject = scanner.next();
+
+        studentDAO.updateStudent(id, firstName, lastName, email, age, grade, subject);
+        System.out.println("Student updated successfully.");
     }
 
     private void deleteStudent(Scanner scanner) {
-        try {
-            System.out.println("\n********************************************");
-            System.out.println("*            Delete Student Record          *");
-            System.out.println("********************************************");
-            System.out.print("Enter student id: ");
-            int id = scanner.nextInt();
-            studentDAO.deleteStudent(id);
-            System.out.println("Student deleted successfully");
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter a valid integer for id.");
-            scanner.nextLine();
+        int id = 0;
+
+        System.out.println("\n********************************************");
+        System.out.println("*            Delete Student Record          *");
+        System.out.println("********************************************");
+
+        while (true) {
+            try {
+                System.out.print("Enter student id: ");
+                id = scanner.nextInt();
+                studentDAO.deleteStudent(id);
+                System.out.println("Student deleted successfully.");
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer for id.");
+                scanner.nextLine(); // clear the invalid input
+            }
         }
     }
 
@@ -150,22 +200,42 @@ public class Menu {
     }
 
     private void searchStudent(Scanner scanner) {
-        try {
-            System.out.println("\n********************************************");
-            System.out.println("*           Search Student Details          *");
-            System.out.println("********************************************");
-            System.out.print("Enter student id: ");
-            int id = scanner.nextInt();
-            Student student = studentDAO.getStudentById(id);
-            System.out.println(student);
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter a valid integer for id.");
-            scanner.nextLine();
+        int id = 0;
+
+        System.out.println("\n********************************************");
+        System.out.println("*           Search Student Details          *");
+        System.out.println("********************************************");
+
+        while (true) {
+            try {
+                System.out.print("Enter student id: ");
+                id = scanner.nextInt();
+                Student student = studentDAO.getStudentById(id);
+                System.out.println(student);
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer for id.");
+                scanner.nextLine(); // clear the invalid input
+            }
         }
     }
 
     private void exportData(Scanner scanner) {
         List<Student> students = studentDAO.getAllStudents();
         ExportData.exportDataMenu(students, scanner);
+    }
+
+    private String getValidatedInput(Scanner scanner, String pattern, String errorMessage, String prompt) {
+        String input;
+        while (true) {
+            System.out.print(prompt);
+            input = scanner.next();
+            if (Pattern.matches(pattern, input)) {
+                break;
+            } else {
+                System.out.println(errorMessage);
+            }
+        }
+        return input;
     }
 }

@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 public class Main {
 
     public static void main(String[] args) {
-        Menu menu = new Menu();
+        source.Menu menu = new source.Menu();
 
         try (Scanner scanner = new Scanner(System.in)) {
             int choice;

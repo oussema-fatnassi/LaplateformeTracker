@@ -1,8 +1,8 @@
-package source;
+package com.example.demofx;
 import java.util.List;
 import java.util.Scanner;
 
-import static source.Menu.studentDAO;
+import static com.example.demofx.Menu.studentDAO;
 
 public class AdvancedResearch {
 

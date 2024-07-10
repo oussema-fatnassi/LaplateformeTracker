@@ -1,4 +1,4 @@
-package source;
+package com.example.demofx;
 
 import java.util.Scanner;
 import java.util.List;

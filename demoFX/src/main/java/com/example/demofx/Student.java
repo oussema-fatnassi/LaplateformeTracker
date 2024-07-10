@@ -1,4 +1,4 @@
-package source;
+package com.example.demofx;
 
 public class Student {
     private int id;

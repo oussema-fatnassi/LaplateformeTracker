@@ -33,7 +33,7 @@ public class Menu {
             choice = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid integer choice.");
-            scanner.nextLine(); // clear the invalid input
+            scanner.nextLine();
         }
         return choice;
     }
@@ -95,7 +95,7 @@ public class Menu {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid integer for age.");
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine();
             }
         }
 
@@ -106,7 +106,7 @@ public class Menu {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid decimal for grade.");
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine();
             }
         }
 
@@ -133,7 +133,7 @@ public class Menu {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid integer for id.");
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine();
             }
         }
 
@@ -148,7 +148,7 @@ public class Menu {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid integer for age.");
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine();
             }
         }
 
@@ -159,7 +159,7 @@ public class Menu {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid decimal for grade.");
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine();
             }
         }
 
@@ -186,7 +186,7 @@ public class Menu {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid integer for id.");
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine();
             }
         }
     }
@@ -196,8 +196,22 @@ public class Menu {
         System.out.println("*          All Students Information         *");
         System.out.println("********************************************");
         List<Student> students = studentDAO.getAllStudents();
-        students.forEach(System.out::println);
+
+        // Display the header
+        System.out.printf("%-4s | %-12s | %-12s | %-4s | %-4s\n", "ID", "First Name", "Last Name", "Age", "Grade");
+        System.out.println("------------------------------------------");
+
+        // Display each student's information in a formatted way
+        for (Student student : students) {
+            System.out.printf("%-4d | %-12s | %-12s | %-4d | %-4.2f\n",
+                    student.getId(),
+                    student.getFirstName(),
+                    student.getLastName(),
+                    student.getAge(),
+                    student.getGrade());
+        }
     }
+
 
     private void searchStudent(Scanner scanner) {
         int id = 0;
@@ -215,7 +229,7 @@ public class Menu {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid integer for id.");
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine();
             }
         }
     }

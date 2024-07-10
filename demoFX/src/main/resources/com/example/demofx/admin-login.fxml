@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.AdminLoginController">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="434.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="ADMIN LOGIN">
+               <VBox.margin>
+                  <Insets bottom="40.0" left="400.0" top="40.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Roboto" size="30.0" />
+               </font>
+            </Label>
+            <Label text="Email">
+               <VBox.margin>
+                  <Insets top="150.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            <TextArea fx:id="email" prefHeight="30.0" prefWidth="40.0" />
+            <Label text="Password">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            <TextArea fx:id="password" prefHeight="40.0" prefWidth="200.0" />
+            <Button fx:id="loginAdmin" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="LOGIN">
+               <VBox.margin>
+                  <Insets left="440.0" top="200.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="50.0" prefWidth="120.0" text="BACK" >
+               <VBox.margin>
+                  <Insets left="440.0" top="30.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets left="100.0" right="100.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

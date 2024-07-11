@@ -3,20 +3,74 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.MainMenuController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-    <Label text="LA PLATEFORME TRACKER APPLICATION">
-        <font>
-            <Font name="Roboto" size="30.0" />
-        </font>
-    </Label>
-    <Button fx:id="createAdmin" prefHeight="100.0" prefWidth="300.0" text="CREATE ADMIN ACCOUNT" onAction="#handleCreateAdminButtonAction" />
-    <Button fx:id="loginAdmin"  prefHeight="100.0" prefWidth="300.0" text="LOGIN ADMIN ACCOUNT" onAction="#handelLoginAdminButtonAction" />
-    <Button fx:id="loginStudent"  prefHeight="100.0" prefWidth="300.0" text="LOGIN STUDENT" onAction="#handleLoginStudentButtonAction" />
-    <Button fx:id="exit"  prefHeight="100.0" prefWidth="300.0" text="EXIT" onAction="#handleExitButtonAction" />
-</VBox>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label prefHeight="95.0" prefWidth="309.0" text="LAPLATEFORME TRACKER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="50.0" top="30.0" />
+         </BorderPane.margin>
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane alignment="BOTTOM_LEFT" prefHeight="484.0" prefWidth="1203.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="610.0" minWidth="10.0" prefWidth="599.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="601.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="createStudentAccount" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="CREATE STUDENT ACCOUNT" GridPane.rowIndex="1">
+                     <opaqueInsets>
+                        <Insets left="50.0" />
+                     </opaqueInsets>
+                  </Button>
+                  <Button fx:id="deleteStudentAccount" mnemonicParsing="false" prefWidth="250.0" text="DELETE STUDENT ACCOUNT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="addGrades" mnemonicParsing="false" prefWidth="250.0" text="ADD GRADES" GridPane.rowIndex="2" />
+                  <Button fx:id="studentList" mnemonicParsing="false" prefWidth="250.0" text="STUDENT LIST" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="sortStudent" mnemonicParsing="false" prefWidth="250.0" text="SORT STUDENTS" GridPane.rowIndex="4" />
+                  <Button fx:id="advancedSearch" mnemonicParsing="false" prefWidth="250.0" text="ADVANCED SEARCH" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Button fx:id="statistics" mnemonicParsing="false" prefWidth="250.0" text="STATISTICS" GridPane.rowIndex="5" />
+                  <Button fx:id="importExportData" mnemonicParsing="false" prefWidth="250.0" text="IMPORT/EXPORT DATA" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="Database operations " GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="400.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Student account creation">
+                     <GridPane.margin>
+                        <Insets right="350.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <Button fx:id="Logout" mnemonicParsing="false" prefWidth="250.0" text="LOGOUT" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="40.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+</BorderPane>

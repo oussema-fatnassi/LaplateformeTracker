@@ -61,7 +61,6 @@ public class AdminCreationController {
         }
 
         if (!validatePassword(passwordText)) {
-            showAlert("Invalid Input", "Password must be at least 10 characters long, contain one uppercase letter, one lowercase letter, one number, and one symbol.");
             return;
         }
 
@@ -91,7 +90,7 @@ public class AdminCreationController {
         boolean hasUpperCase = password.matches(".*[A-Z].*");
         boolean hasLowerCase = password.matches(".*[a-z].*");
         boolean hasDigit = password.matches(".*\\d.*");
-        boolean hasSpecialChar = password.matches(".*[@#$%^&+=?.;].*");
+        boolean hasSpecialChar = password.matches(".*[@#$%^&+=!?.;].*");
 
         System.out.println("Password: " + password);
         System.out.println("Valid Length: " + isValidLength);
@@ -99,6 +98,41 @@ public class AdminCreationController {
         System.out.println("Has Lower Case: " + hasLowerCase);
         System.out.println("Has Digit: " + hasDigit);
         System.out.println("Has Special Char: " + hasSpecialChar);
+
+        String alertMessage = "The password must contain at least";
+        int count = 0;
+        if (!isValidLength) {
+            count++;
+            alertMessage += " 10 characters";
+        } if (!hasUpperCase) {
+            if (count > 0) {
+                alertMessage += ",";
+            }
+            count++;
+            alertMessage += " one uppercase letter";
+        } if (!hasLowerCase) {
+            if (count > 0) {
+                alertMessage += ",";
+            }
+            count++;
+            alertMessage += " one lowercase letter";
+        } if (!hasDigit) {
+            if (count > 0) {
+                alertMessage += ",";
+            }
+            count++;
+            alertMessage += " one number";
+        } if (!hasSpecialChar) {
+            if (count > 0) {
+                alertMessage += ",";
+            }
+            alertMessage += " one special character";
+        }
+        alertMessage += ".";
+
+        if (!isValidLength || !hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar) {
+            showAlert("Invalid Input", alertMessage);
+        }
 
         return isValidLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
     }

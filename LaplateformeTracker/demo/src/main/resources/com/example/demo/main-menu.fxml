@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.MainMenuController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <Label text="LA PLATEFORME TRACKER APPLICATION">
+        <font>
+            <Font name="Roboto" size="30.0" />
+        </font>
+    </Label>
+    <Button fx:id="createAdmin" prefHeight="100.0" prefWidth="300.0" text="CREATE ADMIN ACCOUNT" onAction="#handleCreateAdminButtonAction" />
+    <Button fx:id="loginAdmin"  prefHeight="100.0" prefWidth="300.0" text="LOGIN ADMIN ACCOUNT" onAction="#handelLoginAdminButtonAction" />
+    <Button fx:id="loginStudent"  prefHeight="100.0" prefWidth="300.0" text="LOGIN STUDENT" onAction="#handleLoginStudentButtonAction" />
+    <Button fx:id="exit"  prefHeight="100.0" prefWidth="300.0" text="EXIT" onAction="#handleExitButtonAction" />
+</VBox>

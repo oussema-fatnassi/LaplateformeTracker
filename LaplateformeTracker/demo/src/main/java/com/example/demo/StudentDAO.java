@@ -2,6 +2,8 @@ package com.example.demo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.SQLException;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class StudentDAO {
 
@@ -115,5 +117,28 @@ public class StudentDAO {
             DatabaseConnection.closeConnection(connection);
         }
         return student;
+    }
+
+    public static boolean createStudent(String firstName, String lastName, String email, int age, String password, String year, String major) {
+        String hashedPassword = hashPassword(password);
+        String sql = "INSERT INTO studentAccount (first_name, last_name, email, age, password, year, major) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setString(3, email);
+            statement.setInt(4, age);
+            statement.setString(5, hashedPassword);
+            statement.setString(6, year);
+            statement.setString(7, major);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private static String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }

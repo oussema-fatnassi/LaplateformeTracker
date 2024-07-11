@@ -20,7 +20,7 @@ public class StudentLoginController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main-menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/landing-page.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");

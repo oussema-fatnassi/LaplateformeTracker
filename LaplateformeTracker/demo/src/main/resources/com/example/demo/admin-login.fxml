@@ -8,6 +8,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.AdminLoginController">
     <center>
         <VBox prefHeight="200.0" prefWidth="434.0" BorderPane.alignment="CENTER">
@@ -27,7 +29,7 @@
                     <font>
                         <Font size="20.0" />
                     </font></Label>
-                <TextArea fx:id="email" prefHeight="30.0" prefWidth="40.0" />
+                <TextField fx:id="emailField" prefHeight="30.0" prefWidth="40.0" />
                 <Label text="Password">
                     <VBox.margin>
                         <Insets top="30.0" />
@@ -35,8 +37,8 @@
                     <font>
                         <Font size="20.0" />
                     </font></Label>
-                <TextArea fx:id="password" prefHeight="40.0" prefWidth="200.0" />
-                <Button fx:id="loginAdmin" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="LOGIN">
+                <PasswordField fx:id="passwordField" prefHeight="40.0" prefWidth="200.0" />
+                <Button fx:id="loginAdmin" mnemonicParsing="false" onAction="#handleLoginAdminButtonAction" prefHeight="50.0" prefWidth="120.0" text="LOGIN">
                     <VBox.margin>
                         <Insets left="440.0" top="200.0" />
                     </VBox.margin>

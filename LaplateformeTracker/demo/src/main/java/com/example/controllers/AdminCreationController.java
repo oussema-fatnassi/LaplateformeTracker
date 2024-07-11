@@ -91,7 +91,7 @@ public class AdminCreationController {
         boolean hasUpperCase = password.matches(".*[A-Z].*");
         boolean hasLowerCase = password.matches(".*[a-z].*");
         boolean hasDigit = password.matches(".*\\d.*");
-        boolean hasSpecialChar = password.matches(".*[@#$%^&+=?.;].*");
+        boolean hasSpecialChar = password.matches(".*[@#$%^&+=!?.;].*");
 
         System.out.println("Password: " + password);
         System.out.println("Valid Length: " + isValidLength);
@@ -114,7 +114,7 @@ public class AdminCreationController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main-menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/landing-page.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");

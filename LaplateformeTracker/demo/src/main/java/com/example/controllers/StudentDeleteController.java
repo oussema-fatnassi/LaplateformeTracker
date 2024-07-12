@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import com.example.demo.StudentDAO;
@@ -33,10 +34,8 @@ public class StudentDeleteController {
         year.getItems().addAll("Bachelor1", "Bachelor2", "Bachelor3", "Master1", "Master2");
         major.getItems().addAll("Web Development", "Software Development", "Cybersecurity", "AI Development", "AR/VR Development");
 
-        // Load all student accounts initially
         loadStudentAccounts(null, null);
 
-        // Add listeners to ComboBoxes
         year.setOnAction(event -> filterStudentAccounts());
         major.setOnAction(event -> filterStudentAccounts());
     }
@@ -60,13 +59,38 @@ public class StudentDeleteController {
 
     @FXML
     private void handleDeleteButtonAction(ActionEvent event) {
-        // Your delete logic here
+        String selectedStudent = account.getValue();
+        if (selectedStudent == null || selectedStudent.isEmpty()) {
+            showAlert("No Selection", "Please select a student account to delete.");
+            return;
+        }
+
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setHeaderText("Delete Confirmation");
+        confirmationAlert.setContentText("Are you sure you want to delete the student account for " + selectedStudent + "? This action is final and unreversible.");
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                String[] nameParts = selectedStudent.split(" ");
+                String firstName = nameParts[0];
+                String lastName = nameParts[1];
+
+                boolean success = StudentDAO.deleteStudent(firstName, lastName);
+                if (success) {
+                    showAlert("Success", "Student account deleted successfully.");
+                    filterStudentAccounts();
+                } else {
+                    showAlert("Error", "Failed to delete student account.");
+                }
+            }
+        });
     }
 
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/landing-page.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main-menu.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");

@@ -191,4 +191,17 @@ public class StudentDAO {
         }
         return students;
     }
+
+    public static boolean deleteStudent(String firstName, String lastName) {
+        String sql = "DELETE FROM studentAccount WHERE first_name = ? AND last_name = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

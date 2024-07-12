@@ -64,7 +64,7 @@
                   <Insets left="350.0" top="20.0" />
                </VBox.margin>
             </ComboBox>
-                <Button fx:id="delete" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="DELETE">
+                <Button fx:id="delete" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="DELETE" onAction="#handleDeleteButtonAction">
                     <VBox.margin>
                         <Insets left="440.0" top="220.0" />
                     </VBox.margin>

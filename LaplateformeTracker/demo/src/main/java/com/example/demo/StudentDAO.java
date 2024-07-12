@@ -141,4 +141,54 @@ public class StudentDAO {
     private static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
+
+    public static boolean authenticateStudent(String email, String password) {
+        String sql = "SELECT password FROM studentAccount WHERE email = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String hashedPassword = resultSet.getString("password");
+                return BCrypt.checkpw(password, hashedPassword);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static List<String> getAllStudentsOrdered() {
+        List<String> students = new ArrayList<>();
+        String sql = "SELECT first_name, last_name FROM studentAccount ORDER BY last_name ASC";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                String fullName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                students.add(fullName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
+
+    public static List<String> getFilteredStudents(String selectedYear, String selectedMajor) {
+        List<String> students = new ArrayList<>();
+        String sql = "SELECT first_name, last_name FROM studentAccount WHERE year = ? AND major = ? ORDER BY last_name ASC";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, selectedYear);
+            statement.setString(2, selectedMajor);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String fullName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                students.add(fullName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
 }

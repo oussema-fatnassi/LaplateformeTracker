@@ -204,4 +204,38 @@ public class StudentDAO {
         }
         return false;
     }
+
+    public static List<String> getStudentsByYear(String selectedYear) {
+        List<String> students = new ArrayList<>();
+        String sql = "SELECT first_name, last_name FROM studentAccount WHERE year = ? ORDER BY last_name ASC";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, selectedYear);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String fullName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                students.add(fullName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
+
+    public static List<String> getStudentsByMajor(String selectedMajor) {
+        List<String> students = new ArrayList<>();
+        String sql = "SELECT first_name, last_name FROM studentAccount WHERE major = ? ORDER BY last_name ASC";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, selectedMajor);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String fullName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                students.add(fullName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
 }

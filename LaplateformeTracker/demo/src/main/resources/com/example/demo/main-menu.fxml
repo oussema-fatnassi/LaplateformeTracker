@@ -67,7 +67,7 @@
       </VBox>
    </center>
    <bottom>
-      <Button fx:id="Logout" mnemonicParsing="false" prefWidth="250.0" text="LOGOUT" BorderPane.alignment="CENTER">
+      <Button fx:id="Logout" mnemonicParsing="false" prefWidth="250.0" text="LOGOUT" BorderPane.alignment="CENTER" onAction="#handleLogoutButtonAction">
          <BorderPane.margin>
             <Insets bottom="40.0" />
          </BorderPane.margin>

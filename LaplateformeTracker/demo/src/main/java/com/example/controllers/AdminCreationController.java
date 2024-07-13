@@ -74,6 +74,7 @@ public class AdminCreationController {
         boolean created = AccountCreation.createAdminAccount(firstNameText, lastNameText, emailText, passwordText);
         if (created) {
             showAlert("Success", "Admin account created successfully.");
+            clearFields();
         } else {
             showAlert("Error", "Failed to create admin account.");
         }
@@ -118,5 +119,14 @@ public class AdminCreationController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void clearFields() {
+        firstName.clear();
+        lastName.clear();
+        email.clear();
+        password.clear();
+        confirmPassword.clear();
     }
 }

@@ -39,14 +39,34 @@ public class AdminAddGradeController {
 
         year.setOnAction(event -> filterStudents());
         major.setOnAction(event -> filterStudents());
+        student.setOnMouseClicked(event -> loadAllStudentsIfNeeded());
     }
 
     private void filterStudents() {
         String selectedYear = year.getValue();
         String selectedMajor = major.getValue();
-        List<String> students = StudentDAO.getFilteredStudents(selectedYear, selectedMajor);
+
+        List<String> students;
+        if (selectedYear == null && selectedMajor == null) {
+            students = StudentDAO.getAllStudentsOrdered();
+        } else if (selectedYear != null && selectedMajor == null) {
+            students = StudentDAO.getStudentsByYear(selectedYear);
+        } else if (selectedYear == null && selectedMajor != null) {
+            students = StudentDAO.getStudentsByMajor(selectedMajor);
+        } else {
+            students = StudentDAO.getFilteredStudents(selectedYear, selectedMajor);
+        }
+
         student.getItems().clear();
         student.getItems().addAll(students);
+    }
+
+    private void loadAllStudentsIfNeeded() {
+        if (year.getValue() == null && major.getValue() == null) {
+            List<String> students = StudentDAO.getAllStudentsOrdered();
+            student.getItems().clear();
+            student.getItems().addAll(students);
+        }
     }
 
     @FXML
@@ -63,7 +83,7 @@ public class AdminAddGradeController {
         try {
             double gradeValue = Double.parseDouble(gradeText);
             if (!isValidGrade(gradeValue)) {
-                showAlert("Invalid Input", "Grade must be a number between 0.0 and 100.0 with one decimal place.");
+                showAlert("Invalid Input", "Grade must be a number between 1.0 and 100.0 with one decimal place.");
                 return;
             }
             boolean success = GradeDAO.addGrade(selectedStudent, selectedSubject, gradeValue);
@@ -79,7 +99,7 @@ public class AdminAddGradeController {
     }
 
     private boolean isValidGrade(double grade) {
-        return grade >= 0.0 && grade <= 100.0 && (Math.round(grade * 10.0) / 10.0 == grade);
+        return grade >= 1.0 && grade <= 100.0 && (Math.round(grade * 10.0) / 10.0 == grade);
     }
 
     @FXML

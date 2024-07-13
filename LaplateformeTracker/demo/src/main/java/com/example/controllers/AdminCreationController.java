@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class AdminCreationController {
 
@@ -83,7 +84,9 @@ public class AdminCreationController {
     }
 
     private boolean validateEmail(String email) {
-        return email.contains("@");
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
     }
 
     private boolean validatePassword(String password) {
@@ -92,13 +95,6 @@ public class AdminCreationController {
         boolean hasLowerCase = password.matches(".*[a-z].*");
         boolean hasDigit = password.matches(".*\\d.*");
         boolean hasSpecialChar = password.matches(".*[@#$%^&+=!?.;].*");
-
-        System.out.println("Password: " + password);
-        System.out.println("Valid Length: " + isValidLength);
-        System.out.println("Has Upper Case: " + hasUpperCase);
-        System.out.println("Has Lower Case: " + hasLowerCase);
-        System.out.println("Has Digit: " + hasDigit);
-        System.out.println("Has Special Char: " + hasSpecialChar);
 
         return isValidLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
     }

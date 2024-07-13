@@ -57,4 +57,17 @@ public class MainMenuController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handelAddGradesButtonAction(ActionEvent event){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-add-grades.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 800));
+            stage.setTitle("Add Grades");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

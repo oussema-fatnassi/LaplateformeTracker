@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -20,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class AdminDeleteStudentController {
-
 
     @FXML
     private ListView<String> firstName;
@@ -110,16 +111,31 @@ public class AdminDeleteStudentController {
         }
     }
 
-
+    @FXML
     public void handleDeleteButtonAction(ActionEvent event) {
         int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             StudentAccount selectedStudent = students.get(selectedIndex);
-            StudentAccountDAO.deleteStudent(selectedStudent.getId());
-            students.remove(selectedIndex);
-            updateListViewItems(students);
-        }
+            String studentFullName = selectedStudent.getFirstName() + " " + selectedStudent.getLastName();
 
+            // Show confirmation dialog
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Confirm Delete");
+            confirmationAlert.setHeaderText(null);
+            confirmationAlert.setContentText("Are you sure you want to delete the account of " + studentFullName + "?");
+
+            // Wait for user confirmation
+            confirmationAlert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    StudentAccountDAO.deleteStudent(selectedStudent.getId());
+                    students.remove(selectedIndex);
+                    updateListViewItems(students);
+                    showAlert("Success", "Student account deleted successfully.");
+                }
+            });
+        } else {
+            showAlert("Error", "Please select a student.");
+        }
     }
 
     @FXML
@@ -128,7 +144,7 @@ public class AdminDeleteStudentController {
             Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main-menu.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
-            stage.setTitle("Login");
+            stage.setTitle("Main Menu");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,8 +152,9 @@ public class AdminDeleteStudentController {
     }
 
     private void showAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
     }

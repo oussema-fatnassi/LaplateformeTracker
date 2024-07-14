@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.List;
@@ -71,6 +72,9 @@ public class AdminSortStudentController {
         });
 
         loadStudentData();
+
+        // Set up listeners for selection synchronization
+        setupSelectionListeners();
     }
 
     private void loadStudentData() {
@@ -165,5 +169,41 @@ public class AdminSortStudentController {
         email.setItems(emails);
         major.setItems(majors);
         year.setItems(years);
+
+        // Synchronize the selection after updating items
+        synchronizeSelections();
+    }
+
+    private void setupSelectionListeners() {
+        firstName.setOnMouseClicked(this::synchronizeSelection);
+        lastName.setOnMouseClicked(this::synchronizeSelection);
+        email.setOnMouseClicked(this::synchronizeSelection);
+        major.setOnMouseClicked(this::synchronizeSelection);
+        year.setOnMouseClicked(this::synchronizeSelection);
+    }
+
+    private void synchronizeSelection(MouseEvent event) {
+        ListView<String> source = (ListView<String>) event.getSource();
+        int index = source.getSelectionModel().getSelectedIndex();
+
+        if (index >= 0) {
+            firstName.getSelectionModel().select(index);
+            lastName.getSelectionModel().select(index);
+            email.getSelectionModel().select(index);
+            major.getSelectionModel().select(index);
+            year.getSelectionModel().select(index);
+        }
+    }
+
+    private void synchronizeSelections() {
+        // Get the selected index in any of the list views
+        int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            firstName.getSelectionModel().select(selectedIndex);
+            lastName.getSelectionModel().select(selectedIndex);
+            email.getSelectionModel().select(selectedIndex);
+            major.getSelectionModel().select(selectedIndex);
+            year.getSelectionModel().select(selectedIndex);
+        }
     }
 }

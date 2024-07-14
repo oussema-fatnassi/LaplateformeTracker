@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GradeDAO {
 
@@ -37,5 +39,24 @@ public class GradeDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static List<String> getGradesByStudentId(int studentId) {
+        List<String> grades = new ArrayList<>();
+        String sql = "SELECT subject, grade FROM grades WHERE student_id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, studentId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String subject = resultSet.getString("subject");
+                double grade = resultSet.getDouble("grade");
+                grades.add(subject + ": " + grade);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return grades;
     }
 }

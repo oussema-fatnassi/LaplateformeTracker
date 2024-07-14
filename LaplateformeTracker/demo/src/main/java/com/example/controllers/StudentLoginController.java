@@ -36,9 +36,16 @@ public class StudentLoginController {
             return;
         }
 
-        if (StudentDAO.authenticateStudent(emailText, passwordText)) {
+        int studentId = StudentDAO.authenticateStudent(emailText, passwordText);
+        if (studentId > 0) {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/student-main-menu.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-main-menu.fxml"));
+                Parent root = loader.load();
+
+                // Pass the student ID to the MainMenuStudentController
+                MainMenuStudentController controller = loader.getController();
+                controller.setStudentId(studentId);
+
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root, 1200, 800));
                 stage.setTitle("Student Main Menu");

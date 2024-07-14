@@ -34,7 +34,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="showGrades" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="SHOW GRADES">
+                  <Button fx:id="showGrades" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="SHOW GRADES" onAction="#handleShowGradesAction">
                      <opaqueInsets>
                         <Insets left="50.0" />
                      </opaqueInsets>
@@ -48,7 +48,7 @@
       </VBox>
    </center>
    <bottom>
-      <Button fx:id="logout" mnemonicParsing="false" prefWidth="250.0" text="LOGOUT" BorderPane.alignment="CENTER">
+      <Button fx:id="logout" mnemonicParsing="false" prefWidth="250.0" text="LOGOUT" BorderPane.alignment="CENTER" onAction="#handleBackButtonAction">
          <BorderPane.margin>
             <Insets bottom="40.0" />
          </BorderPane.margin>

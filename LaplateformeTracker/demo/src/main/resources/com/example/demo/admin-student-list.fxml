@@ -18,7 +18,7 @@
       <ListView fx:id="email" layoutX="500.0" layoutY="160.0" prefHeight="467.0" prefWidth="200.0" />
       <ListView fx:id="year" layoutX="700.0" layoutY="160.0" prefHeight="467.0" prefWidth="200.0" />
       <ListView fx:id="major" layoutX="900.0" layoutY="160.0" prefHeight="467.0" prefWidth="200.0" />
-      <Button fx:id="back" layoutX="500.0" layoutY="707.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" text="BACK" onAction="#handleBackButtonAction"/>
+      <Button fx:id="back" layoutX="500.0" layoutY="707.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="40.0" prefWidth="200.0" text="BACK" />
       <Label layoutX="165.0" layoutY="133.0" text="FIRST NAME" />
       <Label layoutX="367.0" layoutY="133.0" text="LAST NAME" />
       <Label layoutX="581.0" layoutY="134.0" text="EMAIL" />

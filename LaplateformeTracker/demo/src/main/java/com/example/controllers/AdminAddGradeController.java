@@ -1,12 +1,15 @@
 package com.example.controllers;
 
+import com.example.demo.StudentAccount;
 import com.example.demo.StudentAccountDAO;
-import com.example.demo.StudentDAO;
 import com.example.demo.GradeDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
@@ -18,89 +21,98 @@ import java.util.List;
 public class AdminAddGradeController {
 
     @FXML
-    private ComboBox<String> year;
-    @FXML
-    private ComboBox<String> major;
-    @FXML
-    private ComboBox<String> student;
-    @FXML
-    private ComboBox<String> subject;
-    @FXML
     private TextField grade;
     @FXML
-    private Button add;
+    private ListView<String> firstName;
+    @FXML
+    private ListView<String> lastName;
+    @FXML
+    private ListView<String> email;
+    @FXML
+    private ListView<String> major;
+    @FXML
+    private ListView<String> year;
     @FXML
     private Button back;
-
     @FXML
-    private void initialize() {
-        year.getItems().addAll("Bachelor1", "Bachelor2", "Bachelor3", "Master1", "Master2");
-        major.getItems().addAll("Web Development", "Software Development", "Cybersecurity", "AI Development", "AR/VR Development");
+    private Button gradeButton;
+    @FXML
+    private ComboBox<String> subject;
+
+    private ObservableList<StudentAccount> students = FXCollections.observableArrayList();
+
+    public void initialize() {
+        loadStudentData();
+        setupSelectionListeners();
+
         subject.getItems().addAll("HTML/CSS Programming", "JavaScript Programming", "Python Programming", "Java Programming", "C++ Programming", "Cybersecurity", "Data Science", "Machine Learning", "Artificial Intelligence", "Augmented Reality", "Virtual Reality", "3D verse", "Unity", "Unreal Engine 5", "English", "French", "Soft Skills");
 
-        year.setOnAction(event -> filterStudents());
-        major.setOnAction(event -> filterStudents());
-        student.setOnMouseClicked(event -> loadAllStudentsIfNeeded());
+        gradeButton.setOnAction(this::handleAddGradeButtonAction);
     }
 
-    private void filterStudents() {
-        String selectedYear = year.getValue();
-        String selectedMajor = major.getValue();
+    private void loadStudentData() {
+        List<StudentAccount> studentList = StudentAccountDAO.getAllStudents();
+        students.setAll(studentList);
 
-        List<String> students;
-        if (selectedYear == null && selectedMajor == null) {
-            students = StudentAccountDAO.getAllStudentsOrdered();
-        } else if (selectedYear != null && selectedMajor == null) {
-            students = StudentAccountDAO.getStudentsByYear(selectedYear);
-        } else if (selectedYear == null && selectedMajor != null) {
-            students = StudentAccountDAO.getStudentsByMajor(selectedMajor);
-        } else {
-            students = StudentAccountDAO.getFilteredStudents(selectedYear, selectedMajor);
-        }
-
-        student.getItems().clear();
-        student.getItems().addAll(students);
+        updateListViewItems(students);
     }
 
-    private void loadAllStudentsIfNeeded() {
-        if (year.getValue() == null && major.getValue() == null) {
-            List<String> students = StudentAccountDAO.getAllStudentsOrdered();
-            student.getItems().clear();
-            student.getItems().addAll(students);
+    private void updateListViewItems(List<StudentAccount> studentList) {
+        ObservableList<String> firstNames = FXCollections.observableArrayList();
+        ObservableList<String> lastNames = FXCollections.observableArrayList();
+        ObservableList<String> emails = FXCollections.observableArrayList();
+        ObservableList<String> majors = FXCollections.observableArrayList();
+        ObservableList<String> years = FXCollections.observableArrayList();
+
+        for (StudentAccount student : studentList) {
+            firstNames.add(student.getFirstName());
+            lastNames.add(student.getLastName());
+            emails.add(student.getEmail());
+            majors.add(student.getMajor());
+            years.add(student.getYear());
         }
+
+        firstName.setItems(firstNames);
+        lastName.setItems(lastNames);
+        email.setItems(emails);
+        major.setItems(majors);
+        year.setItems(years);
+
+        // Synchronize the selection after updating items
+        synchronizeSelections();
     }
 
-    @FXML
-    private void handleAddButtonAction(ActionEvent event) {
-        String selectedStudent = student.getValue();
-        String selectedSubject = subject.getValue();
-        String gradeText = grade.getText();
+    private void setupSelectionListeners() {
+        firstName.setOnMouseClicked(this::synchronizeSelection);
+        lastName.setOnMouseClicked(this::synchronizeSelection);
+        email.setOnMouseClicked(this::synchronizeSelection);
+        major.setOnMouseClicked(this::synchronizeSelection);
+        year.setOnMouseClicked(this::synchronizeSelection);
+    }
 
-        if (selectedStudent == null || selectedSubject == null || gradeText.isEmpty()) {
-            showAlert("Invalid Input", "All fields must be filled.");
-            return;
-        }
+    private void synchronizeSelection(MouseEvent event) {
+        ListView<String> source = (ListView<String>) event.getSource();
+        int index = source.getSelectionModel().getSelectedIndex();
 
-        try {
-            double gradeValue = Double.parseDouble(gradeText);
-            if (!isValidGrade(gradeValue)) {
-                showAlert("Invalid Input", "Grade must be a number between 1.0 and 100.0 with one decimal place.");
-                return;
-            }
-            boolean success = GradeDAO.addGrade(selectedStudent, selectedSubject, gradeValue);
-            if (success) {
-                showAlert("Success", "Grade added successfully.");
-                clearFields();
-            } else {
-                showAlert("Error", "Failed to add grade.");
-            }
-        } catch (NumberFormatException e) {
-            showAlert("Invalid Input", "Grade must be a valid number.");
+        if (index >= 0) {
+            firstName.getSelectionModel().select(index);
+            lastName.getSelectionModel().select(index);
+            email.getSelectionModel().select(index);
+            major.getSelectionModel().select(index);
+            year.getSelectionModel().select(index);
         }
     }
 
-    private boolean isValidGrade(double grade) {
-        return grade >= 1.0 && grade <= 100.0 && (Math.round(grade * 10.0) / 10.0 == grade);
+    private void synchronizeSelections() {
+        // Get the selected index in any of the list views
+        int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            firstName.getSelectionModel().select(selectedIndex);
+            lastName.getSelectionModel().select(selectedIndex);
+            email.getSelectionModel().select(selectedIndex);
+            major.getSelectionModel().select(selectedIndex);
+            year.getSelectionModel().select(selectedIndex);
+        }
     }
 
     @FXML
@@ -116,19 +128,46 @@ public class AdminAddGradeController {
         }
     }
 
+    public void handleAddGradeButtonAction(ActionEvent event) {
+        int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            String studentFullName = firstName.getItems().get(selectedIndex) + " " + lastName.getItems().get(selectedIndex);
+            String selectedSubject = subject.getValue();
+            try {
+                double gradeValue = Double.parseDouble(grade.getText());
+                if (selectedSubject != null) {
+                    // Show confirmation dialog
+                    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                    confirmationAlert.setTitle("Confirm Grade Addition");
+                    confirmationAlert.setHeaderText(null);
+                    confirmationAlert.setContentText("Are you sure you want to give " + studentFullName + " the grade " + gradeValue + " in the subject " + selectedSubject + "?");
+
+                    // Wait for user confirmation
+                    confirmationAlert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            if (GradeDAO.addGrade(studentFullName, selectedSubject, gradeValue)) {
+                                showAlert("Success", "Grade added successfully.");
+                            } else {
+                                showAlert("Error", "Failed to add grade. Please check the inputs.");
+                            }
+                        }
+                    });
+                } else {
+                    showAlert("Error", "Please select a subject.");
+                }
+            } catch (NumberFormatException e) {
+                showAlert("Error", "Invalid grade value. Please enter a number.");
+            }
+        } else {
+            showAlert("Error", "Please select a student.");
+        }
+    }
+
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
-    }
-
-    private void clearFields() {
-        year.setValue(null);
-        major.setValue(null);
-        student.setValue(null);
-        subject.setValue(null);
-        grade.clear();
     }
 }

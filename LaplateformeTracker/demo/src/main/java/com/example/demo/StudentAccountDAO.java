@@ -180,6 +180,7 @@ public class StudentAccountDAO {
         return emails;
     }
 
+
     public static List<String> getStudentMajor() {
         List<String> majors = new ArrayList<>();
         String sql = "SELECT major FROM studentAccount";
@@ -209,5 +210,42 @@ public class StudentAccountDAO {
         }
         return years;
     }
+
+    public static List<String> getAllMajors() {
+        List<String> majors = new ArrayList<>();
+        String sql = "SELECT DISTINCT major FROM studentAccount ORDER BY major ASC";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                majors.add(resultSet.getString("major"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return majors;
+    }
+
+    public static List<StudentAccount> getAllStudents() {
+        List<StudentAccount> students = new ArrayList<>();
+        String sql = "SELECT id, first_name, last_name, email, major, year FROM studentAccount";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String email = resultSet.getString("email");
+                String major = resultSet.getString("major");
+                String year = resultSet.getString("year");
+                students.add(new StudentAccount(id, firstName, lastName, email, major, year));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
+
 
 }

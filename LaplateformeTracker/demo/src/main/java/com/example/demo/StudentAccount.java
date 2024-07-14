@@ -6,9 +6,9 @@ public class StudentAccount {
     private String lastName;
     private String email;
     private String major;
-    private int year;
+    private String year;
 
-    public StudentAccount(int id, String firstName, String lastName, String email, String major, int year) {
+    public StudentAccount(int id, String firstName, String lastName, String email, String major, String year) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,7 +37,7 @@ public class StudentAccount {
         return major;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 

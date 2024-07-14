@@ -142,21 +142,25 @@ public class StudentDAO {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public static boolean authenticateStudent(String email, String password) {
-        String sql = "SELECT password FROM studentAccount WHERE email = ?";
+    public static int authenticateStudent(String email, String password) {
+        String sql = "SELECT id, password FROM studentAccount WHERE email = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String hashedPassword = resultSet.getString("password");
-                return BCrypt.checkpw(password, hashedPassword);
+                int studentId = resultSet.getInt("id");
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return studentId; // Return student ID if authentication is successful
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return -1; // Return -1 if authentication fails
     }
+
 
     public static List<String> getAllStudentsOrdered() {
         List<String> students = new ArrayList<>();

@@ -83,4 +83,17 @@ public class MainMenuController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleStudentListButtonAction(ActionEvent event){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-student-list.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 800));
+            stage.setTitle("Student List");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

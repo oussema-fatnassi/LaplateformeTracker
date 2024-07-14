@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.demo.StudentAccount;
 import com.example.demo.StudentAccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +31,6 @@ public class AdminStudentListController {
     private Button back;
 
     public void initialize() {
-        System.out.println("Initializing AdminStudentListController...");
 
         // Load student data
         loadStudentData();
@@ -39,18 +39,15 @@ public class AdminStudentListController {
     private void loadStudentData() {
         System.out.println("Loading student data...");
 
-        List<String> firstNames = StudentAccountDAO.getStudentFirstName();
-        List<String> lastNames = StudentAccountDAO.getStudentLastName();
-        List<String> emails = StudentAccountDAO.getStudentEmail();
-        List<String> majors = StudentAccountDAO.getStudentMajor();
-        List<String> years = StudentAccountDAO.getStudentYear();
+        List<StudentAccount> students = StudentAccountDAO.getAllStudents();
 
-        // Add data to list views
-        firstName.getItems().addAll(firstNames);
-        lastName.getItems().addAll(lastNames);
-        email.getItems().addAll(emails);
-        major.getItems().addAll(majors);
-        year.getItems().addAll(years);
+        for (StudentAccount student : students) {
+            firstName.getItems().add(student.getFirstName());
+            lastName.getItems().add(student.getLastName());
+            email.getItems().add(student.getEmail());
+            major.getItems().add(student.getMajor());
+            year.getItems().add(String.valueOf(student.getYear()));
+        }
 
         // Optionally set fixed cell size for consistent display
         firstName.setFixedCellSize(25);

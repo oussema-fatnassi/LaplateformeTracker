@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.demo.StudentAccountDAO;
 import com.example.demo.StudentDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,7 +55,7 @@ public class StudentCreationController {
             return;
         }
 
-        boolean success = StudentDAO.createStudent(firstName, lastName, email, Integer.parseInt(age), password, year, major);
+        boolean success = StudentAccountDAO.createStudent(firstName, lastName, email, Integer.parseInt(age), password, year, major);
         if (success) {
             showAlert("Student created successfully.");
             clearFields();

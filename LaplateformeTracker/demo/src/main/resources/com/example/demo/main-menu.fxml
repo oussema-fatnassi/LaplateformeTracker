@@ -46,7 +46,7 @@
                   </Button>
                   <Button fx:id="deleteStudentAccount" mnemonicParsing="false" prefWidth="250.0" text="DELETE STUDENT ACCOUNT" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#handleStudentAccountDeleteButtonAction"/>
                   <Button fx:id="addGrades" mnemonicParsing="false" prefWidth="250.0" text="ADD GRADES" GridPane.rowIndex="2" onAction="#handelAddGradesButtonAction"/>
-                  <Button fx:id="studentList" mnemonicParsing="false" prefWidth="250.0" text="STUDENT LIST" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="studentList" mnemonicParsing="false" prefWidth="250.0" text="STUDENT LIST" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#handleStudentListButtonAction" />
                   <Button fx:id="sortStudent" mnemonicParsing="false" prefWidth="250.0" text="SORT STUDENTS" GridPane.rowIndex="4" />
                   <Button fx:id="advancedSearch" mnemonicParsing="false" prefWidth="250.0" text="ADVANCED SEARCH" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Button fx:id="statistics" mnemonicParsing="false" prefWidth="250.0" text="STATISTICS" GridPane.rowIndex="5" />

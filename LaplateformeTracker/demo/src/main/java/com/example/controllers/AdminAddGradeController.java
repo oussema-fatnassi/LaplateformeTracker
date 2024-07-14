@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.demo.StudentAccountDAO;
 import com.example.demo.StudentDAO;
 import com.example.demo.GradeDAO;
 import javafx.fxml.FXML;
@@ -48,13 +49,13 @@ public class AdminAddGradeController {
 
         List<String> students;
         if (selectedYear == null && selectedMajor == null) {
-            students = StudentDAO.getAllStudentsOrdered();
+            students = StudentAccountDAO.getAllStudentsOrdered();
         } else if (selectedYear != null && selectedMajor == null) {
-            students = StudentDAO.getStudentsByYear(selectedYear);
+            students = StudentAccountDAO.getStudentsByYear(selectedYear);
         } else if (selectedYear == null && selectedMajor != null) {
-            students = StudentDAO.getStudentsByMajor(selectedMajor);
+            students = StudentAccountDAO.getStudentsByMajor(selectedMajor);
         } else {
-            students = StudentDAO.getFilteredStudents(selectedYear, selectedMajor);
+            students = StudentAccountDAO.getFilteredStudents(selectedYear, selectedMajor);
         }
 
         student.getItems().clear();
@@ -63,7 +64,7 @@ public class AdminAddGradeController {
 
     private void loadAllStudentsIfNeeded() {
         if (year.getValue() == null && major.getValue() == null) {
-            List<String> students = StudentDAO.getAllStudentsOrdered();
+            List<String> students = StudentAccountDAO.getAllStudentsOrdered();
             student.getItems().clear();
             student.getItems().addAll(students);
         }

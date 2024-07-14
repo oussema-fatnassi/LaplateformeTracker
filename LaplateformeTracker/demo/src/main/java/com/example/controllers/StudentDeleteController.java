@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.demo.StudentAccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,9 +44,9 @@ public class StudentDeleteController {
     private void loadStudentAccounts(String selectedYear, String selectedMajor) {
         List<String> students;
         if (selectedYear == null && selectedMajor == null) {
-            students = StudentDAO.getAllStudentsOrdered();
+            students = StudentAccountDAO.getAllStudentsOrdered();
         } else {
-            students = StudentDAO.getFilteredStudents(selectedYear, selectedMajor);
+            students = StudentAccountDAO.getFilteredStudents(selectedYear, selectedMajor);
         }
         account.getItems().clear();
         account.getItems().addAll(students);
@@ -76,7 +77,7 @@ public class StudentDeleteController {
                 String firstName = nameParts[0];
                 String lastName = nameParts[1];
 
-                boolean success = StudentDAO.deleteStudent(firstName, lastName);
+                boolean success = StudentAccountDAO.deleteStudent(firstName, lastName);
                 if (success) {
                     showAlert("Success", "Student account deleted successfully.");
                     filterStudentAccounts();

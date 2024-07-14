@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.demo.StudentAccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +37,7 @@ public class StudentLoginController {
             return;
         }
 
-        int studentId = StudentDAO.authenticateStudent(emailText, passwordText);
+        int studentId = StudentAccountDAO.authenticateStudent(emailText, passwordText);
         if (studentId > 0) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-main-menu.fxml"));

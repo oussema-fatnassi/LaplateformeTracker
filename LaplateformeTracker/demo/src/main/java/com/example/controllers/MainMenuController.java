@@ -48,10 +48,10 @@ public class MainMenuController {
     @FXML
     private void handleStudentAccountDeleteButtonAction(ActionEvent event){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/student-account-delete.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-delete-student.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
-            stage.setTitle("Admin Account Deletion");
+            stage.setTitle("Delete Student Account");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

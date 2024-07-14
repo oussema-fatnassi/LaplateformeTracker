@@ -88,19 +88,6 @@ public class StudentAccountDAO {
         return students;
     }
 
-    public static boolean deleteStudent(String firstName, String lastName) {
-        String sql = "DELETE FROM studentAccount WHERE first_name = ? AND last_name = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, firstName);
-            statement.setString(2, lastName);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public static List<String> getStudentsByYear(String selectedYear) {
         List<String> students = new ArrayList<>();
         String sql = "SELECT first_name, last_name FROM studentAccount WHERE year = ? ORDER BY last_name ASC";
@@ -248,4 +235,14 @@ public class StudentAccountDAO {
     }
 
 
+    public static void deleteStudent(int id) {
+        String sql = "DELETE FROM studentAccount WHERE id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

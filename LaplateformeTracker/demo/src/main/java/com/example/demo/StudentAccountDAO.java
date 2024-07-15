@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StudentAccountDAO {
 
@@ -302,5 +304,23 @@ public class StudentAccountDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static Map<String, Integer> getStudentCountByMajor() {
+        List<StudentAccount> students = getAllStudents();
+        Map<String, Integer> countByMajor = new HashMap<>();
+        for (StudentAccount student : students) {
+            countByMajor.put(student.getMajor(), countByMajor.getOrDefault(student.getMajor(), 0) + 1);
+        }
+        return countByMajor;
+    }
+
+    public static Map<String, Integer> getStudentCountByYear() {
+        List<StudentAccount> students = getAllStudents();
+        Map<String, Integer> countByYear = new HashMap<>();
+        for (StudentAccount student : students) {
+            countByYear.put(student.getYear(), countByYear.getOrDefault(student.getYear(), 0) + 1);
+        }
+        return countByYear;
     }
 }

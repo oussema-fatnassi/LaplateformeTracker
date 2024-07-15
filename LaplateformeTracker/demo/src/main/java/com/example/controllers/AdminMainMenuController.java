@@ -122,4 +122,17 @@ public class AdminMainMenuController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleStatisticButtonAction(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-statistic.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 800));
+            stage.setTitle("Statistics");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

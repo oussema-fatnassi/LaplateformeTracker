@@ -15,23 +15,35 @@ public class ExportDataUtils {
 
     private static final String EXPORT_FOLDER = "export";
 
-    public static void exportData(List<StudentAccount> students, String format, String type) {
+    public static String exportData(List<StudentAccount> students, String format, String type) {
         switch (format.toUpperCase()) {
             case "CSV":
-                exportDataCSV(students, type);
-                break;
+                return exportDataCSV(students, type);
             case "JSON":
-                exportDataJSON(students, type);
-                break;
+                return exportDataJSON(students, type);
             case "XML":
-                exportDataXML(students, type);
-                break;
+                return exportDataXML(students, type);
             default:
                 System.out.println("Unsupported format: " + format);
+                return null;
         }
     }
 
-    private static void exportDataCSV(List<StudentAccount> students, String type) {
+    public static String exportStudentGrades(List<StudentGrade> grades, String format) {
+        switch (format.toUpperCase()) {
+            case "CSV":
+                return exportStudentGradesCSV(grades);
+            case "JSON":
+                return exportStudentGradesJSON(grades);
+            case "XML":
+                return exportStudentGradesXML(grades);
+            default:
+                System.out.println("Unsupported format: " + format);
+                return null;
+        }
+    }
+
+    private static String exportDataCSV(List<StudentAccount> students, String type) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students_" + type.toLowerCase() + ".csv";
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
@@ -47,31 +59,64 @@ public class ExportDataUtils {
                                 String.valueOf(student.getYear())
                         });
                     }
-                    break;
-                // Add cases for other types if needed (grades, statistics)
+                    return filePath;
                 default:
                     System.out.println("Unsupported type: " + type);
-                    return;
+                    return null;
             }
-            System.out.println("Data exported to " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
-    private static void exportDataJSON(List<StudentAccount> students, String type) {
+    private static String exportStudentGradesCSV(List<StudentGrade> grades) {
+        createExportFolder();
+        String filePath = EXPORT_FOLDER + "/student_grades.csv";
+        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
+            writer.writeNext(new String[]{"First Name", "Last Name", "Subject", "Grade"});
+            for (StudentGrade grade : grades) {
+                writer.writeNext(new String[]{
+                        grade.getFirstName(),
+                        grade.getLastName(),
+                        grade.getSubject(),
+                        grade.getGrade()
+                });
+            }
+            return filePath;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String exportDataJSON(List<StudentAccount> students, String type) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students_" + type.toLowerCase() + ".json";
         try (FileWriter writer = new FileWriter(filePath)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(students, writer);
-            System.out.println("Data exported to " + filePath);
+            return filePath;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
-    private static void exportDataXML(List<StudentAccount> students, String type) {
+    private static String exportStudentGradesJSON(List<StudentGrade> grades) {
+        createExportFolder();
+        String filePath = EXPORT_FOLDER + "/student_grades.json";
+        try (FileWriter writer = new FileWriter(filePath)) {
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+            gson.toJson(grades, writer);
+            return filePath;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String exportDataXML(List<StudentAccount> students, String type) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students_" + type.toLowerCase() + ".xml";
         try {
@@ -81,9 +126,27 @@ public class ExportDataUtils {
             StudentAccountListWrapper wrapper = new StudentAccountListWrapper();
             wrapper.setStudents(students);
             marshaller.marshal(wrapper, new File(filePath));
-            System.out.println("Data exported to " + filePath);
+            return filePath;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String exportStudentGradesXML(List<StudentGrade> grades) {
+        createExportFolder();
+        String filePath = EXPORT_FOLDER + "/student_grades.xml";
+        try {
+            JAXBContext context = JAXBContext.newInstance(StudentGradeListWrapper.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            StudentGradeListWrapper wrapper = new StudentGradeListWrapper();
+            wrapper.setGrades(grades);
+            marshaller.marshal(wrapper, new File(filePath));
+            return filePath;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

@@ -10,9 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 
@@ -87,7 +85,7 @@ public class AdminSortStudentController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main-menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-main-menu.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Login");
@@ -101,24 +99,26 @@ public class AdminSortStudentController {
     private void handleSortButtonAction(ActionEvent event) {
         String selectedFilter = filter.getValue();
         String selectedOrder = order.getValue();
-        if (selectedFilter != null && selectedOrder != null) {
-            switch (selectedFilter) {
-                case "First Name":
-                    sortNamesByFirstName(selectedOrder);
-                    break;
-                case "Last Name":
-                    sortNamesByLastName(selectedOrder);
-                    break;
-                case "Email":
-                    sortNamesByEmail(selectedOrder);
-                    break;
-                case "Year":
-                    sortNamesByYear(selectedOrder);
-                    break;
-                case "Major":
-                    filterNamesByMajor(selectedOrder);
-                    break;
-            }
+        if (selectedFilter == null || selectedOrder == null) {
+            showAlert("Please select both a filter and an order.");
+            return;
+        }
+        switch (selectedFilter) {
+            case "First Name":
+                sortNamesByFirstName(selectedOrder);
+                break;
+            case "Last Name":
+                sortNamesByLastName(selectedOrder);
+                break;
+            case "Email":
+                sortNamesByEmail(selectedOrder);
+                break;
+            case "Year":
+                sortNamesByYear(selectedOrder);
+                break;
+            case "Major":
+                filterNamesByMajor(selectedOrder);
+                break;
         }
     }
 
@@ -205,5 +205,13 @@ public class AdminSortStudentController {
             major.getSelectionModel().select(selectedIndex);
             year.getSelectionModel().select(selectedIndex);
         }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

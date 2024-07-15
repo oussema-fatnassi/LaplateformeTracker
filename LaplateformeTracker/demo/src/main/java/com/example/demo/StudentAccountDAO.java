@@ -217,7 +217,7 @@ public class StudentAccountDAO {
 
     public static List<StudentAccount> getAllStudents() {
         List<StudentAccount> students = new ArrayList<>();
-        String sql = "SELECT id, first_name, last_name, email, major, year FROM studentAccount";
+        String sql = "SELECT id, first_name, last_name, email,age, major, year FROM studentAccount";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -226,9 +226,10 @@ public class StudentAccountDAO {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String email = resultSet.getString("email");
+                int age = resultSet.getInt("age");
                 String major = resultSet.getString("major");
                 String year = resultSet.getString("year");
-                students.add(new StudentAccount(id, firstName, lastName, email, major, year));
+                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -250,7 +251,7 @@ public class StudentAccountDAO {
 
     public static List<StudentAccount> searchStudents(String parameter, String value) {
         List<StudentAccount> students = new ArrayList<>();
-        String sql = "SELECT id, first_name, last_name, email, major, year FROM studentAccount WHERE ";
+        String sql = "SELECT id, first_name, last_name, email,age, major, year FROM studentAccount WHERE ";
 
         switch (parameter) {
             case "First Name":
@@ -261,6 +262,9 @@ public class StudentAccountDAO {
                 break;
             case "Email":
                 sql += "email LIKE ?";
+                break;
+            case "Age":
+                sql += "age LIKE ?";
                 break;
             case "Major":
                 sql += "major LIKE ?";
@@ -281,9 +285,10 @@ public class StudentAccountDAO {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String email = resultSet.getString("email");
+                int age = resultSet.getInt("age");
                 String major = resultSet.getString("major");
                 String year = resultSet.getString("year");
-                students.add(new StudentAccount(id, firstName, lastName, email, major, year));
+                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -323,4 +328,15 @@ public class StudentAccountDAO {
         }
         return countByYear;
     }
+
+    public static Map<String, Integer> getStudentAgeDistribution() {
+        List<StudentAccount> students = getAllStudents();
+        Map<String, Integer> ageDistribution = new HashMap<>();
+        for (StudentAccount student : students) {
+            String ageCategory = AgeUtils.calculateAgeCategory(student.getAge());
+            ageDistribution.put(ageCategory, ageDistribution.getOrDefault(ageCategory, 0) + 1);
+        }
+        return ageDistribution;
+    }
+
 }

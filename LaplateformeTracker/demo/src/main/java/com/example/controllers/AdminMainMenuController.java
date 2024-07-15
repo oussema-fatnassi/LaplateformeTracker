@@ -11,7 +11,7 @@ import javafx.scene.Parent;
 
 import java.io.IOException;
 
-public class MainMenuController {
+public class AdminMainMenuController {
 
     @FXML
     private Button createStudentAccount;

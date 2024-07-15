@@ -40,7 +40,6 @@ public class AdminAdvancedSearchController {
     public void initialize() {
         search.getItems().addAll("First Name", "Last Name", "Email", "Major", "Year");
 
-        // Add listener to the parameter TextField
         parameter.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -68,14 +67,12 @@ public class AdminAdvancedSearchController {
             year.getItems().add(String.valueOf(student.getYear()));
         }
 
-        // Optionally set fixed cell size for consistent display
         firstName.setFixedCellSize(25);
         lastName.setFixedCellSize(25);
         email.setFixedCellSize(25);
         major.setFixedCellSize(25);
         year.setFixedCellSize(25);
 
-        // Disable selection
         firstName.setFocusTraversable(false);
         firstName.setSelectionModel(null);
         lastName.setFocusTraversable(false);
@@ -133,7 +130,7 @@ public class AdminAdvancedSearchController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main-menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-main-menu.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");

@@ -28,7 +28,7 @@ public class AdminLoginController {
 
         if (AdminDAO.authenticateAdmin(email, password)) {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main-menu.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-main-menu.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root, 1200, 800));
                 stage.setTitle("Main Menu");

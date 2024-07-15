@@ -135,4 +135,17 @@ public class AdminMainMenuController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleImportExportButtonAction(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-export-import.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 800));
+            stage.setTitle("Import/Export Data");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

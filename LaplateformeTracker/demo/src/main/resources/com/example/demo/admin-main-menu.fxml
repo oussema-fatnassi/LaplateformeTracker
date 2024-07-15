@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.AdminMainMenuController">
     <top>
         <Label prefHeight="95.0" prefWidth="309.0" text="LAPLATEFORME TRACKER" BorderPane.alignment="CENTER">
@@ -39,18 +38,18 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="createStudentAccount" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="CREATE STUDENT ACCOUNT" GridPane.rowIndex="1" onAction="#handleStudentAccountCreationButtonAction">
+                        <Button fx:id="createStudentAccount" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleStudentAccountCreationButtonAction" prefHeight="40.0" prefWidth="250.0" text="CREATE STUDENT ACCOUNT" GridPane.rowIndex="1">
                             <opaqueInsets>
                                 <Insets left="50.0" />
                             </opaqueInsets>
                         </Button>
-                        <Button fx:id="deleteStudentAccount" mnemonicParsing="false" prefWidth="250.0" text="DELETE STUDENT ACCOUNT" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#handleStudentAccountDeleteButtonAction"/>
-                        <Button fx:id="addGrades" mnemonicParsing="false" prefWidth="250.0" text="ADD GRADES" GridPane.rowIndex="2" onAction="#handelAddGradesButtonAction"/>
-                        <Button fx:id="studentList" mnemonicParsing="false" prefWidth="250.0" text="STUDENT LIST" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#handleStudentListButtonAction" />
-                        <Button fx:id="sortStudent" mnemonicParsing="false" prefWidth="250.0" text="SORT STUDENTS" GridPane.rowIndex="4" onAction="#handleSortStudentButtonAction"/>
-                        <Button fx:id="advancedSearch" mnemonicParsing="false" prefWidth="250.0" text="ADVANCED SEARCH" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#handleAdvancedSearchButtonAction"/>
-                        <Button fx:id="statistics" mnemonicParsing="false" prefWidth="250.0" text="STATISTICS" GridPane.rowIndex="5" onAction="#handleStatisticButtonAction"/>
-                        <Button fx:id="importExportData" mnemonicParsing="false" prefWidth="250.0" text="IMPORT/EXPORT DATA" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button fx:id="deleteStudentAccount" mnemonicParsing="false" onAction="#handleStudentAccountDeleteButtonAction" prefHeight="40.0" prefWidth="250.0" text="DELETE STUDENT ACCOUNT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="addGrades" mnemonicParsing="false" onAction="#handelAddGradesButtonAction" prefHeight="40.0" prefWidth="250.0" text="ADD GRADES" GridPane.rowIndex="2" />
+                        <Button fx:id="studentList" mnemonicParsing="false" onAction="#handleStudentListButtonAction" prefHeight="40.0" prefWidth="250.0" text="STUDENT LIST" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="sortStudent" mnemonicParsing="false" onAction="#handleSortStudentButtonAction" prefHeight="40.0" prefWidth="250.0" text="SORT STUDENTS" GridPane.rowIndex="4" />
+                        <Button fx:id="advancedSearch" mnemonicParsing="false" onAction="#handleAdvancedSearchButtonAction" prefHeight="40.0" prefWidth="250.0" text="ADVANCED SEARCH" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Button fx:id="statistics" mnemonicParsing="false" onAction="#handleStatisticButtonAction" prefHeight="40.0" prefWidth="250.0" text="STATISTICS" GridPane.rowIndex="5" />
+                        <Button fx:id="importExportData" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="IMPORT/EXPORT DATA" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction="#handleImportExportButtonAction" />
                         <Label text="Database operations " GridPane.rowIndex="3">
                             <GridPane.margin>
                                 <Insets right="400.0" />
@@ -67,7 +66,7 @@
         </VBox>
     </center>
     <bottom>
-        <Button fx:id="Logout" mnemonicParsing="false" prefWidth="250.0" text="LOGOUT" BorderPane.alignment="CENTER" onAction="#handleLogoutButtonAction">
+        <Button fx:id="Logout" mnemonicParsing="false" onAction="#handleLogoutButtonAction" prefHeight="40.0" prefWidth="250.0" text="LOGOUT" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="40.0" />
             </BorderPane.margin>

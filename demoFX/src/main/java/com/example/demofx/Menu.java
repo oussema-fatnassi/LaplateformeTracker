@@ -188,7 +188,7 @@ public class Menu {
                 createAdminAccount(scanner);
                 break;
             case 2:
-                //adminLogin(scanner);
+                adminLogin(scanner);
                 break;
             case 3:
                 //studentLogin(scanner);
@@ -313,4 +313,33 @@ public class Menu {
         return isValidLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
     }
 
+    private void adminLogin(Scanner scanner) {
+        System.out.println("\n********************************************");
+        System.out.println("*               Admin Login                *");
+        System.out.println("********************************************");
+        System.out.print("Enter email: ");
+        String email = scanner.next();
+        System.out.print("Enter password: ");
+        String password = scanner.next();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            System.out.println("All fields must be filled.");
+            return;
+        }
+
+        boolean loggedIn = AdminDAO.authenticateAdmin(email, password);
+        if (loggedIn) {
+            System.out.println("Admin logged in successfully.");
+            int choice;
+            do {
+                displayMenu();
+                choice = getUserChoice(scanner);
+                handleChoice(choice, scanner);
+            } while (choice != 10);
+        } else {
+            System.out.println("Failed to log in.");
+        }
+    }
+
+    
 }

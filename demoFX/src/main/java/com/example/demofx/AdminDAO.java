@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class AdminDAO {
 
     public static boolean createAdmin(String firstName, String lastName, String email, String password) {
@@ -23,13 +25,15 @@ public class AdminDAO {
     }
 
     public static boolean authenticateAdmin(String email, String password) {
-        String sql = "SELECT * FROM admin WHERE email = ? AND password = ?";
+        String sql = "SELECT password FROM admin WHERE email = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
-            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            if (resultSet.next()) {
+                String hashedPassword = resultSet.getString("password");
+                return BCrypt.checkpw(password, hashedPassword);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

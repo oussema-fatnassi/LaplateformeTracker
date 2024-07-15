@@ -1,7 +1,6 @@
 package com.example.controllers;
 
 import com.example.demo.StudentAccountDAO;
-import com.example.demo.StudentDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,6 +51,11 @@ public class StudentCreationController {
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || age.isEmpty() || password.isEmpty() || year == null || major == null) {
             showAlert("Please fill in all fields.");
+            return;
+        }
+
+        if (StudentAccountDAO.emailExists(email)) {
+            showAlert("An account with this email already exists. Use another email.");
             return;
         }
 

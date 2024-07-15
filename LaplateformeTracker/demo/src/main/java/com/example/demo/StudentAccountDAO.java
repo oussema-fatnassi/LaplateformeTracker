@@ -288,4 +288,19 @@ public class StudentAccountDAO {
         }
         return students;
     }
+
+    public static boolean emailExists(String email) {
+        String sql = "SELECT COUNT(*) FROM studentAccount WHERE email = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

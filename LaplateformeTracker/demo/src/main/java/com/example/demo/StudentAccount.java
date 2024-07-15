@@ -7,12 +7,14 @@ public class StudentAccount {
     private String email;
     private String major;
     private String year;
+    private int age;
 
-    public StudentAccount(int id, String firstName, String lastName, String email, String major, String year) {
+    public StudentAccount(int id, String firstName, String lastName, String email, int age,String major, String year) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.age = age;
         this.major = major;
         this.year = year;
     }
@@ -41,15 +43,8 @@ public class StudentAccount {
         return year;
     }
 
-    @Override
-    public String toString() {
-        return "StudentAccount{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", major='" + major + '\'' +
-                ", year=" + year +
-                '}';
+    public int getAge() {
+        return age;
     }
+
 }

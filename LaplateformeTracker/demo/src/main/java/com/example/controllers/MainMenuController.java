@@ -35,7 +35,7 @@ public class MainMenuController {
     @FXML
     private void handleStudentAccountCreationButtonAction(ActionEvent event){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/student-account-creation.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-student-account-creation.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Admin Account Creation");
@@ -104,6 +104,19 @@ public class MainMenuController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Sort Student");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleAdvancedSearchButtonAction(ActionEvent event){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-advanced-search.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 800));
+            stage.setTitle("Advanced Search");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

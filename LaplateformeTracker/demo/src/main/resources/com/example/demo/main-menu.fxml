@@ -48,7 +48,7 @@
                   <Button fx:id="addGrades" mnemonicParsing="false" prefWidth="250.0" text="ADD GRADES" GridPane.rowIndex="2" onAction="#handelAddGradesButtonAction"/>
                   <Button fx:id="studentList" mnemonicParsing="false" prefWidth="250.0" text="STUDENT LIST" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#handleStudentListButtonAction" />
                   <Button fx:id="sortStudent" mnemonicParsing="false" prefWidth="250.0" text="SORT STUDENTS" GridPane.rowIndex="4" onAction="#handleSortStudentButtonAction"/>
-                  <Button fx:id="advancedSearch" mnemonicParsing="false" prefWidth="250.0" text="ADVANCED SEARCH" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Button fx:id="advancedSearch" mnemonicParsing="false" prefWidth="250.0" text="ADVANCED SEARCH" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#handleAdvancedSearchButtonAction"/>
                   <Button fx:id="statistics" mnemonicParsing="false" prefWidth="250.0" text="STATISTICS" GridPane.rowIndex="5" />
                   <Button fx:id="importExportData" mnemonicParsing="false" prefWidth="250.0" text="IMPORT/EXPORT DATA" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="Database operations " GridPane.rowIndex="3">

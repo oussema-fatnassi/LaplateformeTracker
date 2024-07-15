@@ -78,7 +78,6 @@ public class AdminAddGradeController {
         major.setItems(majors);
         year.setItems(years);
 
-        // Synchronize the selection after updating items
         synchronizeSelections();
     }
 
@@ -104,7 +103,6 @@ public class AdminAddGradeController {
     }
 
     private void synchronizeSelections() {
-        // Get the selected index in any of the list views
         int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             firstName.getSelectionModel().select(selectedIndex);
@@ -118,7 +116,7 @@ public class AdminAddGradeController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main-menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-main-menu.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");
@@ -135,6 +133,12 @@ public class AdminAddGradeController {
             String selectedSubject = subject.getValue();
             try {
                 double gradeValue = Double.parseDouble(grade.getText());
+
+                if (gradeValue < 0.0 || gradeValue > 100.0) {
+                    showAlert("Error", "Grade must be between 0.0 and 100.0.");
+                    return;
+                }
+
                 if (selectedSubject != null) {
                     // Show confirmation dialog
                     Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);

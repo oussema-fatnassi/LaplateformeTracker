@@ -1,8 +1,6 @@
 package com.example.controllers;
 
-import com.example.demo.StudentAccount;
-import com.example.demo.StudentAccountDAO;
-import com.example.demo.ExportDataUtils;
+import com.example.demo.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +33,8 @@ public class AdminExportImportController {
     public void initialize() {
         operation.getItems().addAll("Import", "Export");
         format.getItems().addAll("CSV", "JSON", "XML");
+
+        operation.setOnAction(event -> handleOperationChange());
         type.getItems().addAll("Student List", "Student Grades", "Student Statistics");
     }
 
@@ -69,16 +69,41 @@ public class AdminExportImportController {
         }
     }
 
+    private void handleOperationChange() {
+        String selectedOperation = operation.getValue();
+        type.getItems().clear();
+
+        if (selectedOperation.equals("Import")) {
+            type.getItems().addAll("Student Accounts", "Student Grades");
+        } else if (selectedOperation.equals("Export")) {
+            type.getItems().addAll("Student List", "Student Grades", "Student Statistics");
+        }
+    }
+
     private void exportData(String format, String type) {
-        List<StudentAccount> students = StudentAccountDAO.getAllStudents();
-        String filePath = ExportDataUtils.exportData(students, format, type);
-        if (filePath != null) {
-            showAlert("Export Successful", "Data exported to " + filePath);
+        if (type.equals("Student List")) {
+            List<StudentAccount> students = StudentAccountDAO.getAllStudents();
+            String filePath = ExportDataUtils.exportData(students, format, type);
+            if (filePath != null) {
+                showAlert("Export Successful", "Data exported to: " + filePath);
+            } else {
+                showAlert("Export Failed", "Failed to export student list.");
+            }
+        } else if (type.equals("Student Grades")) {
+            List<StudentGrade> grades = GradeDAO.getAllStudentGrades();
+            String filePath = ExportDataUtils.exportStudentGrades(grades, format);
+            if (filePath != null) {
+                showAlert("Export Successful", "Data exported to: " + filePath);
+            } else {
+                showAlert("Export Failed", "Failed to export student grades.");
+            }
+        } else {
+            showAlert("Error", "Exporting " + type + " in " + format + " format is not supported.");
         }
     }
 
     private void importData(String format, String type) {
-        // Implement import functionality if needed
+
     }
 
     private void showAlert(String title, String content) {

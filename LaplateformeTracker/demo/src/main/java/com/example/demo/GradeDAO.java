@@ -59,4 +59,25 @@ public class GradeDAO {
         }
         return grades;
     }
+
+    public static List<StudentGrade> getAllStudentGrades() {
+        List<StudentGrade> grades = new ArrayList<>();
+        String sql = "SELECT first_name, last_name, subject, grade FROM studentAccount " +
+                "JOIN grades ON studentAccount.id = grades.student_id";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String subject = resultSet.getString("subject");
+                String grade = resultSet.getString("grade");
+                grades.add(new StudentGrade(firstName, lastName, subject, grade));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return grades;
+    }
 }

@@ -168,4 +168,149 @@ public class Menu {
         List<Student> students = studentDAO.getAllStudents();
         ExportData.exportDataMenu(students, scanner);
     }
+
+    public void primalMenu() {
+        System.out.println("\n********************************************");
+        System.out.println("*      Student Management System Menu      *");
+        System.out.println("********************************************");
+        System.out.println("1. Create admin account");
+        System.out.println("2. Admin Login");
+        System.out.println("3. Student Login");
+        System.out.println("10. Exit");
+        System.out.println("********************************************");
+        System.out.print("Enter your choice: ");
+
+    }
+
+    public void handlePrimalChoice(int choice, Scanner scanner) {
+        switch (choice) {
+            case 1:
+                createAdminAccount(scanner);
+                break;
+            case 2:
+                //adminLogin(scanner);
+                break;
+            case 3:
+                //studentLogin(scanner);
+                break;
+            case 10:
+                System.out.println("Exiting...");
+                break;
+            default:
+                System.out.println("Invalid choice");
+        }
+    }
+
+    private void createAdminAccount(Scanner scanner) {
+        System.out.println("\n********************************************");
+        System.out.println("*           Create Admin Account            *");
+        System.out.println("********************************************");
+        System.out.print("Enter first name: ");
+        String firstName = scanner.next();
+        System.out.print("Enter last name: ");
+        String lastName = scanner.next();
+        System.out.print("Enter email: ");
+        String email = scanner.next();
+        System.out.print("Enter password: ");
+        String password = scanner.next();
+        System.out.print("Confirm password: ");
+        String confirmPassword = scanner.next();
+
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            System.out.println("All fields must be filled.");
+            return;
+        }
+
+        if (!validateName(firstName)) {
+            System.out.println("First name must not contain numbers or symbols.");
+            return;
+        }
+
+        if (!validateName(lastName)) {
+            System.out.println("Last name must not contain numbers or symbols.");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            System.out.println("Email must be valid and contain '@'.");
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            System.out.println("Passwords do not match.");
+            return;
+        }
+
+        boolean created = AccountCreation.createAdminAccount(firstName, lastName, email, password);
+        if (created) {
+            System.out.println("Admin account created successfully.");
+        } else {
+            System.out.println("Failed to create admin account.");
+        }
+    }
+
+    private boolean validateName(String name) {
+        return name.matches("^[a-zA-Z]+$");
+    }
+
+    private boolean validateEmail(String email) {
+        return email.contains("@");
+    }
+
+    private boolean validatePassword(String password) {
+        boolean isValidLength = password.length() >= 10;
+        boolean hasUpperCase = password.matches(".*[A-Z].*");
+        boolean hasLowerCase = password.matches(".*[a-z].*");
+        boolean hasDigit = password.matches(".*\\d.*");
+        boolean hasSpecialChar = password.matches(".*[@#$%^&+=!?.;].*");
+
+        System.out.println("Password: " + password);
+        System.out.println("Valid Length: " + isValidLength);
+        System.out.println("Has Upper Case: " + hasUpperCase);
+        System.out.println("Has Lower Case: " + hasLowerCase);
+        System.out.println("Has Digit: " + hasDigit);
+        System.out.println("Has Special Char: " + hasSpecialChar);
+
+        String alertMessage = "The password must contain at least";
+        int count = 0;
+        if (!isValidLength) {
+            count++;
+            alertMessage += " 10 characters";
+        } if (!hasUpperCase) {
+            if (count > 0) {
+                alertMessage += ",";
+            }
+            count++;
+            alertMessage += " one uppercase letter";
+        } if (!hasLowerCase) {
+            if (count > 0) {
+                alertMessage += ",";
+            }
+            count++;
+            alertMessage += " one lowercase letter";
+        } if (!hasDigit) {
+            if (count > 0) {
+                alertMessage += ",";
+            }
+            count++;
+            alertMessage += " one number";
+        } if (!hasSpecialChar) {
+            if (count > 0) {
+                alertMessage += ",";
+            }
+            alertMessage += " one special character";
+        }
+        alertMessage += ".";
+
+        if (!isValidLength || !hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar) {
+            System.out.println("Invalid Input: " + alertMessage);
+        }
+
+        return isValidLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
+    }
+
 }

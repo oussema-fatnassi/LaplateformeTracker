@@ -339,4 +339,25 @@ public class StudentAccountDAO {
         }
         return ageDistribution;
     }
+    public static boolean studentExists(String fullName) {
+        String query = "SELECT COUNT(*) AS count FROM studentAccount WHERE CONCAT(first_name, ' ', last_name) = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, fullName);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 }

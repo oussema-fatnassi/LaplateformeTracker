@@ -9,10 +9,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public class ImportDataUtils {
+
+    private static final List<String> VALID_SUBJECTS = Arrays.asList(
+            "HTML/CSS Programming", "JavaScript Programming", "Python Programming", "Java Programming",
+            "C++ Programming", "Cybersecurity", "Data Science", "Machine Learning", "Artificial Intelligence",
+            "Augmented Reality", "Virtual Reality", "3D verse", "Unity", "Unreal Engine 5",
+            "English", "French", "Soft Skills"
+    );
 
     public static List<String> importStudentAccountsFromJSON(File file) {
         List<String> errorMessages = new ArrayList<>();
@@ -61,6 +69,32 @@ public class ImportDataUtils {
             List<StudentGrade> grades = gson.fromJson(reader, gradeListType);
 
             for (StudentGrade grade : grades) {
+                // Validate student existence
+                boolean studentExists = StudentAccountDAO.studentExists(grade.getFullName());
+                if (!studentExists) {
+                    errorMessages.add("Student not registered: " + grade.getFirstName() + " " + grade.getLastName());
+                    continue; // Skip further validation for this grade
+                }
+
+                // Validate subject
+                if (!isValidSubject(grade.getSubject())) {
+                    errorMessages.add("Invalid subject: " + grade.getSubject() + " for student: " + grade.getFirstName() + " " + grade.getLastName());
+                    continue; // Skip further validation for this grade
+                }
+
+                // Validate grade
+                try {
+                    double parsedGrade = grade.getGrade();
+                    if (parsedGrade < 0.0 || parsedGrade > 100.0) {
+                        errorMessages.add("Invalid grade: " + parsedGrade + " for student: " + grade.getFirstName() + " " + grade.getLastName() + ", subject: " + grade.getSubject());
+                        continue; // Skip further validation for this grade
+                    }
+                } catch (NumberFormatException e) {
+                    errorMessages.add("Invalid grade format: " + grade.getGrade() + " for student: " + grade.getFirstName() + " " + grade.getLastName() + ", subject: " + grade.getSubject());
+                    continue; // Skip further validation for this grade
+                }
+
+                // If all validations pass, add the grade
                 boolean success = GradeDAO.addGrade(
                         grade.getFullName(),
                         grade.getSubject(),
@@ -68,16 +102,18 @@ public class ImportDataUtils {
                 );
 
                 if (!success) {
-                    errorMessages.add("Failed to add grade for student: " + grade.getFullName() + ", subject: " + grade.getSubject());
+                    errorMessages.add("Failed to add grade for student: " + grade.getFirstName() + " " + grade.getLastName() + ", subject: " + grade.getSubject());
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             errorMessages.add("Failed to read or parse the file: " + e.getMessage());
         }
         return errorMessages;
     }
 
-
+    private static boolean isValidSubject(String subject) {
+        return VALID_SUBJECTS.contains(subject);
+    }
 
     private static String getValidationMessage(StudentAccount student) {
         List<String> validationErrors = new ArrayList<>();

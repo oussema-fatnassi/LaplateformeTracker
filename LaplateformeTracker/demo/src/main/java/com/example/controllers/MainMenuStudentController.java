@@ -35,7 +35,6 @@ public class MainMenuStudentController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-show-grades.fxml"));
             Parent root = loader.load();
 
-            // Pass the student ID to the StudentGradeController
             StudentGradeController controller = loader.getController();
             controller.setStudentId(studentId);
 

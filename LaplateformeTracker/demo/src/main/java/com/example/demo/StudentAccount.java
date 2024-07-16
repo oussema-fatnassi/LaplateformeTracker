@@ -8,8 +8,9 @@ public class StudentAccount {
     private String major;
     private String year;
     private int age;
+    private String password;
 
-    public StudentAccount(int id, String firstName, String lastName, String email, int age,String major, String year) {
+    public StudentAccount(int id, String firstName, String lastName, String email, int age,String major, String year, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,4 +48,7 @@ public class StudentAccount {
         return age;
     }
 
+    public String getPassword() {
+        return password;
+    }
 }

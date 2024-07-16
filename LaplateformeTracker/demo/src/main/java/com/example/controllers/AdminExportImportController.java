@@ -1,6 +1,8 @@
 package com.example.controllers;
 
 import com.example.demo.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +16,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class AdminExportImportController {
@@ -103,7 +107,22 @@ public class AdminExportImportController {
     }
 
     private void importData(String format, String type) {
+        if (type.equals("Student Accounts") && format.equalsIgnoreCase("JSON")) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
+            File selectedFile = fileChooser.showOpenDialog(null);
 
+            if (selectedFile != null) {
+                List<String> errorMessages = ImportDataUtils.importStudentAccountsFromJSON(selectedFile);
+                if (errorMessages.isEmpty()) {
+                    showAlert("Import Successful", "Student accounts imported successfully.");
+                } else {
+                    showAlert("Import Errors", String.join("\n", errorMessages));
+                }
+            }
+        } else {
+            showAlert("Error", "Importing " + type + " in " + format + " format is not supported.");
+        }
     }
 
     private void showAlert(String title, String content) {

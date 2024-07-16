@@ -217,7 +217,7 @@ public class StudentAccountDAO {
 
     public static List<StudentAccount> getAllStudents() {
         List<StudentAccount> students = new ArrayList<>();
-        String sql = "SELECT id, first_name, last_name, email,age, major, year FROM studentAccount";
+        String sql = "SELECT id, first_name, last_name, email,age, major, year, password FROM studentAccount";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -229,14 +229,14 @@ public class StudentAccountDAO {
                 int age = resultSet.getInt("age");
                 String major = resultSet.getString("major");
                 String year = resultSet.getString("year");
-                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year));
+                String password = resultSet.getString("password");
+                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year, password));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return students;
     }
-
 
     public static void deleteStudent(int id) {
         String sql = "DELETE FROM studentAccount WHERE id = ?";
@@ -288,7 +288,8 @@ public class StudentAccountDAO {
                 int age = resultSet.getInt("age");
                 String major = resultSet.getString("major");
                 String year = resultSet.getString("year");
-                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year));
+                String password = resultSet.getString("password");
+                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year, password));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -338,5 +339,4 @@ public class StudentAccountDAO {
         }
         return ageDistribution;
     }
-
 }

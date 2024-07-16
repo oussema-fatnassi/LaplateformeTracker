@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.scene.control.Alert;
 
 import java.io.File;
 import java.io.FileReader;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ImportDataUtils {
 
@@ -51,27 +53,76 @@ public class ImportDataUtils {
     }
 
     private static String getValidationMessage(StudentAccount student) {
+        List<String> validationErrors = new ArrayList<>();
+
         if (student.getFirstName() == null || student.getFirstName().isEmpty()) {
-            return "Missing or empty first name.";
+            validationErrors.add("Missing or empty first name.");
+        } else if (!validateName(student.getFirstName())) {
+            validationErrors.add("Invalid first name. It must not contain numbers or symbols.");
         }
+
         if (student.getLastName() == null || student.getLastName().isEmpty()) {
-            return "Missing or empty last name.";
+            validationErrors.add("Missing or empty last name.");
+        } else if (!validateName(student.getLastName())) {
+            validationErrors.add("Invalid last name. It must not contain numbers or symbols.");
         }
+
         if (student.getEmail() == null || student.getEmail().isEmpty()) {
-            return "Missing or empty email.";
+            validationErrors.add("Missing or empty email.");
+        } else if (!validateEmail(student.getEmail())) {
+            validationErrors.add("Invalid email format.");
         }
+
         if (student.getAge() <= 0) {
-            return "Invalid or missing age.";
+            validationErrors.add("Invalid or missing age. Age must be a positive integer.");
         }
+
         if (student.getPassword() == null || student.getPassword().isEmpty()) {
-            return "Missing or empty password.";
+            validationErrors.add("Missing or empty password.");
+        } else if (!validatePassword(student.getPassword())) {
+            validationErrors.add("Invalid password. Password must be at least 10 characters long, contain one uppercase letter, one lowercase letter, one number, and one symbol.");
         }
+
         if (student.getYear() == null || student.getYear().isEmpty()) {
-            return "Missing or empty year.";
+            validationErrors.add("Missing or empty year.");
         }
+
         if (student.getMajor() == null || student.getMajor().isEmpty()) {
-            return "Missing or empty major.";
+            validationErrors.add("Missing or empty major.");
         }
-        return null;
+
+        if (!validationErrors.isEmpty()) {
+            return String.join(" ", validationErrors);
+        } else {
+            return null;
+        }
+    }
+
+    private static boolean validateName(String name) {
+        return name.matches("^[a-zA-Z]+$");
+    }
+
+    private static boolean validateEmail(String email) {
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
+
+    private static boolean validatePassword(String password) {
+        boolean isValidLength = password.length() >= 10;
+        boolean hasUpperCase = password.matches(".*[A-Z].*");
+        boolean hasLowerCase = password.matches(".*[a-z].*");
+        boolean hasDigit = password.matches(".*\\d.*");
+        boolean hasSpecialChar = password.matches(".*[@#$%^&+=!?.;].*");
+
+        return isValidLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
+    }
+
+    private static void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

@@ -117,7 +117,11 @@ public class AdminExportImportController {
                 if (errorMessages.isEmpty()) {
                     showAlert("Import Successful", "Student accounts imported successfully.");
                 } else {
-                    showAlert("Import Errors", String.join("\n", errorMessages));
+                    StringBuilder errorMessageBuilder = new StringBuilder();
+                    for (String errorMessage : errorMessages) {
+                        errorMessageBuilder.append(errorMessage).append("\n");
+                    }
+                    showAlert("Import Errors", errorMessageBuilder.toString());
                 }
             }
         } else {

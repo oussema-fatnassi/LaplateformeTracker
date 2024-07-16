@@ -1,6 +1,7 @@
 package com.example.controllers;
 
 import com.example.demo.AccountCreation;
+import com.example.demo.AdminAccountDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +15,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 public class AdminCreationController {
@@ -32,6 +37,8 @@ public class AdminCreationController {
     private Button createAdmin;
     @FXML
     private Button backButton;
+
+
 
     @FXML
     private void handleCreateAdminButtonAction(ActionEvent event) {
@@ -68,6 +75,12 @@ public class AdminCreationController {
 
         if (!passwordText.equals(confirmPasswordText)) {
             showAlert("Error", "Passwords do not match.");
+            return;
+        }
+
+        // Check if the email is allowed to create admin account
+        if (!AdminAccountDAO.isAdminEmail(emailText)) {
+            showAlert("Error", "You are not authorized to create an admin account.");
             return;
         }
 

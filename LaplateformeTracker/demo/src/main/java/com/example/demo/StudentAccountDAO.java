@@ -217,7 +217,7 @@ public class StudentAccountDAO {
 
     public static List<StudentAccount> getAllStudents() {
         List<StudentAccount> students = new ArrayList<>();
-        String sql = "SELECT id, first_name, last_name, email,age, major, year, password FROM studentAccount";
+        String sql = "SELECT id, first_name, last_name, email,age, major, year FROM studentAccount";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -229,8 +229,7 @@ public class StudentAccountDAO {
                 int age = resultSet.getInt("age");
                 String major = resultSet.getString("major");
                 String year = resultSet.getString("year");
-                String password = resultSet.getString("password");
-                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year, password));
+                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year));
             }
         } catch (SQLException e) {
             e.printStackTrace();

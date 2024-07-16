@@ -59,4 +59,23 @@ public class MainMenuStudentController {
             e.printStackTrace();
         }
     }
+
+
+    @FXML
+    private void handleStatisticsButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-statistic.fxml"));
+            Parent root = loader.load();
+
+            StudentStatisticController controller = loader.getController();
+            controller.setStudentId(studentId); // Pass studentId to StudentStatisticController
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 800));
+            stage.setTitle("Student Statistics");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

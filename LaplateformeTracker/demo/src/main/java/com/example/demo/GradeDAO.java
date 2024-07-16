@@ -89,4 +89,26 @@ public class GradeDAO {
         }
         return grades;
     }
+
+    public static int getStudentIdByFullName(String firstName, String lastName) {
+        String query = "SELECT id FROM studentAccount WHERE CONCAT(first_name, ' ', last_name) = ?";
+        int studentId = -1; // Default to -1 if not found or error occurs
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, firstName + " " + lastName);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    studentId = resultSet.getInt("id");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return studentId;
+    }
 }

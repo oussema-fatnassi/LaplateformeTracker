@@ -21,7 +21,7 @@ public class GradeDAO {
              PreparedStatement idStatement = connection.prepareStatement(studentIdQuery);
              PreparedStatement gradeStatement = connection.prepareStatement(insertGradeQuery)) {
 
-            // Get student ID
+            // Set studentFullName as parameter for idStatement
             idStatement.setString(1, studentFullName);
             ResultSet resultSet = idStatement.executeQuery();
             if (resultSet.next()) {
@@ -31,14 +31,18 @@ public class GradeDAO {
                 gradeStatement.setInt(1, studentId);
                 gradeStatement.setString(2, subject);
                 gradeStatement.setDouble(3, grade);
-                return gradeStatement.executeUpdate() > 0;
+                int rowsAffected = gradeStatement.executeUpdate();
+
+                // Check if the insertion was successful
+                return rowsAffected > 0;
             } else {
                 return false; // Student not found
             }
         } catch (SQLException e) {
+            // Consider logging the exception instead of printing stack trace
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public static List<String> getGradesByStudentId(int studentId) {
@@ -47,6 +51,8 @@ public class GradeDAO {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            // Set studentId as parameter for the prepared statement
             statement.setInt(1, studentId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -55,6 +61,7 @@ public class GradeDAO {
                 grades.add(subject + ": " + grade);
             }
         } catch (SQLException e) {
+            // Consider logging the exception instead of printing stack trace
             e.printStackTrace();
         }
         return grades;
@@ -67,15 +74,17 @@ public class GradeDAO {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String subject = resultSet.getString("subject");
-                String grade = resultSet.getString("grade");
+                double grade = resultSet.getDouble("grade");
                 grades.add(new StudentGrade(firstName, lastName, subject, grade));
             }
         } catch (SQLException e) {
+            // Consider logging the exception instead of printing stack trace
             e.printStackTrace();
         }
         return grades;

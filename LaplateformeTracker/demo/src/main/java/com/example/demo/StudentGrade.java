@@ -10,9 +10,9 @@ public class StudentGrade {
     @Expose
     private String subject;
     @Expose
-    private String grade;
+    private double grade;
 
-    public StudentGrade(String firstName, String lastName, String subject, String grade) {
+    public StudentGrade(String firstName, String lastName, String subject, double grade) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.subject = subject;
@@ -31,7 +31,11 @@ public class StudentGrade {
         return subject;
     }
 
-    public String getGrade() {
+    public double getGrade() {
         return grade;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }

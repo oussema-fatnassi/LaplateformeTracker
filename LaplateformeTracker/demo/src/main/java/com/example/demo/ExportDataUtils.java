@@ -80,7 +80,7 @@ public class ExportDataUtils {
                         grade.getFirstName(),
                         grade.getLastName(),
                         grade.getSubject(),
-                        grade.getGrade()
+                        String.valueOf(grade.getGrade())
                 });
             }
             return filePath;

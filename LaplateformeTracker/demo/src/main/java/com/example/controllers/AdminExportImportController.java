@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminExportImportController {
@@ -107,25 +108,34 @@ public class AdminExportImportController {
     }
 
     private void importData(String format, String type) {
-        if (type.equals("Student Accounts") && format.equalsIgnoreCase("JSON")) {
+        if (format.equalsIgnoreCase("JSON")) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
             File selectedFile = fileChooser.showOpenDialog(null);
 
             if (selectedFile != null) {
-                List<String> errorMessages = ImportDataUtils.importStudentAccountsFromJSON(selectedFile);
-                if (errorMessages.isEmpty()) {
-                    showAlert("Import Successful", "Student accounts imported successfully.");
-                } else {
-                    StringBuilder errorMessageBuilder = new StringBuilder();
-                    for (String errorMessage : errorMessages) {
-                        errorMessageBuilder.append(errorMessage).append("\n");
+                List<String> errorMessages = new ArrayList<>();
+
+                if (type.equals("Student Accounts")) {
+                    errorMessages = ImportDataUtils.importStudentAccountsFromJSON(selectedFile);
+                    if (errorMessages.isEmpty()) {
+                        showAlert("Import Successful", "Student accounts imported successfully.");
+                    } else {
+                        showAlert("Import Errors", String.join("\n", errorMessages));
                     }
-                    showAlert("Import Errors", errorMessageBuilder.toString());
+                } else if (type.equals("Student Grades")) {
+                    errorMessages = ImportDataUtils.importStudentGradesFromJSON(selectedFile);
+                    if (errorMessages.isEmpty()) {
+                        showAlert("Import Successful", "Student grades imported successfully.");
+                    } else {
+                        showAlert("Import Errors", String.join("\n", errorMessages));
+                    }
+                } else {
+                    showAlert("Error", "Importing " + type + " is not supported.");
                 }
             }
         } else {
-            showAlert("Error", "Importing " + type + " in " + format + " format is not supported.");
+            showAlert("Error", "Importing in " + format + " format is not supported.");
         }
     }
 

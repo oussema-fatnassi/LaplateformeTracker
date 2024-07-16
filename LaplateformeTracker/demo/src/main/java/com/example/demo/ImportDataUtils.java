@@ -52,6 +52,33 @@ public class ImportDataUtils {
         return errorMessages;
     }
 
+    public static List<String> importStudentGradesFromJSON(File file) {
+        List<String> errorMessages = new ArrayList<>();
+
+        try (FileReader reader = new FileReader(file)) {
+            Gson gson = new Gson();
+            Type gradeListType = new TypeToken<List<StudentGrade>>() {}.getType();
+            List<StudentGrade> grades = gson.fromJson(reader, gradeListType);
+
+            for (StudentGrade grade : grades) {
+                boolean success = GradeDAO.addGrade(
+                        grade.getFullName(),
+                        grade.getSubject(),
+                        grade.getGrade()
+                );
+
+                if (!success) {
+                    errorMessages.add("Failed to add grade for student: " + grade.getFullName() + ", subject: " + grade.getSubject());
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            errorMessages.add("Failed to read or parse the file: " + e.getMessage());
+        }
+        return errorMessages;
+    }
+
+
+
     private static String getValidationMessage(StudentAccount student) {
         List<String> validationErrors = new ArrayList<>();
 

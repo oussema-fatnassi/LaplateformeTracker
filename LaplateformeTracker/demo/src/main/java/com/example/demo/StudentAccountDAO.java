@@ -288,8 +288,7 @@ public class StudentAccountDAO {
                 int age = resultSet.getInt("age");
                 String major = resultSet.getString("major");
                 String year = resultSet.getString("year");
-                String password = resultSet.getString("password");
-                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year, password));
+                students.add(new StudentAccount(id, firstName, lastName, email,age, major, year));
             }
         } catch (SQLException e) {
             e.printStackTrace();

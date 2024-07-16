@@ -18,7 +18,19 @@ public class StudentAccount {
         this.age = age;
         this.major = major;
         this.year = year;
+        this.password = password;
     }
+
+    public StudentAccount(int id, String firstName, String lastName, String email, int age, String major, String year) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.age = age;
+        this.major = major;
+        this.year = year;
+    }
+
 
     public int getId() {
         return id;

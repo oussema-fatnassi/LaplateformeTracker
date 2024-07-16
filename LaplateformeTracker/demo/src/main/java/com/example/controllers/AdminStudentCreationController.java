@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class AdminStudentCreationController {
 
@@ -41,31 +42,93 @@ public class AdminStudentCreationController {
 
     @FXML
     private void handleCreateStudentButtonAction(ActionEvent event) {
-        String firstName = this.firstName.getText();
-        String lastName = this.lastName.getText();
-        String email = this.email.getText();
-        String age = this.age.getText();
-        String password = this.password.getText();
-        String year = this.year.getValue();
-        String major = this.major.getValue();
+        String firstNameText = this.firstName.getText();
+        String lastNameText = this.lastName.getText();
+        String emailText = this.email.getText();
+        String ageText = this.age.getText();
+        String passwordText = this.password.getText();
+        String yearValue = this.year.getValue();
+        String majorValue = this.major.getValue();
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || age.isEmpty() || password.isEmpty() || year == null || major == null) {
-            showAlert("Please fill in all fields.");
+        if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailText.isEmpty() || ageText.isEmpty() || passwordText.isEmpty() || yearValue == null || majorValue == null) {
+            showAlert("Invalid Input", "All fields must be filled.");
             return;
         }
 
-        if (StudentAccountDAO.emailExists(email)) {
-            showAlert("An account with this email already exists. Use another email.");
+        if (!validateName(firstNameText)) {
+            showAlert("Invalid Input", "First name must not contain numbers or symbols.");
             return;
         }
 
-        boolean success = StudentAccountDAO.createStudent(firstName, lastName, email, Integer.parseInt(age), password, year, major);
+        if (!validateName(lastNameText)) {
+            showAlert("Invalid Input", "Last name must not contain numbers or symbols.");
+            return;
+        }
+
+        if (!validateEmail(emailText)) {
+            showAlert("Invalid Input", "Email must be valid and contain '@'.");
+            return;
+        }
+
+        if (!validateAge(ageText)) {
+            showAlert("Invalid Input", "Age must be a positive integer.");
+            return;
+        }
+
+        if (!validatePassword(passwordText)) {
+            showAlert("Invalid Input", "Password must be at least 10 characters long, contain one uppercase letter, one lowercase letter, one number, and one symbol.");
+            return;
+        }
+
+        if (StudentAccountDAO.emailExists(emailText)) {
+            showAlert("Error", "An account with this email already exists. Use another email.");
+            return;
+        }
+
+        boolean success = StudentAccountDAO.createStudent(firstNameText, lastNameText, emailText, Integer.parseInt(ageText), passwordText, yearValue, majorValue);
         if (success) {
-            showAlert("Student created successfully.");
+            showAlert("Success", "Student created successfully.");
             clearFields();
         } else {
-            showAlert("Failed to create student.");
+            showAlert("Error", "Failed to create student.");
         }
+    }
+
+    private boolean validateName(String name) {
+        return name.matches("^[a-zA-Z]+$");
+    }
+
+    private boolean validateEmail(String email) {
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
+
+    private boolean validateAge(String age) {
+        try {
+            int ageValue = Integer.parseInt(age);
+            return ageValue > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean validatePassword(String password) {
+        boolean isValidLength = password.length() >= 10;
+        boolean hasUpperCase = password.matches(".*[A-Z].*");
+        boolean hasLowerCase = password.matches(".*[a-z].*");
+        boolean hasDigit = password.matches(".*\\d.*");
+        boolean hasSpecialChar = password.matches(".*[@#$%^&+=!?.;].*");
+
+        return isValidLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -79,14 +142,6 @@ public class AdminStudentCreationController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void clearFields() {

@@ -19,6 +19,10 @@ import java.io.IOException;
 public class StudentLoginController {
 
     @FXML
+    private TextField passwordTextField;
+    @FXML
+    private Button togglePasswordVisibility;
+    @FXML
     private TextField email;
     @FXML
     private PasswordField password;
@@ -28,9 +32,20 @@ public class StudentLoginController {
     private Button back;
 
     @FXML
+    private void initialize() {
+        // Initialize visibility state
+        passwordTextField.setVisible(false);
+        passwordTextField.setEditable(false);
+    }
+
+    @FXML
     private void handleLoginButtonAction(ActionEvent event) {
         String emailText = email.getText();
         String passwordText = password.getText();
+
+        if(passwordTextField.isVisible()){
+            passwordText = passwordTextField.getText();
+        }
 
         if (emailText.isEmpty() || passwordText.isEmpty()) {
             showAlert("Invalid Input", "All fields must be filled.");
@@ -69,6 +84,23 @@ public class StudentLoginController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void togglePasswordVisibility(ActionEvent event) {
+        boolean isVisible = passwordTextField.isVisible();
+        passwordTextField.setVisible(!isVisible);
+        password.setVisible(isVisible);
+        passwordTextField.setManaged(!isVisible);
+        password.setManaged(isVisible);
+
+        if(isVisible){
+            password.setText(passwordTextField.getText());
+            passwordTextField.setText("");
+        } else {
+            passwordTextField.setText(password.getText());
+            password.setText("");
         }
     }
 

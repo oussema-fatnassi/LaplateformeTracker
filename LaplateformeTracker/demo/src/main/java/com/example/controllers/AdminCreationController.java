@@ -76,6 +76,13 @@ public class AdminCreationController {
         String passwordText = password.getText();
         String confirmPasswordText = confirmPassword.getText();
 
+        if(passwordTextField.isVisible()){
+            passwordText = passwordTextField.getText();
+        }
+        if(confirmPasswordTextField.isVisible()){
+            confirmPasswordText = confirmPasswordTextField.getText();
+        }
+
         if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailText.isEmpty() || passwordText.isEmpty() || confirmPasswordText.isEmpty()) {
             showAlert("Invalid Input", "All fields must be filled.");
             return;

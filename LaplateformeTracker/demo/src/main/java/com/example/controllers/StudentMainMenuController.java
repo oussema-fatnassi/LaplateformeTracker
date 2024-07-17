@@ -15,6 +15,8 @@ import java.io.IOException;
 public class StudentMainMenuController {
 
     @FXML
+    private Button changePassword;
+    @FXML
     private Button showGrades;
     @FXML
     private Button statistics;
@@ -78,4 +80,23 @@ public class StudentMainMenuController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleChangePasswordButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-change-password.fxml"));
+            Parent root = loader.load();
+
+            StudentChangePasswordController controller = loader.getController();
+            controller.setStudentId(studentId);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 800));
+            stage.setTitle("Change Password");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

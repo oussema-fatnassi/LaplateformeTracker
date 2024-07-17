@@ -19,7 +19,7 @@
          </opaqueInsets>
       </Button>
       <Button fx:id="statistics" layoutX="790.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleStatisticsButtonAction" prefHeight="40.0" prefWidth="250.0" text="STATISTICS" />
-      <Button fx:id="changePassword" layoutX="478.0" layoutY="399.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="CHANGE PASSWORD" />
+      <Button fx:id="changePassword" layoutX="478.0" layoutY="399.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="CHANGE PASSWORD" onAction="#handleChangePasswordButtonAction" />
       <Button fx:id="logout" layoutX="476.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="40.0" prefWidth="250.0" text="LOGOUT" />
       <Label fx:id="studentLabel" layoutX="97.0" layoutY="172.0" text="Student Name">
          <font>

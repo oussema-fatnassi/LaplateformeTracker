@@ -358,4 +358,55 @@ public class StudentAccountDAO {
         return false;
     }
 
+    public static boolean changePassword(int studentId, String currentPassword, String newPassword) {
+        String query = "SELECT password FROM studentAccount WHERE id = ?";
+        String updateQuery = "UPDATE studentAccount SET password = ? WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+
+            statement.setInt(1, studentId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String hashedPassword = resultSet.getString("password");
+
+                // Check if the current password is correct
+                if (BCrypt.checkpw(currentPassword, hashedPassword)) {
+                    // Hash the new password
+                    String newHashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+                    updateStatement.setString(1, newHashedPassword);
+                    updateStatement.setInt(2, studentId);
+                    updateStatement.executeUpdate();
+                    return true;
+                } else {
+                    return false; // Current password is incorrect
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static boolean authenticateStudentById(int studentId, String password) {
+        String query = "SELECT password FROM studentAccount WHERE id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, studentId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String hashedPassword = resultSet.getString("password");
+                return BCrypt.checkpw(password, hashedPassword);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

@@ -39,7 +39,14 @@ public class StudentGradeController {
     }
 
     private void loadGrades() {
+        System.out.println("Loading grades for studentId: " + studentId);
+
+        // Clear existing items for debugging purposes
+        gradeList.getItems().clear();
+        subjectList.getItems().clear();
+
         List<String> grades = GradeDAO.getGradesByStudentId(studentId);
+        System.out.println("Retrieved grades: " + grades);
 
         for (String grade : grades) {
             // Split the grade into subject and grade parts
@@ -54,6 +61,7 @@ public class StudentGradeController {
             gradeList.getItems().add(gradeValue);
         }
     }
+
 
     @FXML
     private void initialize() {
@@ -112,7 +120,13 @@ public class StudentGradeController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/student-main-menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-main-menu.fxml"));
+            Parent root = loader.load();
+
+            // Pass the student ID back to the main menu
+            StudentMainMenuController controller = loader.getController();
+            controller.setStudentId(studentId);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");

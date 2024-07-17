@@ -53,12 +53,18 @@ public class StudentStatisticController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/student-main-menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-main-menu.fxml"));
+            Parent root = loader.load();
+
+            // Pass the student ID back to the main menu
+            StudentMainMenuController controller = loader.getController();
+            controller.setStudentId(studentId);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -3,55 +3,28 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.MainMenuStudentController">
-   <top>
-      <Label prefHeight="95.0" prefWidth="309.0" text="LAPLATEFORME TRACKER" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="50.0" top="30.0" />
-         </BorderPane.margin>
+<Pane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.StudentMainMenuController">
+   <children>
+      <Label layoutX="440.0" layoutY="56.0" prefHeight="95.0" prefWidth="309.0" text="LAPLATEFORME TRACKER">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-   </top>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <GridPane alignment="BOTTOM_LEFT" prefHeight="334.0" prefWidth="1180.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="610.0" minWidth="10.0" prefWidth="599.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="601.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button fx:id="showGrades" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="SHOW GRADES" onAction="#handleShowGradesAction">
-                     <opaqueInsets>
-                        <Insets left="50.0" />
-                     </opaqueInsets>
-                  </Button>
-                  <Button fx:id="statistics" mnemonicParsing="false" prefWidth="250.0" text="STATISTICS" GridPane.columnIndex="1" />
-                  <Button fx:id="export" mnemonicParsing="false" prefWidth="250.0" text="EXPORT " GridPane.rowIndex="1" />
-                  <Button fx:id="changePassword" mnemonicParsing="false" prefWidth="250.0" text="CHANGE PASSWORD" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               </children>
-            </GridPane>
-         </children>
-      </VBox>
-   </center>
-   <bottom>
-      <Button fx:id="logout" mnemonicParsing="false" prefWidth="250.0" text="LOGOUT" BorderPane.alignment="CENTER" onAction="#handleBackButtonAction">
-         <BorderPane.margin>
-            <Insets bottom="40.0" />
-         </BorderPane.margin>
+      <Button fx:id="showGrades" alignment="CENTER" contentDisplay="CENTER" layoutX="147.0" layoutY="248.0" mnemonicParsing="false" onAction="#handleShowGradesAction" prefHeight="40.0" prefWidth="250.0" text="SHOW GRADES">
+         <opaqueInsets>
+            <Insets left="50.0" />
+         </opaqueInsets>
       </Button>
-   </bottom>
-</BorderPane>
+      <Button fx:id="statistics" layoutX="790.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleStatisticsButtonAction" prefHeight="40.0" prefWidth="250.0" text="STATISTICS" />
+      <Button fx:id="changePassword" layoutX="478.0" layoutY="399.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="CHANGE PASSWORD" />
+      <Button fx:id="logout" layoutX="476.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="40.0" prefWidth="250.0" text="LOGOUT" />
+      <Label fx:id="studentLabel" layoutX="97.0" layoutY="172.0" text="Student Name">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

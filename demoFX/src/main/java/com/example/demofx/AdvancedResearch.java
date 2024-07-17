@@ -6,6 +6,7 @@ import static com.example.demofx.Menu.studentDAO;
 
 public class AdvancedResearch {
 
+    // Search for students by first name
     public static void searchByFirstName(String firstName, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getFirstName().equals(firstName))
@@ -17,6 +18,7 @@ public class AdvancedResearch {
         }
     }
 
+    // Search for students by last name
     public static void searchByLastName(String lastName, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getLastName().equals(lastName))
@@ -28,6 +30,7 @@ public class AdvancedResearch {
         }
     }
 
+    // Search for students by email
     public static void searchByEmail(String email, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getEmail().equals(email))
@@ -39,6 +42,7 @@ public class AdvancedResearch {
         }
     }
 
+    // Search for students by age
     public static void searchByAge(int age, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getAge() == age)
@@ -50,6 +54,7 @@ public class AdvancedResearch {
         }
     }
 
+    // Search for students by grade
     public static void searchByGrade(double grade, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getGrade() == grade)
@@ -61,6 +66,7 @@ public class AdvancedResearch {
         }
     }
 
+    // Search for students by subject
     public static void searchBySubject(String subject, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getSubject().equals(subject))
@@ -72,6 +78,7 @@ public class AdvancedResearch {
         }
     }
 
+    // Advanced search menu
     public static void advancedSearchMenu(Scanner scanner){
         System.out.println("********************************************");
         System.out.println("*          Advanced Search                  *");

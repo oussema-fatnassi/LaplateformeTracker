@@ -7,6 +7,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class AccountCreation {
 
+    // Create a new admin account
     public static boolean createAdminAccount(String firstName, String lastName, String email, String password) {
         String hashedPassword = hashPassword(password);
         try (Connection connection = DatabaseConnection.getConnection()) {
@@ -25,10 +26,12 @@ public class AccountCreation {
         }
     }
 
+    // Hash the password using BCrypt
     private static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
+    // Authenticate the admin account
     public static boolean authenticateAdmin(String email, String password) {
         return AdminDAO.authenticateAdmin(email, password);
     }

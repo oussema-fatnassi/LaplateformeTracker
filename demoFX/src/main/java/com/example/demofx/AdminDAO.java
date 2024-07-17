@@ -9,6 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class AdminDAO {
 
+    // Create a new admin account
     public static boolean createAdmin(String firstName, String lastName, String email, String password) {
         String sql = "INSERT INTO admin (first_name, last_name, email, password) VALUES (?, ?, ?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -24,6 +25,7 @@ public class AdminDAO {
         return false;
     }
 
+    // Authenticate the admin account
     public static boolean authenticateAdmin(String email, String password) {
         String sql = "SELECT password FROM admin WHERE email = ?";
         try (Connection connection = DatabaseConnection.getConnection();

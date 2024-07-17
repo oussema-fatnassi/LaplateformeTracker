@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainMenuStudentController {
+public class StudentMainMenuController {
 
     @FXML
     private Button showGrades;

@@ -44,7 +44,7 @@ public class StudentLoginController {
                 Parent root = loader.load();
 
                 // Pass the student ID to the MainMenuStudentController
-                MainMenuStudentController controller = loader.getController();
+                StudentMainMenuController controller = loader.getController();
                 controller.setStudentId(studentId);
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

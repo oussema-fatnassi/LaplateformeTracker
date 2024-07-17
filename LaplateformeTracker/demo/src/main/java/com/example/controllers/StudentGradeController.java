@@ -1,15 +1,15 @@
 package com.example.controllers;
 
+import com.example.demo.ExportDataUtils;
 import com.example.demo.GradeDAO;
+import com.example.demo.StudentGrade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
@@ -23,9 +23,13 @@ public class StudentGradeController {
     @FXML
     private Button back;
     @FXML
+    private Button export;
+    @FXML
     private ListView<String> gradeList;
     @FXML
     private ListView<String> subjectList;
+    @FXML
+    private ComboBox<String> format;
 
     private int studentId;
 
@@ -53,6 +57,8 @@ public class StudentGradeController {
 
     @FXML
     private void initialize() {
+        format.getItems().addAll("JSON", "CSV");
+
         // Configure gradeList cell factory to display grades with alignment
         gradeList.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
@@ -114,5 +120,29 @@ public class StudentGradeController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void handleExportButtonAction(ActionEvent event) {
+        String selectedFormat = format.getValue();
+        if (selectedFormat == null) {
+            showAlert(Alert.AlertType.WARNING, "No Format Selected", "Please select a format to export.");
+            return;
+        }
+        List<StudentGrade> grades = GradeDAO.getGradesByStudentIdList(studentId);
+        String filePath = ExportDataUtils.exportStudentGrades(grades, selectedFormat);
+        if (filePath != null) {
+            showAlert(Alert.AlertType.INFORMATION, "Export Successful", "Grades exported to: " + filePath);
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Export Failed", "An error occurred during the export.");
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

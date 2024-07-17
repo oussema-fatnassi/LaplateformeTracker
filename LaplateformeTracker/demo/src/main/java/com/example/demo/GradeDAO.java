@@ -111,4 +111,28 @@ public class GradeDAO {
 
         return studentId;
     }
+
+    public static List<StudentGrade> getGradesByStudentIdList(int studentId) {
+        List<StudentGrade> grades = new ArrayList<>();
+        String sql = "SELECT first_name, last_name, subject, grade FROM studentAccount " +
+                "JOIN grades ON studentAccount.id = grades.student_id WHERE student_id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, studentId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String subject = resultSet.getString("subject");
+                double grade = resultSet.getDouble("grade");
+                grades.add(new StudentGrade(firstName, lastName, subject, grade));
+            }
+        } catch (SQLException e) {
+            // Consider logging the exception instead of printing stack trace
+            e.printStackTrace();
+        }
+        return grades;
+    }
 }

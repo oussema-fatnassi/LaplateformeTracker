@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.terminal;
+
+import com.example.utility.Student;
 
 import java.util.Scanner;
 

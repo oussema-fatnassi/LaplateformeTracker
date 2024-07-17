@@ -1,9 +1,8 @@
-package com.example.demo;
+package com.example.utility;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
-import org.mindrot.jbcrypt.BCrypt;
 
 public class StudentDAO {
 

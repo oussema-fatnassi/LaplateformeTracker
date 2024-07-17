@@ -12,4 +12,8 @@ module com.example.demo {
     exports com.example.demo;
     exports com.example.controllers;
     opens com.example.controllers to com.google.gson, javafx.fxml;
+    exports com.example.terminal;
+    opens com.example.terminal to com.google.gson, javafx.fxml;
+    exports com.example.utility;
+    opens com.example.utility to com.google.gson, javafx.fxml;
 }

@@ -1,6 +1,6 @@
 package com.example.controllers;
 
-import com.example.demo.AdminDAO;
+import com.example.utility.AdminDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.utility;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

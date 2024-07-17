@@ -1,7 +1,7 @@
 package com.example.controllers;
 
-import com.example.demo.StudentAccount;
-import com.example.demo.StudentAccountDAO;
+import com.example.utility.StudentAccount;
+import com.example.utility.StudentAccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

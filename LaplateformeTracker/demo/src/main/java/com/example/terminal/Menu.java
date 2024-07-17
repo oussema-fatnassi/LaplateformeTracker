@@ -1,4 +1,7 @@
-package com.example.demo;
+package com.example.terminal;
+
+import com.example.utility.Student;
+import com.example.utility.StudentDAO;
 
 import java.util.Scanner;
 import java.util.List;
@@ -20,7 +23,7 @@ public class Menu {
         System.out.println("6. Sort students");
         System.out.println("7. Advanced Search");
         System.out.println("8. Display statistics");
-        System.out.println("9. Export data (CSV, XML, JSON)");
+        System.out.println("9. Export data (CSV, JSON)");
         System.out.println("10. Exit");
         System.out.println("********************************************");
         System.out.print("Enter your choice: ");

@@ -1,7 +1,7 @@
 package com.example.controllers;
 
-import com.example.demo.AccountCreation;
-import com.example.demo.AdminAccountDAO;
+import com.example.utility.AccountCreation;
+import com.example.utility.AdminAccountDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

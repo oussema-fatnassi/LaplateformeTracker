@@ -1,8 +1,10 @@
-package com.example.demo;
+package com.example.terminal;
+import com.example.utility.Student;
+
 import java.util.List;
 import java.util.Scanner;
 
-import static com.example.demo.Menu.studentDAO;
+import static com.example.terminal.Menu.studentDAO;
 
 public class AdvancedResearch {
 

@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.terminal.Menu;
+import com.example.utility.StudentDAO;
+
 import java.util.Scanner;
 
 public class Main {

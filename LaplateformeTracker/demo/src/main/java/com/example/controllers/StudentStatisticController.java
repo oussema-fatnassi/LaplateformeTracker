@@ -1,7 +1,7 @@
 package com.example.controllers;
 
-import com.example.demo.GradeDAO;
-import com.example.demo.StudentGrade;
+import com.example.utility.GradeDAO;
+import com.example.utility.StudentGrade;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

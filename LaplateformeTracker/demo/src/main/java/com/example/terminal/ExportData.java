@@ -1,11 +1,10 @@
-package com.example.demo;
+package com.example.terminal;
 
+import com.example.utility.Student;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opencsv.CSVWriter;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,23 +23,6 @@ public class ExportData {
             gson.toJson(students, writer);
             System.out.println("Data exported to " + filePath);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public static void exportDataXML(List<Student> students) {
-        createExportFolder();
-        String filePath = EXPORT_FOLDER + "/students.xml";
-        try {
-            JAXBContext context = JAXBContext.newInstance(StudentListWrapper.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            StudentListWrapper wrapper = new StudentListWrapper();
-            wrapper.setStudents(students);
-            marshaller.marshal(wrapper, new File(filePath));
-            System.out.println("Data exported to " + filePath);
-        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -79,8 +61,7 @@ public class ExportData {
         System.out.println("*            Export Data Format             *");
         System.out.println("********************************************");
         System.out.println("1. Export as JSON");
-        System.out.println("2. Export as XML");
-        System.out.println("3. Export as CSV");
+        System.out.println("2. Export as CSV");
         System.out.print("Enter your choice: ");
         int exportChoice = scanner.nextInt();
 
@@ -89,9 +70,6 @@ public class ExportData {
                 exportDataJSON(students);
                 break;
             case 2:
-                exportDataXML(students);
-                break;
-            case 3:
                 exportDataCSV(students);
                 break;
             default:

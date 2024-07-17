@@ -1,8 +1,6 @@
 package com.example.controllers;
 
-import com.example.demo.StudentAccountDAO;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.example.utility.StudentAccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

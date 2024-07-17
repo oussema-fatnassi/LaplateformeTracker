@@ -1,6 +1,6 @@
 package com.example.controllers;
 
-import com.example.demo.StudentAccountDAO;
+import com.example.utility.StudentAccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.example.demo.StudentDAO;
 
 import java.io.IOException;
 

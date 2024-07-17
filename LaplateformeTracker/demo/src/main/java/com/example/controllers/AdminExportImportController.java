@@ -1,6 +1,6 @@
 package com.example.controllers;
 
-import com.example.demo.*;
+import com.example.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

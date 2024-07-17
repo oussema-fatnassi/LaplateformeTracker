@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opencsv.CSVWriter;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,8 +19,6 @@ public class ExportDataUtils {
                 return exportDataCSV(students, type);
             case "JSON":
                 return exportDataJSON(students, type);
-            case "XML":
-                return exportDataXML(students, type);
             default:
                 System.out.println("Unsupported format: " + format);
                 return null;
@@ -35,8 +31,6 @@ public class ExportDataUtils {
                 return exportStudentGradesCSV(grades);
             case "JSON":
                 return exportStudentGradesJSON(grades);
-            case "XML":
-                return exportStudentGradesXML(grades);
             default:
                 System.out.println("Unsupported format: " + format);
                 return null;
@@ -111,40 +105,6 @@ public class ExportDataUtils {
             gson.toJson(grades, writer);
             return filePath;
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private static String exportDataXML(List<StudentAccount> students, String type) {
-        createExportFolder();
-        String filePath = EXPORT_FOLDER + "/students_" + type.toLowerCase() + ".xml";
-        try {
-            JAXBContext context = JAXBContext.newInstance(StudentAccountListWrapper.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            StudentAccountListWrapper wrapper = new StudentAccountListWrapper();
-            wrapper.setStudents(students);
-            marshaller.marshal(wrapper, new File(filePath));
-            return filePath;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private static String exportStudentGradesXML(List<StudentGrade> grades) {
-        createExportFolder();
-        String filePath = EXPORT_FOLDER + "/student_grades.xml";
-        try {
-            JAXBContext context = JAXBContext.newInstance(StudentGradeListWrapper.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            StudentGradeListWrapper wrapper = new StudentGradeListWrapper();
-            wrapper.setGrades(grades);
-            marshaller.marshal(wrapper, new File(filePath));
-            return filePath;
-        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

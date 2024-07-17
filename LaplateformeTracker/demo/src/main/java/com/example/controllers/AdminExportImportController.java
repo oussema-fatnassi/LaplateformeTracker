@@ -33,10 +33,10 @@ public class AdminExportImportController {
     // Initialize method to initialize the ComboBoxes with data
     public void initialize() {
         operation.getItems().addAll("Import", "Export");
-        format.getItems().addAll("CSV", "JSON", "XML");
+        format.getItems().addAll("CSV", "JSON");
 
         operation.setOnAction(event -> handleOperationChange());
-        type.getItems().addAll("Student List", "Student Grades", "Student Statistics");
+        type.getItems().addAll("Student List", "Student Grades");
     }
     // Handle back button action to return to the main menu
     @FXML

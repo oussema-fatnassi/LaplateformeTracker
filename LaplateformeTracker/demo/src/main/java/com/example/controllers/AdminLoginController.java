@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AdminLoginController {
-
+    // FXML fields
     @FXML
     private Button loginAdmin;
     @FXML
@@ -29,14 +29,13 @@ public class AdminLoginController {
     private TextField emailField;
     @FXML
     private PasswordField passwordField;
-
+    // Initialize visibility state
     @FXML
     private void initialize() {
-        // Initialize visibility state
         passwordTextField.setVisible(false);
         passwordTextField.setEditable(false);
     }
-
+    // Handle button actions for login
     @FXML
     private void handleLoginAdminButtonAction(ActionEvent event) {
         String email = emailField.getText();
@@ -45,7 +44,6 @@ public class AdminLoginController {
         if(passwordTextField.isVisible()){
             password = passwordTextField.getText();
         }
-
         if (AdminDAO.authenticateAdmin(email, password)) {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-main-menu.fxml"));
@@ -60,7 +58,7 @@ public class AdminLoginController {
             showAlert("Login Failed", "Invalid email or password.");
         }
     }
-
+    // Handle button actions for back button
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
@@ -73,7 +71,7 @@ public class AdminLoginController {
             e.printStackTrace();
         }
     }
-
+    // Handle button actions for password visibility
     @FXML
     private void togglePasswordVisibility(ActionEvent event) {
         boolean isVisible = passwordTextField.isVisible();
@@ -81,7 +79,6 @@ public class AdminLoginController {
         passwordField.setVisible(isVisible);
         passwordTextField.setManaged(!isVisible);
         passwordField.setManaged(isVisible);
-
         if (isVisible) {
             passwordField.setText(passwordTextField.getText());
             passwordTextField.setText("");
@@ -90,7 +87,7 @@ public class AdminLoginController {
             passwordField.setText("");
         }
     }
-
+    // Show alert message for invalid login
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

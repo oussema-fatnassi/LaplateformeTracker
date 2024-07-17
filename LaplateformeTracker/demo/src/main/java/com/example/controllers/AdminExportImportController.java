@@ -1,8 +1,6 @@
 package com.example.controllers;
 
 import com.example.demo.*;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,14 +14,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdminExportImportController {
-
+    // FXML fields
     @FXML
     private Button importExport;
     @FXML
@@ -34,7 +30,7 @@ public class AdminExportImportController {
     private ComboBox<String> format;
     @FXML
     private ComboBox<String> type;
-
+    // Initialize method to initialize the ComboBoxes with data
     public void initialize() {
         operation.getItems().addAll("Import", "Export");
         format.getItems().addAll("CSV", "JSON", "XML");
@@ -42,7 +38,7 @@ public class AdminExportImportController {
         operation.setOnAction(event -> handleOperationChange());
         type.getItems().addAll("Student List", "Student Grades", "Student Statistics");
     }
-
+    // Handle back button action to return to the main menu
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
@@ -55,36 +51,35 @@ public class AdminExportImportController {
             e.printStackTrace();
         }
     }
-
+    // Handle import/export button action to import or export data
     @FXML
     private void handleImportExportButtonAction(ActionEvent event) {
         String selectedOperation = operation.getValue();
         String selectedFormat = format.getValue();
         String selectedType = type.getValue();
-
+    // Validate selected operation, format, and type
         if (selectedOperation == null || selectedFormat == null || selectedType == null) {
             showAlert("Error", "Please select operation, format, and type.");
             return;
         }
-
         if (selectedOperation.equals("Export")) {
             exportData(selectedFormat, selectedType);
         } else if (selectedOperation.equals("Import")) {
             importData(selectedFormat, selectedType);
         }
     }
-
+    // Handle operation change to update the type ComboBox
     private void handleOperationChange() {
         String selectedOperation = operation.getValue();
         type.getItems().clear();
-
+    // Update the type ComboBox based on the selected operation
         if (selectedOperation.equals("Import")) {
             type.getItems().addAll("Student Accounts", "Student Grades");
         } else if (selectedOperation.equals("Export")) {
             type.getItems().addAll("Student List", "Student Grades", "Student Statistics");
         }
     }
-
+    // Export data based on the selected format and type
     private void exportData(String format, String type) {
         if (type.equals("Student List")) {
             List<StudentAccount> students = StudentAccountDAO.getAllStudents();
@@ -106,7 +101,7 @@ public class AdminExportImportController {
             showAlert("Error", "Exporting " + type + " in " + format + " format is not supported.");
         }
     }
-
+    // Import data based on the selected format and type
     private void importData(String format, String type) {
         if (format.equalsIgnoreCase("JSON")) {
             FileChooser fileChooser = new FileChooser();
@@ -138,7 +133,7 @@ public class AdminExportImportController {
             showAlert("Error", "Importing in " + format + " format is not supported.");
         }
     }
-
+    // Show alert dialog with the specified title and content
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

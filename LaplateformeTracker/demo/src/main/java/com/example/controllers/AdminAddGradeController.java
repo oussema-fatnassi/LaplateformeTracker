@@ -20,6 +20,7 @@ import java.util.List;
 
 public class AdminAddGradeController {
 
+    // FXML fields
     @FXML
     private TextField grade;
     @FXML
@@ -39,17 +40,26 @@ public class AdminAddGradeController {
     @FXML
     private ComboBox<String> subject;
 
+    // Observable list to hold student accounts
     private ObservableList<StudentAccount> students = FXCollections.observableArrayList();
 
+    // Initialize method to set up data and event handlers
     public void initialize() {
         loadStudentData();
         setupSelectionListeners();
 
-        subject.getItems().addAll("HTML/CSS Programming", "JavaScript Programming", "Python Programming", "Java Programming", "C++ Programming", "Cybersecurity", "Data Science", "Machine Learning", "Artificial Intelligence", "Augmented Reality", "Virtual Reality", "3D verse", "Unity", "Unreal Engine 5", "English", "French", "Soft Skills");
+        // Add subjects to the ComboBox
+        subject.getItems().addAll(
+                "HTML/CSS Programming", "JavaScript Programming", "Python Programming", "Java Programming",
+                "C++ Programming", "Cybersecurity", "Data Science", "Machine Learning", "Artificial Intelligence",
+                "Augmented Reality", "Virtual Reality", "3D verse", "Unity", "Unreal Engine 5", "English", "French", "Soft Skills"
+        );
 
+        // Set up event handler for grade button
         gradeButton.setOnAction(this::handleAddGradeButtonAction);
     }
 
+    // Load student data from the database
     private void loadStudentData() {
         List<StudentAccount> studentList = StudentAccountDAO.getAllStudents();
         students.setAll(studentList);
@@ -57,6 +67,7 @@ public class AdminAddGradeController {
         updateListViewItems(students);
     }
 
+    // Update the ListView items with student data
     private void updateListViewItems(List<StudentAccount> studentList) {
         ObservableList<String> firstNames = FXCollections.observableArrayList();
         ObservableList<String> lastNames = FXCollections.observableArrayList();
@@ -64,6 +75,7 @@ public class AdminAddGradeController {
         ObservableList<String> majors = FXCollections.observableArrayList();
         ObservableList<String> years = FXCollections.observableArrayList();
 
+        // Populate the ObservableLists with student data
         for (StudentAccount student : studentList) {
             firstNames.add(student.getFirstName());
             lastNames.add(student.getLastName());
@@ -72,6 +84,7 @@ public class AdminAddGradeController {
             years.add(student.getYear());
         }
 
+        // Set the items for each ListView
         firstName.setItems(firstNames);
         lastName.setItems(lastNames);
         email.setItems(emails);
@@ -81,6 +94,7 @@ public class AdminAddGradeController {
         synchronizeSelections();
     }
 
+    // Set up selection listeners for each ListView
     private void setupSelectionListeners() {
         firstName.setOnMouseClicked(this::synchronizeSelection);
         lastName.setOnMouseClicked(this::synchronizeSelection);
@@ -89,6 +103,7 @@ public class AdminAddGradeController {
         year.setOnMouseClicked(this::synchronizeSelection);
     }
 
+    // Synchronize the selection across all ListViews
     private void synchronizeSelection(MouseEvent event) {
         ListView<String> source = (ListView<String>) event.getSource();
         int index = source.getSelectionModel().getSelectedIndex();
@@ -102,6 +117,7 @@ public class AdminAddGradeController {
         }
     }
 
+    // Ensure the selections are synchronized when data is loaded
     private void synchronizeSelections() {
         int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -113,6 +129,7 @@ public class AdminAddGradeController {
         }
     }
 
+    // Handle the back button action to return to the main menu
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
@@ -126,19 +143,24 @@ public class AdminAddGradeController {
         }
     }
 
+    // Handle the add grade button action
     public void handleAddGradeButtonAction(ActionEvent event) {
         int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
+            // Get selected student details
             String studentFullName = firstName.getItems().get(selectedIndex) + " " + lastName.getItems().get(selectedIndex);
             String selectedSubject = subject.getValue();
             try {
+                // Parse grade value from the text field
                 double gradeValue = Double.parseDouble(grade.getText());
 
+                // Validate the grade value
                 if (gradeValue < 0.0 || gradeValue > 100.0) {
                     showAlert("Error", "Grade must be between 0.0 and 100.0.");
                     return;
                 }
 
+                // Ensure a subject is selected
                 if (selectedSubject != null) {
                     // Show confirmation dialog
                     Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -149,6 +171,7 @@ public class AdminAddGradeController {
                     // Wait for user confirmation
                     confirmationAlert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
+                            // Add grade to the database
                             if (GradeDAO.addGrade(studentFullName, selectedSubject, gradeValue)) {
                                 showAlert("Success", "Grade added successfully.");
                             } else {
@@ -167,6 +190,7 @@ public class AdminAddGradeController {
         }
     }
 
+    // Show alert dialog with specified title and content
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

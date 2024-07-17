@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public class AdminStatisticController {
-
+    // FXML fields
     @FXML
     private Button back;
     @FXML
@@ -28,15 +28,14 @@ public class AdminStatisticController {
     private CategoryAxis barXAxis;
     @FXML
     private NumberAxis barYAxis;
-
+    // Initialize the ComboBox and the PieChart
     public void initialize() {
         graph.getItems().addAll("Major", "Year", "Age Distribution");
         graph.getSelectionModel().selectFirst();
         graph.setOnAction(this::updateChart);
-
         updateChart(null);
     }
-
+    // Handle button actions for back button
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
@@ -49,11 +48,11 @@ public class AdminStatisticController {
             e.printStackTrace();
         }
     }
-
+    // Update the chart based on the selected graph
     private void updateChart(ActionEvent event) {
         String selectedGraph = graph.getValue();
         pieChart.setVisible(false);
-
+        // Hide the bar chart if it is visible
         if ("Major".equals(selectedGraph)) {
             pieChart.setVisible(true);
             updatePieChart(StudentAccountDAO.getStudentCountByMajor());
@@ -65,7 +64,7 @@ public class AdminStatisticController {
             updatePieChart(StudentAccountDAO.getStudentAgeDistribution());
         }
     }
-
+    // Update the pie chart based on the data
     private void updatePieChart(Map<String, Integer> data) {
         pieChart.getData().clear();
         for (Map.Entry<String, Integer> entry : data.entrySet()) {
@@ -73,5 +72,4 @@ public class AdminStatisticController {
             pieChart.getData().add(slice);
         }
     }
-
 }

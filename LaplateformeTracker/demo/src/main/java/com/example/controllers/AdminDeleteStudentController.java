@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class AdminDeleteStudentController {
-
+    // FXML fields
     @FXML
     private ListView<String> firstName;
     @FXML
@@ -37,22 +37,21 @@ public class AdminDeleteStudentController {
     private Button delete;
     @FXML
     private Button back;
-
+    // Observable list to hold student accounts and synchronize selection
     private ObservableList<StudentAccount> students = FXCollections.observableArrayList();
-
+    // Initialize method to set up data and event handlers
     @FXML
     public void initialize() {
         loadStudentData();
         setupSelectionListeners();
     }
-
+    // Load all student data from the database
     private void loadStudentData() {
         List<StudentAccount> studentList = StudentAccountDAO.getAllStudents();
         students.setAll(studentList);
-
         updateListViewItems(students);
     }
-
+    // Update list view items with student data
     private void updateListViewItems(List<StudentAccount> studentList) {
         ObservableList<String> firstNames = FXCollections.observableArrayList();
         ObservableList<String> lastNames = FXCollections.observableArrayList();
@@ -73,11 +72,10 @@ public class AdminDeleteStudentController {
         email.setItems(emails);
         major.setItems(majors);
         year.setItems(years);
-
         // Synchronize the selection after updating items
         synchronizeSelections();
     }
-
+    // Set up selection listeners for each list view to synchronize selection
     private void setupSelectionListeners() {
         firstName.setOnMouseClicked(this::synchronizeSelection);
         lastName.setOnMouseClicked(this::synchronizeSelection);
@@ -85,7 +83,7 @@ public class AdminDeleteStudentController {
         major.setOnMouseClicked(this::synchronizeSelection);
         year.setOnMouseClicked(this::synchronizeSelection);
     }
-
+    // Synchronize the selection across all list views
     private void synchronizeSelection(MouseEvent event) {
         ListView<String> source = (ListView<String>) event.getSource();
         int index = source.getSelectionModel().getSelectedIndex();
@@ -98,7 +96,7 @@ public class AdminDeleteStudentController {
             year.getSelectionModel().select(index);
         }
     }
-
+    // Synchronize the selection across all list views
     private void synchronizeSelections() {
         // Get the selected index in any of the list views
         int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
@@ -110,20 +108,18 @@ public class AdminDeleteStudentController {
             year.getSelectionModel().select(selectedIndex);
         }
     }
-
+    // Handle delete button action to delete student account
     @FXML
     public void handleDeleteButtonAction(ActionEvent event) {
         int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             StudentAccount selectedStudent = students.get(selectedIndex);
             String studentFullName = selectedStudent.getFirstName() + " " + selectedStudent.getLastName();
-
             // Show confirmation dialog
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationAlert.setTitle("Confirm Delete");
             confirmationAlert.setHeaderText(null);
             confirmationAlert.setContentText("Are you sure you want to delete the account of " + studentFullName + "?");
-
             // Wait for user confirmation
             confirmationAlert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
@@ -137,7 +133,7 @@ public class AdminDeleteStudentController {
             showAlert("Error", "Please select a student.");
         }
     }
-
+    // Handle back button action to return to the main menu
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
@@ -150,7 +146,7 @@ public class AdminDeleteStudentController {
             e.printStackTrace();
         }
     }
-
+    // Show alert dialog with specified title and content
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

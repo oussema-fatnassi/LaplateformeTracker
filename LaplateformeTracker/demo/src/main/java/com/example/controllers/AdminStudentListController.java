@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class AdminStudentListController {
-
+    // FXML fields
     @FXML
     private ListView<String> firstName;
     @FXML
@@ -29,13 +29,11 @@ public class AdminStudentListController {
     private ListView<String> year;
     @FXML
     private Button back;
-  
+    // Load student data
     public void initialize() {
-
-        // Load student data
         loadStudentData();
     }
-
+    // Load student data into the list views
     private void loadStudentData() {
         System.out.println("Loading student data...");
 
@@ -48,14 +46,12 @@ public class AdminStudentListController {
             major.getItems().add(student.getMajor());
             year.getItems().add(String.valueOf(student.getYear()));
         }
-
-        // Optionally set fixed cell size for consistent display
+        // Set fixed cell size for consistent display
         firstName.setFixedCellSize(25);
         lastName.setFixedCellSize(25);
         email.setFixedCellSize(25);
         major.setFixedCellSize(25);
         year.setFixedCellSize(25);
-
         // Disable selection
         firstName.setFocusTraversable(false);
         firstName.setSelectionModel(null);
@@ -68,7 +64,7 @@ public class AdminStudentListController {
         year.setFocusTraversable(false);
         year.setSelectionModel(null);
     }
-
+    // Handle button actions for back button
     @FXML
     private void handleBackButtonAction(ActionEvent event){
         try {
@@ -81,5 +77,4 @@ public class AdminStudentListController {
             e.printStackTrace();
         }
     }
-
 }

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AdminSortStudentController {
-
+    // FXML fields
     @FXML
     private ListView<String> firstName;
     @FXML
@@ -38,9 +38,9 @@ public class AdminSortStudentController {
     private ComboBox<String> filter;
     @FXML
     private ComboBox<String> order;
-
+    // Observable list for students data
     private ObservableList<StudentAccount> students = FXCollections.observableArrayList();
-
+    // Initialize the controller and the combo boxes
     public void initialize() {
         ObservableList<String> filterOptions = FXCollections.observableArrayList(
                 "First Name", "Last Name", "Email", "Year", "Major"
@@ -70,18 +70,16 @@ public class AdminSortStudentController {
         });
 
         loadStudentData();
-
         // Set up listeners for selection synchronization
         setupSelectionListeners();
     }
-
+    // Load student data
     private void loadStudentData() {
         List<StudentAccount> studentList = StudentAccountDAO.getAllStudents();
         students.setAll(studentList);
-
         updateListViewItems(students);
     }
-
+    // Handle back button actions for returning to the main menu
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
@@ -94,7 +92,7 @@ public class AdminSortStudentController {
             e.printStackTrace();
         }
     }
-
+    // Handle sort button actions for sorting students
     @FXML
     private void handleSortButtonAction(ActionEvent event) {
         String selectedFilter = filter.getValue();
@@ -121,34 +119,34 @@ public class AdminSortStudentController {
                 break;
         }
     }
-
+    // Sort student names by first name
     private void sortNamesByFirstName(String order) {
         students.sort((s1, s2) -> order.equals("Ascending") ? s1.getFirstName().compareTo(s2.getFirstName()) : s2.getFirstName().compareTo(s1.getFirstName()));
         updateListViewItems(students);
     }
-
+    // Sort student names by last name
     private void sortNamesByLastName(String order) {
         students.sort((s1, s2) -> order.equals("Ascending") ? s1.getLastName().compareTo(s2.getLastName()) : s2.getLastName().compareTo(s1.getLastName()));
         updateListViewItems(students);
     }
-
+    // Sort student names by email
     private void sortNamesByEmail(String order) {
         students.sort((s1, s2) -> order.equals("Ascending") ? s1.getEmail().compareTo(s2.getEmail()) : s2.getEmail().compareTo(s1.getEmail()));
         updateListViewItems(students);
     }
-
+    // Sort student names by year
     private void sortNamesByYear(String order) {
         students.sort((s1, s2) -> order.equals("Ascending") ? s1.getYear().compareTo(s2.getYear()) : s2.getYear().compareTo(s1.getYear()));
         updateListViewItems(students);
     }
-
+    // Filter student names by major
     private void filterNamesByMajor(String selectedMajor) {
         List<StudentAccount> filteredStudents = students.stream()
                 .filter(student -> student.getMajor().equals(selectedMajor))
                 .collect(Collectors.toList());
         updateListViewItems(filteredStudents);
     }
-
+    // Update list view items with student data based on the sort type selected
     private void updateListViewItems(List<StudentAccount> studentList) {
         ObservableList<String> firstNames = FXCollections.observableArrayList();
         ObservableList<String> lastNames = FXCollections.observableArrayList();
@@ -169,11 +167,10 @@ public class AdminSortStudentController {
         email.setItems(emails);
         major.setItems(majors);
         year.setItems(years);
-
         // Synchronize the selection after updating items
         synchronizeSelections();
     }
-
+    // Set up listeners for selection synchronization
     private void setupSelectionListeners() {
         firstName.setOnMouseClicked(this::synchronizeSelection);
         lastName.setOnMouseClicked(this::synchronizeSelection);
@@ -181,7 +178,7 @@ public class AdminSortStudentController {
         major.setOnMouseClicked(this::synchronizeSelection);
         year.setOnMouseClicked(this::synchronizeSelection);
     }
-
+    // Synchronize the selection of the list views
     private void synchronizeSelection(MouseEvent event) {
         ListView<String> source = (ListView<String>) event.getSource();
         int index = source.getSelectionModel().getSelectedIndex();
@@ -194,9 +191,8 @@ public class AdminSortStudentController {
             year.getSelectionModel().select(index);
         }
     }
-
+    // Synchronize the selections of the list views
     private void synchronizeSelections() {
-        // Get the selected index in any of the list views
         int selectedIndex = firstName.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             firstName.getSelectionModel().select(selectedIndex);
@@ -206,7 +202,7 @@ public class AdminSortStudentController {
             year.getSelectionModel().select(selectedIndex);
         }
     }
-
+    // Show an alert with the given message
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");

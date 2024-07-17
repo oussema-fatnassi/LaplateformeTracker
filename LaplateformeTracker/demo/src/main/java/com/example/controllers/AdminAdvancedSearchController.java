@@ -18,6 +18,7 @@ import java.util.List;
 
 public class AdminAdvancedSearchController {
 
+    // FXML fields
     @FXML
     private ListView<String> firstName;
     @FXML
@@ -37,9 +38,12 @@ public class AdminAdvancedSearchController {
     @FXML
     private TextField parameter;
 
+    // Initialize method to set up data and event handlers
     public void initialize() {
+        // Add search parameters to ComboBox
         search.getItems().addAll("First Name", "Last Name", "Email", "Major", "Year");
 
+        // Add a listener to the text field to handle search on text change
         parameter.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -47,18 +51,22 @@ public class AdminAdvancedSearchController {
             }
         });
 
+        // Load initial student data
         loadStudentData();
     }
 
+    // Load all student data from the database
     private void loadStudentData() {
         List<StudentAccount> students = StudentAccountDAO.getAllStudents();
 
+        // Clear previous data in ListViews
         firstName.getItems().clear();
         lastName.getItems().clear();
         email.getItems().clear();
         major.getItems().clear();
         year.getItems().clear();
 
+        // Populate ListViews with student data
         for (StudentAccount student : students) {
             firstName.getItems().add(student.getFirstName());
             lastName.getItems().add(student.getLastName());
@@ -67,12 +75,14 @@ public class AdminAdvancedSearchController {
             year.getItems().add(String.valueOf(student.getYear()));
         }
 
+        // Set fixed cell size for each ListView
         firstName.setFixedCellSize(25);
         lastName.setFixedCellSize(25);
         email.setFixedCellSize(25);
         major.setFixedCellSize(25);
         year.setFixedCellSize(25);
 
+        // Make ListViews non-focusable and disable selection
         firstName.setFocusTraversable(false);
         firstName.setSelectionModel(null);
         lastName.setFocusTraversable(false);
@@ -85,10 +95,12 @@ public class AdminAdvancedSearchController {
         year.setSelectionModel(null);
     }
 
+    // Handle search based on selected parameter and input value
     private void handleSearch() {
         String selectedParameter = search.getValue();
         String parameterValue = parameter.getText().trim();
 
+        // Perform search if a parameter and value are provided, otherwise load all data
         if (selectedParameter != null && !parameterValue.isEmpty()) {
             List<StudentAccount> filteredStudents = StudentAccountDAO.searchStudents(selectedParameter, parameterValue);
             updateListViewItems(filteredStudents);
@@ -97,11 +109,13 @@ public class AdminAdvancedSearchController {
         }
     }
 
+    // Handle search button action
     @FXML
     private void handleSearchButtonAction(ActionEvent event) {
         String selectedParameter = search.getValue();
         String parameterValue = parameter.getText().trim();
 
+        // Validate search parameter and value
         if (selectedParameter == null) {
             showAlert("Error", "Please select a search parameter.");
         } else if (parameterValue.isEmpty()) {
@@ -111,13 +125,16 @@ public class AdminAdvancedSearchController {
         }
     }
 
+    // Update ListView items with filtered student data
     private void updateListViewItems(List<StudentAccount> students) {
+        // Clear previous data in ListViews
         firstName.getItems().clear();
         lastName.getItems().clear();
         email.getItems().clear();
         major.getItems().clear();
         year.getItems().clear();
 
+        // Populate ListViews with filtered student data
         for (StudentAccount student : students) {
             firstName.getItems().add(student.getFirstName());
             lastName.getItems().add(student.getLastName());
@@ -127,6 +144,7 @@ public class AdminAdvancedSearchController {
         }
     }
 
+    // Handle back button action to return to the main menu
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
@@ -140,6 +158,7 @@ public class AdminAdvancedSearchController {
         }
     }
 
+    // Show alert dialog with specified title and content
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

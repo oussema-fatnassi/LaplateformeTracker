@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import java.io.IOException;
 
 public class LandingPageController {
+    // FXML fields
     @FXML
     private Button createAdmin;
     @FXML
@@ -20,7 +21,7 @@ public class LandingPageController {
     private Button loginStudent;
     @FXML
     private Button exit;
-
+    // Handle button actions for creating admin account
     @FXML
     private void handleCreateAdminButtonAction(ActionEvent event) {
         try {
@@ -33,7 +34,7 @@ public class LandingPageController {
             e.printStackTrace();
         }
     }
-
+    // Handle button actions for logging in as admin
     @FXML
     private void handelLoginAdminButtonAction(ActionEvent event) {
         try {
@@ -46,7 +47,7 @@ public class LandingPageController {
             e.printStackTrace();
         }
     }
-
+    // Handle button actions for logging in as student
     @FXML
     private void handleLoginStudentButtonAction(ActionEvent event) {
         try {
@@ -59,7 +60,7 @@ public class LandingPageController {
             e.printStackTrace();
         }
     }
-
+    // Handle button actions for exiting the application
     @FXML
     private void handleExitButtonAction(ActionEvent event) {
         Stage stage = (Stage) exit.getScene().getWindow();

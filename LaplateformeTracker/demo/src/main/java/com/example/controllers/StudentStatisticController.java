@@ -16,27 +16,23 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class StudentStatisticController {
-
+    // FXML fields
     @FXML
     private BarChart<String, Number> barChart;
-
     @FXML
     private PieChart pieChart;
-
     @FXML
     private LineChart<String, Number> lineChart;
-
     @FXML
     private ComboBox<String> graph;
 
     private int studentId;
-
+    // Initialize the controller and populate the graph and combo box
     public void initialize() {
         barChart.setVisible(false);
         pieChart.setVisible(false);
@@ -44,22 +40,20 @@ public class StudentStatisticController {
         populateGraphComboBox();
         graph.setOnAction(this::handleGraphSelection);
     }
-
+    // Set the student ID and load student statistics
     public void setStudentId(int studentId) {
         this.studentId = studentId;
         loadStudentStatistics();
     }
-
+    // Handle button action for back button to go back to the main menu
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-main-menu.fxml"));
             Parent root = loader.load();
-
             // Pass the student ID back to the main menu
             StudentMainMenuController controller = loader.getController();
             controller.setStudentId(studentId);
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");
@@ -68,11 +62,11 @@ public class StudentStatisticController {
             e.printStackTrace();
         }
     }
-
+    // Populate the graph combo box with options
     private void populateGraphComboBox() {
         graph.setItems(FXCollections.observableArrayList("Bar Chart", "Pie Chart", "Line Chart"));
     }
-
+    // Handle graph selection to display the selected graph
     @FXML
     private void handleGraphSelection(ActionEvent event) {
         String selectedGraph = graph.getValue();
@@ -91,7 +85,7 @@ public class StudentStatisticController {
                 break;
         }
     }
-
+    // Load student statistics to display in the graphs
     private void loadStudentStatistics() {
         List<StudentGrade> allGrades = GradeDAO.getAllStudentGrades();
         List<String> studentGrades = GradeDAO.getGradesByStudentId(studentId);
@@ -100,7 +94,7 @@ public class StudentStatisticController {
         populatePieChart(allGrades);
         populateLineChart(allGrades);
     }
-
+    // Populate the bar chart with student grades
     private void populateBarChart(List<String> studentGrades) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         for (String grade : studentGrades) {
@@ -109,7 +103,7 @@ public class StudentStatisticController {
         }
         barChart.getData().add(series);
     }
-
+    // Populate the pie chart with student grades
     private void populatePieChart(List<StudentGrade> allGrades) {
         int totalSubjects = 0;
         int passedSubjects = 0;
@@ -123,7 +117,7 @@ public class StudentStatisticController {
         PieChart.Data failData = new PieChart.Data("Failed", totalSubjects - passedSubjects);
         pieChart.setData(FXCollections.observableArrayList(passData, failData));
     }
-
+    // Populate the line chart with student grades
     private void populateLineChart(List<StudentGrade> allGrades) {
         Map<String, Double> subjectAverages = new HashMap<>();
         Map<String, Integer> subjectCounts = new HashMap<>();

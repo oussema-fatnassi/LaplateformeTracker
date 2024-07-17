@@ -19,7 +19,7 @@ import javafx.util.Callback;
 import java.util.List;
 
 public class StudentGradeController {
-
+    // FXML fields
     @FXML
     private Button back;
     @FXML
@@ -32,41 +32,33 @@ public class StudentGradeController {
     private ComboBox<String> format;
 
     private int studentId;
-
+    // Set the student ID and load grades
     public void setStudentId(int studentId) {
         this.studentId = studentId;
         loadGrades();
     }
-
+    // Load grades for the student
     private void loadGrades() {
-        System.out.println("Loading grades for studentId: " + studentId);
-
         // Clear existing items for debugging purposes
         gradeList.getItems().clear();
         subjectList.getItems().clear();
 
         List<String> grades = GradeDAO.getGradesByStudentId(studentId);
-        System.out.println("Retrieved grades: " + grades);
-
         for (String grade : grades) {
             // Split the grade into subject and grade parts
             String[] parts = grade.split(":");
             String subject = parts[0];
             String gradeValue = parts[1];
-
             // Add subject to subjectList
             subjectList.getItems().add(subject);
-
             // Add grade to gradeList
             gradeList.getItems().add(gradeValue);
         }
     }
-
-
+    // Initialize the controller and configure cell factories
     @FXML
     private void initialize() {
         format.getItems().addAll("JSON", "CSV");
-
         // Configure gradeList cell factory to display grades with alignment
         gradeList.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
@@ -86,7 +78,6 @@ public class StudentGradeController {
                 };
             }
         });
-
         // Configure subjectList cell factory to display subjects
         subjectList.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
@@ -112,21 +103,19 @@ public class StudentGradeController {
         subjectList.setFocusTraversable(false);
         subjectList.setSelectionModel(null);
 
-        // Optional: Set fixed cell size to ensure consistent height
-        gradeList.setFixedCellSize(25); // Adjust height as needed
-        subjectList.setFixedCellSize(25); // Adjust height as needed
+        //  Set fixed cell size to ensure consistent height
+        gradeList.setFixedCellSize(25);
+        subjectList.setFixedCellSize(25);
     }
-
+    // Handle button actions for back button
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/student-main-menu.fxml"));
             Parent root = loader.load();
-
             // Pass the student ID back to the main menu
             StudentMainMenuController controller = loader.getController();
             controller.setStudentId(studentId);
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 800));
             stage.setTitle("Main Menu");
@@ -135,7 +124,7 @@ public class StudentGradeController {
             e.printStackTrace();
         }
     }
-
+    // Handle button actions for exporting grades
     @FXML
     public void handleExportButtonAction(ActionEvent event) {
         String selectedFormat = format.getValue();
@@ -151,7 +140,7 @@ public class StudentGradeController {
             showAlert(Alert.AlertType.ERROR, "Export Failed", "An error occurred during the export.");
         }
     }
-
+    // Show alert message with the given type, title, and message
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

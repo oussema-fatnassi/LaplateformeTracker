@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.mindrot.jbcrypt.BCrypt;
-
+// This class is used to create and authenticate admin accounts
 public class AdminDAO {
-
+    // Create a new admin account
     public static boolean createAdmin(String firstName, String lastName, String email, String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         String sql = "INSERT INTO admin (first_name, last_name, email, password) VALUES (?, ?, ?, ?)";
@@ -23,7 +23,7 @@ public class AdminDAO {
         }
         return false;
     }
-
+    // Authenticate an admin account
     public static boolean authenticateAdmin(String email, String password) {
         String sql = "SELECT password FROM admin WHERE email = ?";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -39,6 +39,4 @@ public class AdminDAO {
         }
         return false;
     }
-
-
 }

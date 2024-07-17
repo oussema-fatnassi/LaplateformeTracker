@@ -3,27 +3,27 @@ package com.example.terminal;
 import com.example.utility.Student;
 
 import java.util.Scanner;
-
+// Statistic class with methods to calculate average age, average grade, count students, and count students by subject
 public class Statistic {
-
+    // Calculate the average age of students
     public static double calculateAverageAge() {
         return Menu.studentDAO.getAllStudents().stream()
                 .mapToInt(Student::getAge)
                 .average()
                 .orElse(0);
     }
-
+    // Calculate the average grade of students
     public static double calculateAverageGrade() {
         return Menu.studentDAO.getAllStudents().stream()
                 .mapToDouble(Student::getGrade)
                 .average()
                 .orElse(0);
     }
-
+    // Count the total number of students
     public static int countStudents() {
         return Menu.studentDAO.getAllStudents().size();
     }
-
+    // Count the number of students by subject
     public static int countStudentsBySubject(String subject) {
         subject = subject.toLowerCase();
         String finalSubject = subject;
@@ -31,7 +31,7 @@ public class Statistic {
                 .filter(student -> student.getSubject().equals(finalSubject))
                 .count();
     }
-
+    // Statistic menu to display the statistic information
     public static void statisticsMenu(Scanner scanner){
 
         System.out.println("********************************************");

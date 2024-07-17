@@ -1,6 +1,7 @@
 package com.example.utility;
 
 public class StudentAccount {
+    // StudentAccount class with private fields and a constructor
     private int id;
     private String firstName;
     private String lastName;
@@ -9,7 +10,7 @@ public class StudentAccount {
     private String year;
     private int age;
     private String password;
-
+    // Constructor to initialize the fields
     public StudentAccount(int id, String firstName, String lastName, String email, int age,String major, String year, String password) {
         this.id = id;
         this.firstName = firstName;
@@ -20,7 +21,7 @@ public class StudentAccount {
         this.year = year;
         this.password = password;
     }
-
+    // Constructor without password field
     public StudentAccount(int id, String firstName, String lastName, String email, int age, String major, String year) {
         this.id = id;
         this.firstName = firstName;
@@ -30,8 +31,7 @@ public class StudentAccount {
         this.major = major;
         this.year = year;
     }
-
-
+    // Getters to access the fields
     public int getId() {
         return id;
     }

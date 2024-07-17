@@ -8,34 +8,33 @@ import java.util.List;
 import java.util.Scanner;
 
 import static com.example.terminal.Menu.studentDAO;
-
-
+// Sort class to sort the students by different fields
 public class Sort {
-
+    // Sort by first name
     public static void sortByFirstName(List<Student> students) {
         students.sort(Comparator.comparing(Student::getFirstName));
     }
-
+    // Sort by last name
     public static void sortByLastName(List<Student> students) {
         students.sort(Comparator.comparing(Student::getLastName));
     }
-
+    // Sort by email
     public static void sortByEmail(List<Student> students) {
         students.sort(Comparator.comparing(Student::getEmail));
     }
-
+    // Sort by age
     public static void sortByAge(List<Student> students) {
         students.sort(Comparator.comparing(Student::getAge));
     }
-
+    // Sort by grade
     public static void sortByGrade(List<Student> students) {
         students.sort(Comparator.comparing(Student::getGrade));
     }
-
+    // Sort by subject
     public static void sortBySubject(List<Student> students) {
         students.sort(Comparator.comparing(Student::getSubject));
     }
-
+    // Sort students menu to sort the students by different fields
     public static void sortStudentsMenu(Scanner scanner) {
         try {
             System.out.println("********************************************");

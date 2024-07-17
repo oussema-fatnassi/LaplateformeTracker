@@ -14,22 +14,22 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class ImportDataUtils {
-
+    // List of valid subjects for student grades
     private static final List<String> VALID_SUBJECTS = Arrays.asList(
             "HTML/CSS Programming", "JavaScript Programming", "Python Programming", "Java Programming",
             "C++ Programming", "Cybersecurity", "Data Science", "Machine Learning", "Artificial Intelligence",
             "Augmented Reality", "Virtual Reality", "3D verse", "Unity", "Unreal Engine 5",
             "English", "French", "Soft Skills"
     );
-
+    // Import student accounts from JSON file
     public static List<String> importStudentAccountsFromJSON(File file) {
         List<String> errorMessages = new ArrayList<>();
-
+        // Read the file and parse the JSON data
         try (FileReader reader = new FileReader(file)) {
             Gson gson = new Gson();
             Type studentListType = new TypeToken<List<StudentAccount>>() {}.getType();
             List<StudentAccount> students = gson.fromJson(reader, studentListType);
-
+            // Iterate over the list of students
             for (StudentAccount student : students) {
                 String validationMessage = getValidationMessage(student);
                 if (validationMessage == null) {
@@ -59,10 +59,10 @@ public class ImportDataUtils {
         }
         return errorMessages;
     }
-
+    // Import student grades from JSON file
     public static List<String> importStudentGradesFromJSON(File file) {
         List<String> errorMessages = new ArrayList<>();
-
+        // Read the file and parse the JSON data
         try (FileReader reader = new FileReader(file)) {
             Gson gson = new Gson();
             Type gradeListType = new TypeToken<List<StudentGrade>>() {}.getType();
@@ -75,13 +75,11 @@ public class ImportDataUtils {
                     errorMessages.add("Student not registered: " + grade.getFirstName() + " " + grade.getLastName());
                     continue; // Skip further validation for this grade
                 }
-
                 // Validate subject
                 if (!isValidSubject(grade.getSubject())) {
                     errorMessages.add("Invalid subject: " + grade.getSubject() + " for student: " + grade.getFirstName() + " " + grade.getLastName());
                     continue; // Skip further validation for this grade
                 }
-
                 // Validate grade
                 try {
                     double parsedGrade = grade.getGrade();
@@ -93,14 +91,12 @@ public class ImportDataUtils {
                     errorMessages.add("Invalid grade format: " + grade.getGrade() + " for student: " + grade.getFirstName() + " " + grade.getLastName() + ", subject: " + grade.getSubject());
                     continue; // Skip further validation for this grade
                 }
-
                 // If all validations pass, add the grade
                 boolean success = GradeDAO.addGrade(
                         grade.getFullName(),
                         grade.getSubject(),
                         grade.getGrade()
                 );
-
                 if (!success) {
                     errorMessages.add("Failed to add grade for student: " + grade.getFirstName() + " " + grade.getLastName() + ", subject: " + grade.getSubject());
                 }
@@ -110,11 +106,11 @@ public class ImportDataUtils {
         }
         return errorMessages;
     }
-
+    // Import student accounts from CSV file
     private static boolean isValidSubject(String subject) {
         return VALID_SUBJECTS.contains(subject);
     }
-
+    // Validate student account data before importing to the database
     private static String getValidationMessage(StudentAccount student) {
         List<String> validationErrors = new ArrayList<>();
 
@@ -160,17 +156,17 @@ public class ImportDataUtils {
             return null;
         }
     }
-
+    // Validate name format
     private static boolean validateName(String name) {
         return name.matches("^[a-zA-Z]+$");
     }
-
+    // Validate email format
     private static boolean validateEmail(String email) {
         String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
     }
-
+    // Validate password format
     private static boolean validatePassword(String password) {
         boolean isValidLength = password.length() >= 10;
         boolean hasUpperCase = password.matches(".*[A-Z].*");
@@ -180,7 +176,7 @@ public class ImportDataUtils {
 
         return isValidLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
     }
-
+    // Show alert dialog with the import results
     private static void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

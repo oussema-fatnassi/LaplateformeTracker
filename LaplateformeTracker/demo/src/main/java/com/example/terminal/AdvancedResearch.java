@@ -7,7 +7,7 @@ import java.util.Scanner;
 import static com.example.terminal.Menu.studentDAO;
 
 public class AdvancedResearch {
-
+    // Search by first name
     public static void searchByFirstName(String firstName, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getFirstName().equals(firstName))
@@ -18,7 +18,7 @@ public class AdvancedResearch {
             System.out.println("No students found with the first name: " + firstName);
         }
     }
-
+    // Search by last name
     public static void searchByLastName(String lastName, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getLastName().equals(lastName))
@@ -29,7 +29,7 @@ public class AdvancedResearch {
             System.out.println("No students found with the last name: " + lastName);
         }
     }
-
+    // Search by email
     public static void searchByEmail(String email, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getEmail().equals(email))
@@ -40,7 +40,7 @@ public class AdvancedResearch {
             System.out.println("No students found with the email: " + email);
         }
     }
-
+    // Search by age
     public static void searchByAge(int age, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getAge() == age)
@@ -51,7 +51,7 @@ public class AdvancedResearch {
             System.out.println("No students found with the age: " + age);
         }
     }
-
+    // Search by grade
     public static void searchByGrade(double grade, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getGrade() == grade)
@@ -62,7 +62,7 @@ public class AdvancedResearch {
             System.out.println("No students found with the grade: " + grade);
         }
     }
-
+    // Search by subject
     public static void searchBySubject(String subject, List<Student> students) {
         List<Student> studentsFound = students.stream()
                 .filter(student -> student.getSubject().equals(subject))
@@ -73,7 +73,7 @@ public class AdvancedResearch {
             System.out.println("No students found with the subject: " + subject);
         }
     }
-
+    // Advanced search menu
     public static void advancedSearchMenu(Scanner scanner){
         System.out.println("********************************************");
         System.out.println("*          Advanced Search                  *");

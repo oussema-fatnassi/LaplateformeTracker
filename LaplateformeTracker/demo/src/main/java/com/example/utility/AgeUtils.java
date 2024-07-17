@@ -1,7 +1,7 @@
 package com.example.utility;
-
+// AgeUtils class with a static method calculateAgeCategory
 public class AgeUtils {
-
+    // Method to calculate the age category
     public static String calculateAgeCategory(int age) {
         if (age >= 18 && age <= 25) {
             return "18-25";
@@ -21,5 +21,4 @@ public class AgeUtils {
             return "Unknown";
         }
     }
-
 }

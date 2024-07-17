@@ -16,9 +16,9 @@ public class Main {
             int choice;
 
             do {
-                menu.displayMenu();
+                menu.primalMenu();
                 choice = menu.getUserChoice(scanner);
-                menu.handleChoice(choice, scanner);
+                menu.handlePrimalChoice(choice, scanner);
             } while (choice != 10);
         }
     }

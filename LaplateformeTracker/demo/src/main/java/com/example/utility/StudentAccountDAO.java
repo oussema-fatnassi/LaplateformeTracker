@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class StudentAccountDAO {
-
+    // Create a new student account
     public static boolean createStudent(String firstName, String lastName, String email, int age, String password, String year, String major) {
         String hashedPassword = hashPassword(password);
         String sql = "INSERT INTO studentAccount (first_name, last_name, email, age, password, year, major) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -31,11 +31,11 @@ public class StudentAccountDAO {
         }
         return false;
     }
-
+    // Hash the password using BCrypt
     private static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
-
+    // Authenticate a student account
     public static int authenticateStudent(String email, String password) {
         String sql = "SELECT id, password FROM studentAccount WHERE email = ?";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -54,8 +54,7 @@ public class StudentAccountDAO {
         }
         return -1; // Return -1 if authentication fails
     }
-
-
+    // Get all students ordered by last name
     public static List<String> getAllStudentsOrdered() {
         List<String> students = new ArrayList<>();
         String sql = "SELECT first_name, last_name FROM studentAccount ORDER BY last_name ASC";
@@ -71,7 +70,7 @@ public class StudentAccountDAO {
         }
         return students;
     }
-
+    // Get all students ordered by first name
     public static List<String> getFilteredStudents(String selectedYear, String selectedMajor) {
         List<String> students = new ArrayList<>();
         String sql = "SELECT first_name, last_name FROM studentAccount WHERE year = ? AND major = ? ORDER BY last_name ASC";
@@ -89,7 +88,7 @@ public class StudentAccountDAO {
         }
         return students;
     }
-
+    // Get all students ordered by year
     public static List<String> getStudentsByYear(String selectedYear) {
         List<String> students = new ArrayList<>();
         String sql = "SELECT first_name, last_name FROM studentAccount WHERE year = ? ORDER BY last_name ASC";
@@ -106,7 +105,7 @@ public class StudentAccountDAO {
         }
         return students;
     }
-
+    // Get all students ordered by major
     public static List<String> getStudentsByMajor(String selectedMajor) {
         List<String> students = new ArrayList<>();
         String sql = "SELECT first_name, last_name FROM studentAccount WHERE major = ? ORDER BY last_name ASC";
@@ -123,7 +122,7 @@ public class StudentAccountDAO {
         }
         return students;
     }
-
+    // Get all students ordered by age
     public static List<String> getStudentFirstName() {
         List<String> firstNames = new ArrayList<>();
         String sql = "SELECT first_name FROM studentAccount";
@@ -138,7 +137,7 @@ public class StudentAccountDAO {
         }
         return firstNames;
     }
-
+    // Get all students ordered by age
     public static List<String> getStudentLastName() {
         List<String> lastNames = new ArrayList<>();
         String sql = "SELECT last_name FROM studentAccount";
@@ -153,7 +152,7 @@ public class StudentAccountDAO {
         }
         return lastNames;
     }
-
+    // Get all students ordered by age
     public static List<String> getStudentEmail() {
         List<String> emails = new ArrayList<>();
         String sql = "SELECT email FROM studentAccount";
@@ -169,7 +168,7 @@ public class StudentAccountDAO {
         return emails;
     }
 
-
+    // Get all students ordered by age
     public static List<String> getStudentMajor() {
         List<String> majors = new ArrayList<>();
         String sql = "SELECT major FROM studentAccount";
@@ -184,7 +183,7 @@ public class StudentAccountDAO {
         }
         return majors;
     }
-
+    // Get all students ordered by age
     public static List<String> getStudentYear() {
         List<String> years = new ArrayList<>();
         String sql = "SELECT year FROM studentAccount";
@@ -199,7 +198,7 @@ public class StudentAccountDAO {
         }
         return years;
     }
-
+    //  Get list of all majors
     public static List<String> getAllMajors() {
         List<String> majors = new ArrayList<>();
         String sql = "SELECT DISTINCT major FROM studentAccount ORDER BY major ASC";
@@ -214,7 +213,7 @@ public class StudentAccountDAO {
         }
         return majors;
     }
-
+    // Get list of all students
     public static List<StudentAccount> getAllStudents() {
         List<StudentAccount> students = new ArrayList<>();
         String sql = "SELECT id, first_name, last_name, email,age, major, year FROM studentAccount";
@@ -236,7 +235,7 @@ public class StudentAccountDAO {
         }
         return students;
     }
-
+    // Delete a student account by ID
     public static void deleteStudent(int id) {
         String sql = "DELETE FROM studentAccount WHERE id = ?";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -247,7 +246,7 @@ public class StudentAccountDAO {
             e.printStackTrace();
         }
     }
-
+    // Search for students by a specific parameter
     public static List<StudentAccount> searchStudents(String parameter, String value) {
         List<StudentAccount> students = new ArrayList<>();
         String sql = "SELECT id, first_name, last_name, email,age, major, year FROM studentAccount WHERE ";
@@ -294,7 +293,7 @@ public class StudentAccountDAO {
         }
         return students;
     }
-
+    // Check if a student account exists by email
     public static boolean emailExists(String email) {
         String sql = "SELECT COUNT(*) FROM studentAccount WHERE email = ?";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -309,7 +308,7 @@ public class StudentAccountDAO {
         }
         return false;
     }
-
+    // Get student account by Major
     public static Map<String, Integer> getStudentCountByMajor() {
         List<StudentAccount> students = getAllStudents();
         Map<String, Integer> countByMajor = new HashMap<>();
@@ -318,7 +317,7 @@ public class StudentAccountDAO {
         }
         return countByMajor;
     }
-
+    // Get student account by Year
     public static Map<String, Integer> getStudentCountByYear() {
         List<StudentAccount> students = getAllStudents();
         Map<String, Integer> countByYear = new HashMap<>();
@@ -327,7 +326,7 @@ public class StudentAccountDAO {
         }
         return countByYear;
     }
-
+    // Get student account by Age Distribution
     public static Map<String, Integer> getStudentAgeDistribution() {
         List<StudentAccount> students = getAllStudents();
         Map<String, Integer> ageDistribution = new HashMap<>();
@@ -337,27 +336,24 @@ public class StudentAccountDAO {
         }
         return ageDistribution;
     }
+    // Check if a student account exists by full name
     public static boolean studentExists(String fullName) {
         String query = "SELECT COUNT(*) AS count FROM studentAccount WHERE CONCAT(first_name, ' ', last_name) = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-
             statement.setString(1, fullName);
-
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int count = resultSet.getInt("count");
                 return count > 0;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
-
+    // Change the password for a student account
     public static boolean changePassword(int studentId, String currentPassword, String newPassword) {
         String query = "SELECT password FROM studentAccount WHERE id = ?";
         String updateQuery = "UPDATE studentAccount SET password = ? WHERE id = ?";
@@ -368,10 +364,8 @@ public class StudentAccountDAO {
 
             statement.setInt(1, studentId);
             ResultSet resultSet = statement.executeQuery();
-
             if (resultSet.next()) {
                 String hashedPassword = resultSet.getString("password");
-
                 // Check if the current password is correct
                 if (BCrypt.checkpw(currentPassword, hashedPassword)) {
                     // Hash the new password
@@ -387,10 +381,9 @@ public class StudentAccountDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
-
+    // Authenticate a student account by ID
     public static boolean authenticateStudentById(int studentId, String password) {
         String query = "SELECT password FROM studentAccount WHERE id = ?";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -408,5 +401,4 @@ public class StudentAccountDAO {
         }
         return false;
     }
-
 }

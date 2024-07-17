@@ -12,7 +12,7 @@ import java.util.List;
 public class ExportDataUtils {
 
     private static final String EXPORT_FOLDER = "export";
-
+    // Export data as JSON format
     public static String exportData(List<StudentAccount> students, String format, String type) {
         switch (format.toUpperCase()) {
             case "CSV":
@@ -24,7 +24,7 @@ public class ExportDataUtils {
                 return null;
         }
     }
-
+    // Export student grades as JSON or CSV format
     public static String exportStudentGrades(List<StudentGrade> grades, String format) {
         switch (format.toUpperCase()) {
             case "CSV":
@@ -36,7 +36,7 @@ public class ExportDataUtils {
                 return null;
         }
     }
-
+    // Export data as CSV format
     private static String exportDataCSV(List<StudentAccount> students, String type) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students_" + type.toLowerCase() + ".csv";
@@ -63,7 +63,7 @@ public class ExportDataUtils {
             return null;
         }
     }
-
+    // Export student grades as CSV format
     private static String exportStudentGradesCSV(List<StudentGrade> grades) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/student_grades.csv";
@@ -83,7 +83,7 @@ public class ExportDataUtils {
             return null;
         }
     }
-
+    // Export data as JSON format
     private static String exportDataJSON(List<StudentAccount> students, String type) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students_" + type.toLowerCase() + ".json";
@@ -96,7 +96,7 @@ public class ExportDataUtils {
             return null;
         }
     }
-
+    // Export student grades as JSON format
     private static String exportStudentGradesJSON(List<StudentGrade> grades) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/student_grades.json";
@@ -109,7 +109,7 @@ public class ExportDataUtils {
             return null;
         }
     }
-
+    // Create export folder
     private static void createExportFolder() {
         File exportDir = new File(EXPORT_FOLDER);
         if (!exportDir.exists()) {

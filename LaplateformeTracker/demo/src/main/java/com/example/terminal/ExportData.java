@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class ExportData {
 
     private static final String EXPORT_FOLDER = "export";
-
+    // Export data as JSON format
     public static void exportDataJSON(List<Student> students) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students.json";
@@ -26,7 +26,7 @@ public class ExportData {
             e.printStackTrace();
         }
     }
-
+    // Export data as CSV format
     public static void exportDataCSV(List<Student> students) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students.csv";
@@ -48,14 +48,14 @@ public class ExportData {
             e.printStackTrace();
         }
     }
-
+    // Create export folder
     private static void createExportFolder() {
         File exportDir = new File(EXPORT_FOLDER);
         if (!exportDir.exists()) {
             exportDir.mkdirs();
         }
     }
-
+    // Export data menu
     public static void exportDataMenu(List<Student> students, Scanner scanner) {
         System.out.println("********************************************");
         System.out.println("*            Export Data Format             *");

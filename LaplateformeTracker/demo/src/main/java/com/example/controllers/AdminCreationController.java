@@ -28,6 +28,8 @@ public class AdminCreationController {
     @FXML
     private Label ruleSpecialChar;
     @FXML
+    private Label ruleEmail;
+    @FXML
     private Button togglePasswordVisibility;
     @FXML
     private Button toggleConfirmPasswordVisibility;
@@ -55,6 +57,8 @@ public class AdminCreationController {
         // Add listeners to update password rules labels
         password.textProperty().addListener((observable, oldValue, newValue) -> validatePassword(newValue));
         confirmPassword.textProperty().addListener((observable, oldValue, newValue) -> validatePassword(newValue));
+        email.textProperty().addListener((observable, oldValue, newValue) -> validateEmail(newValue));
+
 
         // Initialize visibility state
         passwordTextField.setVisible(false);
@@ -87,15 +91,17 @@ public class AdminCreationController {
             return;
         }
 
-        if (!validateEmail(emailText)) {
+        if(ruleEmail.getTextFill() == Color.RED) {
             showAlert("Invalid Input", "Email must be valid and contain '@'.");
             return;
         }
 
-//        if (!validatePassword(passwordText)) {
-//            showAlert("Invalid Input", "Password must be at least 10 characters long, contain one uppercase letter, one lowercase letter, one number, and one symbol.");
-//            return;
-//        }
+        if (ruleLength.getTextFill() == Color.RED || ruleUpperCase.getTextFill() == Color.RED ||
+                ruleLowerCase.getTextFill() == Color.RED || ruleDigit.getTextFill() == Color.RED ||
+                ruleSpecialChar.getTextFill() == Color.RED) {
+            showAlert("Invalid Input", "Password must meet all criteria.");
+            return;
+        }
 
         if (!passwordText.equals(confirmPasswordText)) {
             showAlert("Error", "Passwords do not match.");
@@ -121,7 +127,12 @@ public class AdminCreationController {
         return name.matches("^[a-zA-Z]+$");
     }
 
-    private boolean validateEmail(String email) {
+    private void validateEmail(String email) {
+        boolean isValidEmail = validateEmailFormat(email);
+        updateLabel(ruleEmail, isValidEmail);
+    }
+
+    private boolean validateEmailFormat(String email) {
         String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
@@ -156,11 +167,13 @@ public class AdminCreationController {
         ruleLowerCase.setText("Password must contain at least one lowercase letter");
         ruleDigit.setText("Password must contain at least one digit");
         ruleSpecialChar.setText("Password must contain at least one special character (@#$%^&+=!?.;)");
+        ruleEmail.setText("Email must be valid with '@' and a domain name");
         updateLabel(ruleLength, false);
         updateLabel(ruleUpperCase, false);
         updateLabel(ruleLowerCase, false);
         updateLabel(ruleDigit, false);
         updateLabel(ruleSpecialChar, false);
+        updateLabel(ruleEmail, false);
     }
 
     private void updateLabel(Label label, boolean isValid) {

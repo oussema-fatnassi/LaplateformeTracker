@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.AdminCreationController">
    <children>
       <Label layoutX="405.0" layoutY="29.0" text="ADMIN ACCOUNT CREATION">
@@ -49,12 +48,13 @@
       <Button fx:id="backButton" layoutX="475.0" layoutY="703.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="50.0" prefWidth="250.0" text="BACK" />
       <TextField fx:id="passwordTextField" layoutX="166.0" layoutY="450.0" prefHeight="40.0" prefWidth="446.0" />
       <TextField fx:id="confirmPasswordTextField" layoutX="166.0" layoutY="550.0" prefHeight="40.0" prefWidth="446.0" />
-      <Button fx:id="togglePasswordVisibility" layoutX="627.0" layoutY="458.0" mnemonicParsing="false" text="👁" onAction="#togglePasswordVisibility"/>
-      <Button fx:id="toggleConfirmPasswordVisibility" layoutX="627.0" layoutY="557.0" mnemonicParsing="false" text="👁" onAction="#toggleConfirmPasswordVisibility" />
+      <Button fx:id="togglePasswordVisibility" layoutX="627.0" layoutY="458.0" mnemonicParsing="false" onAction="#togglePasswordVisibility" text="👁" />
+      <Button fx:id="toggleConfirmPasswordVisibility" layoutX="627.0" layoutY="557.0" mnemonicParsing="false" onAction="#toggleConfirmPasswordVisibility" text="👁" />
       <Label fx:id="ruleLength" layoutX="733.0" layoutY="462.0" text="ruleLength" textFill="RED" />
       <Label fx:id="ruleUpperCase" layoutX="733.0" layoutY="487.0" text="ruleUpperCase" textFill="RED" />
       <Label fx:id="ruleLowerCase" layoutX="733.0" layoutY="512.0" text="ruleLowerCase" textFill="RED" />
       <Label fx:id="ruleDigit" layoutX="733.0" layoutY="537.0" text="ruleDigit" textFill="RED" />
       <Label fx:id="ruleSpecialChar" layoutX="733.0" layoutY="562.0" text="ruleSpecialChar" textFill="RED" />
+      <Label fx:id="ruleEmail" layoutX="735.0" layoutY="372.0" text="ruleEmail" textFill="RED" />
    </children>
 </Pane>

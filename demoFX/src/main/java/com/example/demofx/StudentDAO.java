@@ -7,6 +7,7 @@ public class StudentDAO {
 
     Connection connection = null;
 
+    // Add a new student to the database
     public void addStudent(String firstName, String lastName, String email, int age, double grade, String subject) {
         String query = "INSERT INTO student (first_name, last_name, email, age, grade, subject) VALUES (?, ?, ?, ?, ?, ?)";
         try {
@@ -26,6 +27,7 @@ public class StudentDAO {
         }
     }
 
+    // Update an existing student in the database
     public void updateStudent(int id, String firstName, String lastName, String email, int age, double grade, String subject) {
         String query = "UPDATE student SET first_name = ?, last_name = ?, email = ?, age = ?, grade = ?, subject = ? WHERE id = ?";
         try {
@@ -46,6 +48,7 @@ public class StudentDAO {
         }
     }
 
+    // Delete a student from the database
     public void deleteStudent(int id) {
         String query = "DELETE FROM student WHERE id = ?";
         try {
@@ -60,6 +63,7 @@ public class StudentDAO {
         }
     }
 
+    // Get all students from the database
     public List<Student> getAllStudents() {
         List<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM student";
@@ -89,6 +93,7 @@ public class StudentDAO {
         return students;
     }
 
+    // Get a student by id from the database
     public Student getStudentById(int id) {
         Student student = null;
         String sql = "SELECT * FROM student WHERE id = ?";

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Statistics {
 
+    // Calculates the average age of students
     public static double calculateAverageAge() {
         return Menu.studentDAO.getAllStudents().stream()
                 .mapToInt(Student::getAge)
@@ -11,6 +12,7 @@ public class Statistics {
                 .orElse(0);
     }
 
+    // Calculates the average grade of students
     public static double calculateAverageGrade() {
         return Menu.studentDAO.getAllStudents().stream()
                 .mapToDouble(Student::getGrade)
@@ -18,10 +20,12 @@ public class Statistics {
                 .orElse(0);
     }
 
+    // Counts the total number of students
     public static int countStudents() {
         return Menu.studentDAO.getAllStudents().size();
     }
 
+    // Counts the number of students by subject
     public static int countStudentsBySubject(String subject) {
         subject = subject.toLowerCase();
         String finalSubject = subject;
@@ -30,6 +34,7 @@ public class Statistics {
                 .count();
     }
 
+    // Displays the statistics menu
     public static void statisticsMenu(Scanner scanner){
 
         System.out.println("********************************************");

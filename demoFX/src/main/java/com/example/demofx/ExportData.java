@@ -16,6 +16,7 @@ public class ExportData {
 
     private static final String EXPORT_FOLDER = "export";
 
+    // Export data as JSON
     public static void exportDataJSON(List<Student> students) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students.json";
@@ -28,7 +29,7 @@ public class ExportData {
         }
     }
 
-
+    // Export data as XML
     public static void exportDataXML(List<Student> students) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students.xml";
@@ -45,6 +46,7 @@ public class ExportData {
         }
     }
 
+    // Export data as CSV
     public static void exportDataCSV(List<Student> students) {
         createExportFolder();
         String filePath = EXPORT_FOLDER + "/students.csv";
@@ -67,6 +69,7 @@ public class ExportData {
         }
     }
 
+    // Create the export folder if it does not exist
     private static void createExportFolder() {
         File exportDir = new File(EXPORT_FOLDER);
         if (!exportDir.exists()) {
@@ -74,6 +77,7 @@ public class ExportData {
         }
     }
 
+    // Export data menu
     public static void exportDataMenu(List<Student> students, Scanner scanner) {
         System.out.println("********************************************");
         System.out.println("*            Export Data Format             *");

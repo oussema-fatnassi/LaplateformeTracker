@@ -9,6 +9,7 @@ public class Menu {
 
     static final StudentDAO studentDAO = new StudentDAO();
 
+    // Display the main menu options
     public void displayMenu() {
         System.out.println("********************************************");
         System.out.println("*         Student Management System         *");
@@ -27,6 +28,7 @@ public class Menu {
         System.out.print("Enter your choice: ");
     }
 
+    // Get user's choice from the menu
     public int getUserChoice(Scanner scanner) {
         int choice = 0;
         try {
@@ -38,6 +40,7 @@ public class Menu {
         return choice;
     }
 
+    // Handle the user's choice from the menu
     public void handleChoice(int choice, Scanner scanner) {
         switch (choice) {
             case 1:
@@ -75,6 +78,7 @@ public class Menu {
         }
     }
 
+    // Add a new student
     private void addStudent(Scanner scanner) {
         String firstName, lastName, email, subject;
         int age = 0;
@@ -117,6 +121,7 @@ public class Menu {
         System.out.println("Student added successfully.");
     }
 
+    // Update student details
     private void updateStudent(Scanner scanner) {
         int id = 0, age = 0;
         double grade = 0.0;
@@ -170,6 +175,7 @@ public class Menu {
         System.out.println("Student updated successfully.");
     }
 
+    // Delete a student
     private void deleteStudent(Scanner scanner) {
         int id = 0;
 
@@ -191,17 +197,16 @@ public class Menu {
         }
     }
 
+    // Display all students
     private void displayAllStudents() {
         System.out.println("********************************************");
         System.out.println("*          All Students Information         *");
         System.out.println("********************************************");
         List<Student> students = studentDAO.getAllStudents();
 
-        // Display the header
         System.out.printf("%-4s | %-12s | %-12s | %-4s | %-4s\n", "ID", "First Name", "Last Name", "Age", "Grade");
         System.out.println("------------------------------------------");
 
-        // Display each student's information in a formatted way
         for (Student student : students) {
             System.out.printf("%-4d | %-12s | %-12s | %-4d | %-4.2f\n",
                     student.getId(),
@@ -213,6 +218,7 @@ public class Menu {
     }
 
 
+    // Search for a student by ID
     private void searchStudent(Scanner scanner) {
         int id = 0;
 
@@ -234,11 +240,13 @@ public class Menu {
         }
     }
 
+    // Export student data
     private void exportData(Scanner scanner) {
         List<Student> students = studentDAO.getAllStudents();
         ExportData.exportDataMenu(students, scanner);
     }
 
+    // Get validated input based on a regex pattern
     private String getValidatedInput(Scanner scanner, String pattern, String errorMessage, String prompt) {
         String input;
         while (true) {
@@ -253,6 +261,7 @@ public class Menu {
         return input;
     }
 
+    // Display the primal menu options
     public void primalMenu() {
         System.out.println("\n********************************************");
         System.out.println("*      Student Management System Menu      *");
@@ -266,6 +275,7 @@ public class Menu {
 
     }
 
+    // Handle the user's choice from the primal menu
     public void handlePrimalChoice(int choice, Scanner scanner) {
         switch (choice) {
             case 1:
@@ -285,6 +295,7 @@ public class Menu {
         }
     }
 
+    // Create an admin account
     private void createAdminAccount(Scanner scanner) {
         System.out.println("\n********************************************");
         System.out.println("*           Create Admin Account            *");
@@ -337,14 +348,17 @@ public class Menu {
         }
     }
 
+    // Validate a name (should contain only letters)
     private boolean validateName(String name) {
         return name.matches("^[a-zA-Z]+$");
     }
 
+    // Validate an email address
     private boolean validateEmail(String email) {
         return email.contains("@");
     }
 
+    // Validate a password (should meet certain criteria)
     private boolean validatePassword(String password) {
         boolean isValidLength = password.length() >= 10;
         boolean hasUpperCase = password.matches(".*[A-Z].*");
@@ -397,6 +411,7 @@ public class Menu {
         return isValidLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
     }
 
+    // Perform admin login
     private void adminLogin(Scanner scanner) {
         System.out.println("\n********************************************");
         System.out.println("*               Admin Login                *");
@@ -425,6 +440,7 @@ public class Menu {
         }
     }
 
+    // Display the student menu options
     private void studentDisplayMenu(Scanner scanner) {
         System.out.println("********************************************");
         System.out.println("*               Student Menu               *");
@@ -438,6 +454,7 @@ public class Menu {
         System.out.print("Enter your choice: ");
     }
 
+    // Handle the user's choice from the student menu
     private void handleStudentChoice(int choice, Scanner scanner) {
         switch (choice) {
             case 1:
@@ -460,6 +477,7 @@ public class Menu {
         }
     }
 
+    // Display the student menu
     private void studentMenu(Scanner scanner) {
         int choice;
         do {

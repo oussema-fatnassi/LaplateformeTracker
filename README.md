@@ -45,3 +45,6 @@ LaPlateforme_Tracker is a Java application that manages student data stored in a
 This project has two different versions:
 1. The terminal version is launched from the `Main.java` file.
 2. The GUI version is launched from the `TrackerApplication.java` file.
+
+### Installation
+Clone this repository: https://github.com/oussema-fatnassi/LaplateformeTracker.git

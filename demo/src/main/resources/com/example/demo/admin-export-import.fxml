@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.AdminExportImportController">
+   <children>
+      <Button fx:id="importExport" layoutX="475.0" layoutY="656.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="IMPORT/EXPORT" onAction="#handleImportExportButtonAction" />
+      <Button fx:id="back" layoutX="475.0" layoutY="717.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="BACK" onAction="#handleBackButtonAction"/>
+      <Label layoutX="448.0" layoutY="55.0" text="IMPORT / EXPORT STUDENT DATA">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="operation" layoutX="110.0" layoutY="149.0" prefHeight="30.0" prefWidth="150.0" promptText="Select operation" />
+      <Label layoutX="110.0" layoutY="110.0" text="Select operation" />
+      <ComboBox fx:id="format" layoutX="465.0" layoutY="149.0" prefHeight="30.0" prefWidth="150.0" promptText="Select format" />
+      <Label layoutX="465.0" layoutY="110.0" text="Select format" />
+      <ComboBox fx:id="type" layoutX="835.0" layoutY="149.0" prefHeight="30.0" prefWidth="150.0" promptText="Select type" />
+      <Label layoutX="835.0" layoutY="110.0" text="Select type" />
+   </children>
+</Pane>

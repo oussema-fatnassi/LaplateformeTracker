@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.AdminStatisticController">
+   <children>
+      <Label layoutX="547.0" layoutY="49.0" text="STATISTICS">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="back" layoutX="500.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="40.0" prefWidth="200.0" text="BACK" />
+      <ComboBox fx:id="graph" layoutX="109.0" layoutY="129.0" prefWidth="250.0" promptText="Select a graph" />
+      <PieChart fx:id="pieChart" layoutX="192.0" layoutY="194.0" prefHeight="444.0" prefWidth="816.0" visible="false" />
+      <Label layoutX="109.0" layoutY="102.0" text="Graph type" />
+   </children>
+</Pane>

@@ -1,7 +1,6 @@
 package com.example.terminal;
 
 import com.example.utility.AccountCreation;
-import com.example.utility.AdminDAO;
 import com.example.utility.Student;
 import com.example.utility.StudentDAO;
 
@@ -432,7 +431,7 @@ public class Menu {
             return;
         }
 
-        boolean loggedIn = AdminDAO.authenticateAdmin(email, password);
+        boolean loggedIn = AccountCreation.authenticateAdmin(email, password);
         if (loggedIn) {
             System.out.println("Admin logged in successfully.");
             int choice;

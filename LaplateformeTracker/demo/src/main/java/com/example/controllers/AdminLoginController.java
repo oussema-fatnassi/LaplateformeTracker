@@ -1,6 +1,6 @@
 package com.example.controllers;
 
-import com.example.utility.AdminDAO;
+import com.example.utility.AccountCreation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,7 +44,7 @@ public class AdminLoginController {
         if(passwordTextField.isVisible()){
             password = passwordTextField.getText();
         }
-        if (AdminDAO.authenticateAdmin(email, password)) {
+        if (AccountCreation.authenticateAdmin(email, password)) {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/admin-main-menu.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

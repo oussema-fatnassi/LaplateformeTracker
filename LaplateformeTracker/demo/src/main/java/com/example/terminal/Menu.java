@@ -112,6 +112,10 @@ public class Menu {
             try {
                 System.out.print("Enter grade: ");
                 grade = scanner.nextDouble();
+                if (grade < 0.0 || grade > 10.0) {
+                    System.out.println("Invalid input. Grade must be between 0.0 and 10.0.");
+                    continue;
+                }
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid decimal for grade.");
@@ -166,6 +170,10 @@ public class Menu {
             try {
                 System.out.print("Enter grade: ");
                 grade = scanner.nextDouble();
+                if (grade < 0.0 || grade > 10.0) {
+                    System.out.println("Invalid input. Grade must be between 0.0 and 10.0.");
+                    continue;
+                }
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid decimal for grade.");

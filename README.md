@@ -11,7 +11,7 @@ This project is designed for beginner looking to enhance their skills in Java pr
 
 LaPlateforme_Tracker is a Java application that manages student data stored in a MySQL database. The application allows users to add, update, delete, and view student information. Additionally, it provides advanced features like sorting, searching, and statistical analysis of student data.
 
-#### Features
+### Features
 
 - **Add Student**: Input new student information (first name, last name, age, grades) and save it to the database.
 - **Update Student**: Search for a student by their ID and update their information.
@@ -27,3 +27,21 @@ LaPlateforme_Tracker is a Java application that manages student data stored in a
 - **Authentication**: Secure the application with a username and password.
 - **Auto Backup**: Automatically back up student data at regular intervals to prevent data loss.
 
+### How to use it?
+
+1. Launch the application.
+2. Use the menu to navigate different functionalities:
+   - Add a new student.
+   - Update existing student information.
+   - Delete a student record.
+   - View all student records.
+   - Search for a student by ID.
+   - Sort and search student records.
+   - View statistics and perform data import/export.
+3. For each action, follow the prompts to input the necessary information and execute the desired task.
+
+### How to launch the application?
+
+This project has two different versions:
+1. The terminal version is launched from the `Main.java` file.
+2. The GUI version is launched from the `TrackerApplication.java` file.
